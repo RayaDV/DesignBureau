@@ -1,4 +1,5 @@
-﻿using DesignBureau.Models;
+﻿using DesignBureau.Core.Models.Home;
+using DesignBureau.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,7 +10,8 @@ namespace DesignBureau.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            var model = new IndexViewModel();
+            return View(model);
         }
 
 
