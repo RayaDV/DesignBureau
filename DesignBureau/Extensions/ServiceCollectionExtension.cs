@@ -1,4 +1,7 @@
-﻿using DesignBureau.Data;
+﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Services;
+using DesignBureau.Data;
+using DesignBureau.Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +11,8 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IProjectService, ProjectService>();
+
             return services;
         }
 
@@ -16,6 +21,8 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
             var connectionString = config.GetConnectionString("DefaultConnection");
             services.AddDbContext<DesignBureauDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddScoped<IRepository, Repository>(); // when we create Repository.cs
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
