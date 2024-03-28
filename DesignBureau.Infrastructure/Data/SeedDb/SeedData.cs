@@ -127,7 +127,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 Title = "Multi-purpose building ONYX",
                 Country = "Bulgaria",
                 Town = "Sofia",
-                MainImageUrl = "~/img/onyx-main.png",
+                MainImageUrl = "https://localhost:7134/img/ONYX/ONYX-01.jpg",
                 Architect = "ProArch",
                 Phase = Models.Enums.PhaseType.Construction,
                 YearDesigned = 2019,
@@ -142,7 +142,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 Title = "Multi-purpose building SEG",
                 Country = "Bulgaria",
                 Town = "Krivina",
-                MainImageUrl = "~/img/seg-main.png",
+                MainImageUrl = "https://localhost:7134/img/SEG/SEG-01.jpg",
                 Architect = "Ivo Petrov Architects",
                 Phase = Models.Enums.PhaseType.Use,
                 YearDesigned = 2018,
@@ -154,10 +154,29 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
 
         private void SeedImages()
         {
-            FirstProjectFirstImage = new Image() { Id = 1, ImageUrl = "", ProjectId = FirstProject.Id };
-            FirstProjectSecondImage = new Image() { Id = 2, ImageUrl = "", ProjectId = FirstProject.Id };
-            SecondProjectFirstImage = new Image() { Id = 3, ImageUrl = "", ProjectId = SecondProject.Id };
-            SecondProjectSecondImage = new Image() { Id = 4, ImageUrl = "", ProjectId = SecondProject.Id };
+            FirstProjectFirstImage = new Image() 
+            { 
+                Id = 1, 
+                ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg", 
+                ProjectId = FirstProject.Id 
+            };
+            FirstProjectSecondImage = new Image() 
+            { Id = 2, 
+                ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg", 
+                ProjectId = FirstProject.Id 
+            };
+            SecondProjectFirstImage = new Image() 
+            { 
+                Id = 3, 
+                ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg", 
+                ProjectId = SecondProject.Id 
+            };
+            SecondProjectSecondImage = new Image() 
+            { 
+                Id = 4, 
+                ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg", 
+                ProjectId = SecondProject.Id 
+            };
         }
 
     }

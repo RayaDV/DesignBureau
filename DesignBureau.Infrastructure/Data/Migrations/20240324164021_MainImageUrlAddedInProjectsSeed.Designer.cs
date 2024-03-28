@@ -4,6 +4,7 @@ using DesignBureau.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesignBureau.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DesignBureauDbContext))]
-    partial class DesignBureauDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240324164021_MainImageUrlAddedInProjectsSeed")]
+    partial class MainImageUrlAddedInProjectsSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,25 +232,25 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg",
+                            ImageUrl = "",
                             ProjectId = 1
                         },
                         new
                         {
                             Id = 2,
-                            ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg",
+                            ImageUrl = "",
                             ProjectId = 1
                         },
                         new
                         {
                             Id = 3,
-                            ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg",
+                            ImageUrl = "",
                             ProjectId = 2
                         },
                         new
                         {
                             Id = 4,
-                            ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg",
+                            ImageUrl = "",
                             ProjectId = 2
                         });
                 });
@@ -332,7 +334,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Country = "Bulgaria",
                             Description = "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.",
                             DesignerId = 2,
-                            MainImageUrl = "https://localhost:7134/img/ONYX/ONYX-01.jpg",
+                            MainImageUrl = "~/img/ONYX/ONYX-01.jpg",
                             Phase = 2,
                             Title = "Multi-purpose building ONYX",
                             Town = "Sofia",
@@ -346,7 +348,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Country = "Bulgaria",
                             Description = "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.",
                             DesignerId = 2,
-                            MainImageUrl = "https://localhost:7134/img/SEG/SEG-01.jpg",
+                            MainImageUrl = "~/img/SEG/SEG-01.jpg",
                             Phase = 3,
                             Title = "Multi-purpose building SEG",
                             Town = "Krivina",
@@ -475,15 +477,15 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9892ec11-0b7f-40f0-8bac-9c0379b53f5f",
+                            ConcurrencyStamp = "2fe0d8ce-8941-46bc-973a-26f40fa49544",
                             Email = "designer@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "designer@mail.com",
                             NormalizedUserName = "designer@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELr4IQzKMQqYH6yxDf2aIOrcMAjiGaGV7Ns/tjbmpM52CodFX2I1HbVYMguHjjlhXQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECRKa/FAdbtscTQHoPjd8pwFPtvtuWHZNvlx8CkmY2Pj51VWPHqH+LlEJiMkkN4Hfg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "972e4ad6-a38d-4e5d-b7ad-10267bafc9ba",
+                            SecurityStamp = "badce8c5-53a2-450a-923a-ae7b8a6bde12",
                             TwoFactorEnabled = false,
                             UserName = "designer@mail.com"
                         },
@@ -491,15 +493,15 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5ca75fd4-88e7-4942-a2dc-57c26f8e78d3",
+                            ConcurrencyStamp = "40288494-322f-487a-b743-c6f037ae8ac3",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHcbI3WUjQMsqtukucwKRHWITu7gY1zF3ot6MFjD1d/zIZ6WAY7uvbWV/KBuX515ew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM7XBxkSCe1bUJVQhszkdzZumnrxbbVSvIPoRwJQasZ4UrUP/fHGcrA5qYJ21afU0A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f312c5a2-8b6a-4542-93d5-0e30506ec780",
+                            SecurityStamp = "81dbe973-cb9c-48ee-9217-563061777ddf",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
