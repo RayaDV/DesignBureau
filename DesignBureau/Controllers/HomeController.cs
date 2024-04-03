@@ -17,7 +17,7 @@ namespace DesignBureau.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await projectService.AllProjectsFromBack();
+            var model = await projectService.AllProjectsFromLastAsync();
 
             return View(model);
         }

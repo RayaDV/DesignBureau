@@ -1,4 +1,5 @@
 ﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Models.Designer;
 using DesignBureau.Core.Models.Home;
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
@@ -20,7 +21,8 @@ namespace DesignBureau.Core.Services
             this.repository = repository;
         }
 
-        public async Task<IEnumerable<IndexViewModel>> AllProjectsFromBack()
+
+        public async Task<IEnumerable<IndexViewModel>> AllProjectsFromLastAsync()
         {
             return await repository
                 .AllReadOnly<Project>()

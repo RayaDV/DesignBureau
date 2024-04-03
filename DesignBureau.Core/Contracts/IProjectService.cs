@@ -1,4 +1,5 @@
-﻿using DesignBureau.Core.Models.Home;
+﻿using DesignBureau.Core.Models.Designer;
+using DesignBureau.Core.Models.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace DesignBureau.Core.Contracts
 {
     public interface IProjectService
     {
-        Task<IEnumerable<IndexViewModel>> AllProjectsFromBack();
+        Task<IEnumerable<IndexViewModel>> AllProjectsFromLastAsync();
+
     }
 }

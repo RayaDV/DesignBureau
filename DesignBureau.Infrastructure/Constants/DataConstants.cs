@@ -20,6 +20,9 @@ namespace DesignBureau.Infrastructure.Constants
         public const int DesignerNameMaxLength = 50;
         public const int DesignerNameMinLength = 2;
 
+        public const int DesignerMaxExperience = 80;
+        public const int DesignerMinExperience = 0;
+
         // Image
         public const int ImageNameMaxLength = 50;
         public const int ImageNameMinLength = 2;

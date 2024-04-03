@@ -4,6 +4,7 @@ using DesignBureau.Data;
 using DesignBureau.Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace Microsoft.Extensions.DependencyInjection  // the namespace changed from DesignBureau.Extensions
 {
@@ -12,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IDesignerService, DesignerService>();
 
             return services;
         }
@@ -22,7 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
             services.AddDbContext<DesignBureauDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            services.AddScoped<IRepository, Repository>(); // when we create Repository.cs
+            services.AddScoped<IRepository, Repository>(); 
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
