@@ -5,8 +5,8 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
-        public IdentityUser DesignerUser { get; set; }
-        public IdentityUser GuestUser { get; set; }
+        public ApplicationUser DesignerUser { get; set; }
+        public ApplicationUser GuestUser { get; set; }
 
         public Discipline ArchitectureDiscipline { get; set; }
         public Discipline StructureDiscipline { get; set; }
@@ -16,8 +16,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
         public Discipline GeodesyDiscipline { get; set; }
         public Discipline LandscapingDiscipline { get; set; }
 
-        public Designer Architect { get; set; }
-        public Designer StructuralEngineer { get; set; }
+        public Designer FirstDesigner { get; set; }
 
         public Category InternationalProjectsCategory { get; set; }
         public Category PublicBuildingsCategory { get; set; }
@@ -47,31 +46,35 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
 
         private void SeedUsers()
         {
-            var hasher = new PasswordHasher<IdentityUser>();
+            var hasher = new PasswordHasher<ApplicationUser>();
 
-            DesignerUser = new IdentityUser()
+            DesignerUser = new ApplicationUser()
             {
-                Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                UserName = "designer@mail.com",
-                NormalizedUserName = "designer@mail.com",
-                Email = "designer@mail.com",
-                NormalizedEmail = "designer@mail.com"
+                Id = "2f08c4b6-7afe-4bba-beaa-36d800c03e44",
+                UserName = "raya@e.kroumov.com",
+                NormalizedUserName = "RAYA@E.KROUMOV.COM",
+                Email = "raya@e.kroumov.com",
+                NormalizedEmail = "RAYA@E.KROUMOV.COM",
+                FirstName = "Raya",
+                LastName = "Dimitrova",
             };
 
             DesignerUser.PasswordHash =
-                 hasher.HashPassword(DesignerUser, "designer123");
+                 hasher.HashPassword(DesignerUser, "raya123");
 
-            GuestUser = new IdentityUser()
+            GuestUser = new ApplicationUser()
             {
-                Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                UserName = "guest@mail.com",
-                NormalizedUserName = "guest@mail.com",
-                Email = "guest@mail.com",
-                NormalizedEmail = "guest@mail.com"
+                Id = Guid.NewGuid().ToString(),
+                UserName = "dimitar@mail.com",
+                NormalizedUserName = "DIMITAR@MAIL.COM",
+                Email = "dimitar@mail.com",
+                NormalizedEmail = "DIMITAR@MAIL.COM",
+                FirstName = "Dimitar",
+                LastName = "Dimitrov",
             };
 
             GuestUser.PasswordHash =
-            hasher.HashPassword(GuestUser, "guest123");
+            hasher.HashPassword(GuestUser, "dimitar123");
         }
 
         private void SeedDisciplines()
@@ -86,26 +89,14 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
         }
         private void SeedDesigners()
         {
-            Architect = new Designer()
+            FirstDesigner = new Designer()
             {
                 Id = 1,
-                Name = "Dipl.Arch. Christina Kroumova",
-                Email = "kristina.krumova@e.kroumov.com",
-                DesignExperience = 18,
-                DesignerImageUrl = "",
-                DisciplineId = ArchitectureDiscipline.Id,
-                UserId = DesignerUser.Id
-            };
-
-            StructuralEngineer = new Designer()
-            {
-                Id = 2,
-                Name = "Dipl.Eng. Raya Velichkova",
-                Email = "raya@e.kroumov.com",
+                PhoneNumber = "+359883494948",
                 DesignExperience = 13,
-                DesignerImageUrl = "",
+                DesignerImageUrl = "https://localhost:7134/img/Designers/Raya.jpg",
                 DisciplineId = StructureDiscipline.Id,
-                UserId = DesignerUser.Id
+                UserId = DesignerUser.Id,
             };
         }
         private void SeedCategories()
@@ -133,7 +124,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 YearDesigned = 2019,
                 Description = "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.",
                 CategoryId = OfficeAndResidentialBuildingsCategory.Id,
-                DesignerId = StructuralEngineer.Id
+                DesignerId = FirstDesigner.Id
             };
 
             SecondProject = new Project()
@@ -148,36 +139,69 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 YearDesigned = 2018,
                 Description = "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.",
                 CategoryId = IndustrialBuildingsCategory.Id,
-                DesignerId = StructuralEngineer.Id
+                DesignerId = FirstDesigner.Id
             };
         }
 
         private void SeedImages()
         {
-            FirstProjectFirstImage = new Image() 
-            { 
-                Id = 1, 
-                ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg", 
-                ProjectId = FirstProject.Id 
-            };
-            FirstProjectSecondImage = new Image() 
-            { Id = 2, 
-                ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg", 
-                ProjectId = FirstProject.Id 
-            };
-            SecondProjectFirstImage = new Image() 
-            { 
-                Id = 3, 
-                ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg", 
-                ProjectId = SecondProject.Id 
-            };
-            SecondProjectSecondImage = new Image() 
-            { 
-                Id = 4, 
-                ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg", 
-                ProjectId = SecondProject.Id 
-            };
-        }
+            FirstProjectFirstImage =
+                new Image()
+                {
+                    Id = 1,
+                    ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg",
+                    ProjectId = FirstProject.Id
+                };
+            FirstProjectSecondImage =
+                new Image()
+                {
+                    Id = 2,
+                    ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg",
+                    ProjectId = FirstProject.Id
+                };
+            SecondProjectFirstImage =
+                new Image()
+                {
+                    Id = 3,
+                    ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg",
+                    ProjectId = SecondProject.Id
+                };
+            SecondProjectSecondImage =
+                new Image()
+                {
+                    Id = 4,
+                    ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg",
+                    ProjectId = SecondProject.Id
+                };
 
+            //FirstProjectImages = new List<Image>() {
+            //    new Image()
+            //    {
+            //        Id = 1,
+            //        ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg",
+            //        ProjectId = FirstProject.Id
+            //    },
+            //    new Image()
+            //    {
+            //        Id = 2,
+            //        ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg",
+            //        ProjectId = FirstProject.Id
+            //    }
+            //};
+            //SecondProjectImages = new List<Image>() {
+            //    new Image()
+            //    {
+            //        Id = 3,
+            //        ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg",
+            //        ProjectId = SecondProject.Id
+            //    },
+            //    new Image()
+            //    {
+            //        Id = 4,
+            //        ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg",
+            //        ProjectId = SecondProject.Id
+            //    }
+            // };
+        }
     }
 }

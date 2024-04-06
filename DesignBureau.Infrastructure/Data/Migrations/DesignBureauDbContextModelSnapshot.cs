@@ -22,6 +22,142 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FacebookPage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("User Facebook Page");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasComment("User First Name");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("User Last Name");
+
+                    b.Property<string>("LinkedInPage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("User LinkedIn Page");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkypeProfile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("User Skype Profile");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2f08c4b6-7afe-4bba-beaa-36d800c03e44",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e9e4c0e9-e72c-49b2-a405-f5c4e891f015",
+                            Email = "raya@e.kroumov.com",
+                            EmailConfirmed = false,
+                            FacebookPage = "",
+                            FirstName = "Raya",
+                            LastName = "Dimitrova",
+                            LinkedInPage = "",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "RAYA@E.KROUMOV.COM",
+                            NormalizedUserName = "RAYA@E.KROUMOV.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPzOIpjm1W8Bb3j05IbFGOOqPrPoRok0I+Q46G7sGbggK6iGj25lJRZJZGEVDWeSqQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "107c9355-cb01-4519-b98e-c73b55c3764f",
+                            SkypeProfile = "",
+                            TwoFactorEnabled = false,
+                            UserName = "raya@e.kroumov.com"
+                        },
+                        new
+                        {
+                            Id = "2ebb7ac0-f9b8-4067-a775-97db2b221a0b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3c434882-dc92-4e41-8012-d40c6b194435",
+                            Email = "dimitar@mail.com",
+                            EmailConfirmed = false,
+                            FacebookPage = "",
+                            FirstName = "Dimitar",
+                            LastName = "Dimitrov",
+                            LinkedInPage = "",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DIMITAR@MAIL.COM",
+                            NormalizedUserName = "DIMITAR@MAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAECmPY+UEBohLdL43xyefUy0fZ+BjLqaIwWlKwNrZojbQhYAfXllxdnzs4121dF8ShA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6714d114-8a12-439a-aad3-71f2d0acb0db",
+                            SkypeProfile = "",
+                            TwoFactorEnabled = false,
+                            UserName = "dimitar@mail.com"
+                        });
+                });
+
             modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -87,7 +223,8 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DesignExperience")
+                    b.Property<int?>("DesignExperience")
+                        .IsRequired()
                         .HasColumnType("int")
                         .HasComment("Designer work experience in years");
 
@@ -100,16 +237,11 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("Discipline identifier");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Designer email");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("Designer name");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasComment("Designer phone number");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -130,22 +262,11 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DesignExperience = 18,
-                            DesignerImageUrl = "",
-                            DisciplineId = 1,
-                            Email = "kristina.krumova@e.kroumov.com",
-                            Name = "Dipl.Arch. Christina Kroumova",
-                            UserId = "dea12856-c198-4129-b3f3-b893d8395082"
-                        },
-                        new
-                        {
-                            Id = 2,
                             DesignExperience = 13,
-                            DesignerImageUrl = "",
+                            DesignerImageUrl = "https://localhost:7134/img/Designers/Raya.jpg",
                             DisciplineId = 2,
-                            Email = "raya@e.kroumov.com",
-                            Name = "Dipl.Eng. Raya Velichkova",
-                            UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+                            PhoneNumber = "+359883494948",
+                            UserId = "2f08c4b6-7afe-4bba-beaa-36d800c03e44"
                         });
                 });
 
@@ -331,7 +452,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             CategoryId = 3,
                             Country = "Bulgaria",
                             Description = "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.",
-                            DesignerId = 2,
+                            DesignerId = 1,
                             MainImageUrl = "https://localhost:7134/img/ONYX/ONYX-01.jpg",
                             Phase = 2,
                             Title = "Multi-purpose building ONYX",
@@ -345,7 +466,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             CategoryId = 5,
                             Country = "Bulgaria",
                             Description = "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.",
-                            DesignerId = 2,
+                            DesignerId = 1,
                             MainImageUrl = "https://localhost:7134/img/SEG/SEG-01.jpg",
                             Phase = 3,
                             Title = "Multi-purpose building SEG",
@@ -404,105 +525,6 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9892ec11-0b7f-40f0-8bac-9c0379b53f5f",
-                            Email = "designer@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "designer@mail.com",
-                            NormalizedUserName = "designer@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELr4IQzKMQqYH6yxDf2aIOrcMAjiGaGV7Ns/tjbmpM52CodFX2I1HbVYMguHjjlhXQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "972e4ad6-a38d-4e5d-b7ad-10267bafc9ba",
-                            TwoFactorEnabled = false,
-                            UserName = "designer@mail.com"
-                        },
-                        new
-                        {
-                            Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5ca75fd4-88e7-4942-a2dc-57c26f8e78d3",
-                            Email = "guest@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "guest@mail.com",
-                            NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHcbI3WUjQMsqtukucwKRHWITu7gY1zF3ot6MFjD1d/zIZ6WAY7uvbWV/KBuX515ew==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "f312c5a2-8b6a-4542-93d5-0e30506ec780",
-                            TwoFactorEnabled = false,
-                            UserName = "guest@mail.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -598,7 +620,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                    b.HasOne("DesignBureau.Infrastructure.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -650,7 +672,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DesignBureau.Infrastructure.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -659,7 +681,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DesignBureau.Infrastructure.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -674,7 +696,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DesignBureau.Infrastructure.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -683,7 +705,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DesignBureau.Infrastructure.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

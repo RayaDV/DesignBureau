@@ -19,18 +19,13 @@ namespace DesignBureau.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(DesignerNameMaxLength)]
-        [Comment("Designer name")]
-        public string Name { get; set; } = string.Empty;
-
-        [Required]
-        //[EmailAddress]
-        [Comment("Designer email")]
-        public string Email { get; set; } = string.Empty;
+        [MaxLength(DesignerPhoneNumberMaxLength)] 
+        [Comment("Designer phone number")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Required]
         [Comment("Designer work experience in years")]
-        public int DesignExperience { get; set; }
+        public int? DesignExperience { get; set; }
 
         [Required]
         [Comment("Designer image URL")]
@@ -48,7 +43,7 @@ namespace DesignBureau.Infrastructure.Data.Models
         [Comment("User identifier")]
         public virtual string UserId { get; set; } = string.Empty;
 
-        public virtual IdentityUser User { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
 
         public virtual IEnumerable<Project> Projects { get; set; }
     }

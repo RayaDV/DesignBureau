@@ -4,24 +4,19 @@
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form method="post">
             <div class="mb-3">
-                <label for="Name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="Name" placeholder="Add designer name here ...">
-                <span asp-validation-for="Name" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="Email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="Email" placeholder="Add designer email here ...">
-                <span asp-validation-for="Email" class="small text-danger"></span>
+                <label for="PhoneNumber" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" asp-for="PhoneNumber" id="PhoneNumber" placeholder="Add designer email here ...">
+                <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="Experience" class="form-label">Design Experience</label>
-                <input type="number" class="form-control" id="Experience" placeholder="Add work experience in years here ...">
+                <input type="number" class="form-control" asp-for="DesignExperience" id="Experience" placeholder="Add work experience in years here ...">
                 <span asp-validation-for="DesignExperience" class="small text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label for="ImageUrl" class="form-label">Designer Image URL</label>
-                <input type="text" class="form-control" id="ImageUrl" placeholder="Add image URL here ...">
+                <input type="text" class="form-control" asp-for="DesignerImageUrl" id="ImageUrl" placeholder="Add image URL here ...">
                 <span asp-validation-for="DesignerImageUrl" class="small text-danger"></span>
             </div>
 
@@ -37,7 +32,7 @@
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button formmethod="post" type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>

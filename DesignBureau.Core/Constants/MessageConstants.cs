@@ -6,9 +6,11 @@
 
         public const string LengthMessage = "The field {0} must be between {2} and {1} characters long";
 
+        public const string PhoneNumberExists = "This Phone number already exists. Enter another one!";
+
         public const string EmailExists = "This Email already exists. Enter another one!";
 
-        public const string DisciplineNotExists = "This discipline does not exist. Enter another one!";
+        public const string DisciplineDoesNotExist = "This discipline does not exist. Enter another one!";
 
     }
 }

@@ -11,14 +11,24 @@ namespace DesignBureau.Core.Models.Designer
     public class DesignerFormViewModel
 	{
         [Required(ErrorMessage = RequiredMessage)]
-        [StringLength(DesignerNameMaxLength, MinimumLength = DesignerNameMinLength, 
-            ErrorMessage = LengthMessage)]
-        [Display(Name = "Designer Name")]
-        public string Name { get; set; } = string.Empty;
+        [EmailAddress]
+        [Display(Name = "Designer Email Address")]
+        public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredMessage)]
-        [EmailAddress]
-        public string Email { get; set; } = string.Empty;
+        [StringLength(UserFirstNameMaxLength, MinimumLength = UserFirstNameMinLength, ErrorMessage = LengthMessage)]
+        [Display(Name = "Designer First Name")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(UserLastNameMaxLength, MinimumLength = UserLastNameMinLength, ErrorMessage = LengthMessage)]
+        [Display(Name = "Designer Last Name")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(DesignerPhoneNumberMaxLength, MinimumLength = DesignerPhoneNumberMinLength, ErrorMessage = LengthMessage)]
+        [Display(Name = "Designer Phone Number")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredMessage)]
         [Range(DesignerMinExperience, DesignerMaxExperience, 
@@ -38,5 +48,11 @@ namespace DesignBureau.Core.Models.Designer
 
         public IEnumerable<DesignerDisciplineViewModel> Disciplines { get; set; }
             = new List<DesignerDisciplineViewModel>();
+
+        [Required]
+        [ForeignKey(nameof(User))]
+        [Comment("User identifier")]
+        public virtual string UserId { get; set; } = string.Empty;
+
     }
 }

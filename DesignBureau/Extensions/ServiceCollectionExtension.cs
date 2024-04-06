@@ -2,9 +2,8 @@
 using DesignBureau.Core.Services;
 using DesignBureau.Data;
 using DesignBureau.Infrastructure.Common;
-using Microsoft.AspNetCore.Identity;
+using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 
 namespace Microsoft.Extensions.DependencyInjection  // the namespace changed from DesignBureau.Extensions
 {
@@ -14,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
         {
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IDesignerService, DesignerService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
 
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;

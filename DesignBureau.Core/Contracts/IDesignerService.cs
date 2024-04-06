@@ -6,6 +6,8 @@ namespace DesignBureau.Core.Contracts
     {
         Task<bool> ExistsByIdAsync(string userId);
 
+        Task<bool> ExistsByPhoneNumberAsync(string email);
+
         Task<bool> ExistsByEmailAsync(string email);
 
         Task CreateAsync(DesignerFormViewModel model, string userId);

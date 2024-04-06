@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DesignBureau.Infrastructure.Data.Migrations
 {
-    public partial class DomainTablesAdded : Migration
+    public partial class InitialMigrationWithApplicationUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,11 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, comment: "User First Name"),
+                    LastName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "User Last Name"),
+                    FacebookPage = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "User Facebook Page"),
+                    LinkedInPage = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "User LinkedIn Page"),
+                    SkypeProfile = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "User Skype Profile"),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -186,8 +191,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Designer identifier")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Designer name"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Designer email"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, comment: "Designer phone number"),
                     DesignExperience = table.Column<int>(type: "int", nullable: false, comment: "Designer work experience in years"),
                     DesignerImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Designer image URL"),
                     DisciplineId = table.Column<int>(type: "int", nullable: false, comment: "Discipline identifier"),
@@ -266,6 +270,68 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 },
                 comment: "Project image");
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FacebookPage", "FirstName", "LastName", "LinkedInPage", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SkypeProfile", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "2ebb7ac0-f9b8-4067-a775-97db2b221a0b", 0, "3c434882-dc92-4e41-8012-d40c6b194435", "dimitar@mail.com", false, "", "Dimitar", "Dimitrov", "", false, null, "DIMITAR@MAIL.COM", "DIMITAR@MAIL.COM", "AQAAAAEAACcQAAAAECmPY+UEBohLdL43xyefUy0fZ+BjLqaIwWlKwNrZojbQhYAfXllxdnzs4121dF8ShA==", null, false, "6714d114-8a12-439a-aad3-71f2d0acb0db", "", false, "dimitar@mail.com" },
+                    { "2f08c4b6-7afe-4bba-beaa-36d800c03e44", 0, "e9e4c0e9-e72c-49b2-a405-f5c4e891f015", "raya@e.kroumov.com", false, "", "Raya", "Dimitrova", "", false, null, "RAYA@E.KROUMOV.COM", "RAYA@E.KROUMOV.COM", "AQAAAAEAACcQAAAAEPzOIpjm1W8Bb3j05IbFGOOqPrPoRok0I+Q46G7sGbggK6iGj25lJRZJZGEVDWeSqQ==", null, false, "107c9355-cb01-4519-b98e-c73b55c3764f", "", false, "raya@e.kroumov.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "International Projects" },
+                    { 2, "Public Buildings" },
+                    { 3, "Office And Residential Buildings" },
+                    { 4, "Commercial Buildings" },
+                    { 5, "Industrial Buildings" },
+                    { 6, "Family Houses" },
+                    { 7, "Reconstructions And Rebuildings" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Disciplines",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Architecture" },
+                    { 2, "Structure" },
+                    { 4, "WS&S" },
+                    { 5, "HVAC" },
+                    { 6, "Geodesy" },
+                    { 7, "Landscaping" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Designers",
+                columns: new[] { "Id", "DesignExperience", "DesignerImageUrl", "DisciplineId", "PhoneNumber", "UserId" },
+                values: new object[] { 1, 13, "https://localhost:7134/img/Designers/Raya.jpg", 2, "+359883494948", "2f08c4b6-7afe-4bba-beaa-36d800c03e44" });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "Id", "Architect", "CategoryId", "Country", "Description", "DesignerId", "MainImageUrl", "Phase", "Title", "Town", "YearDesigned" },
+                values: new object[] { 1, "ProArch", 3, "Bulgaria", "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.", 1, "https://localhost:7134/img/ONYX/ONYX-01.jpg", 2, "Multi-purpose building ONYX", "Sofia", 2019 });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "Id", "Architect", "CategoryId", "Country", "Description", "DesignerId", "MainImageUrl", "Phase", "Title", "Town", "YearDesigned" },
+                values: new object[] { 2, "Ivo Petrov Architects", 5, "Bulgaria", "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.", 1, "https://localhost:7134/img/SEG/SEG-01.jpg", 3, "Multi-purpose building SEG", "Krivina", 2018 });
+
+            migrationBuilder.InsertData(
+                table: "Images",
+                columns: new[] { "Id", "ImageUrl", "ProjectId" },
+                values: new object[,]
+                {
+                    { 1, "https://localhost:7134/img/ONYX/ONYX-02.jpg", 1 },
+                    { 2, "https://localhost:7134/img/ONYX/ONYX-03.jpg", 1 },
+                    { 3, "https://localhost:7134/img/SEG/SEG-02.jpg", 2 },
+                    { 4, "https://localhost:7134/img/SEG/SEG-03.jpg", 2 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

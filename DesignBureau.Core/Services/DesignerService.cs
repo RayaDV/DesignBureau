@@ -19,8 +19,7 @@ namespace DesignBureau.Core.Services
         {
             Designer designer = new Designer()
             {
-                Name = model.Name,
-                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
                 DesignExperience = model.DesignExperience,
                 DesignerImageUrl = model.DesignerImageUrl,
                 DisciplineId = model.DisciplineId,
@@ -31,10 +30,16 @@ namespace DesignBureau.Core.Services
             await repository.SaveChangesAsync();
         }
 
+        public async Task<bool> ExistsByPhoneNumberAsync(string phoneNumber)
+        {
+            return await repository.AllReadOnly<Designer>()
+                .AnyAsync(d => d.PhoneNumber == phoneNumber);
+        }
+
         public async Task<bool> ExistsByEmailAsync(string email)
         {
             return await repository.AllReadOnly<Designer>()
-                .AnyAsync(d => d.Email == email);
+                .AnyAsync(d => d.User.Email == email);
         }
 
         public async Task<bool> ExistsByIdAsync(string userId)

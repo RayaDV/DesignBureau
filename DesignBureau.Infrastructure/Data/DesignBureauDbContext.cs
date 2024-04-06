@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DesignBureau.Data
 {
-    public class DesignBureauDbContext : IdentityDbContext
+    public class DesignBureauDbContext : IdentityDbContext<ApplicationUser>
     {
         public DesignBureauDbContext(DbContextOptions<DesignBureauDbContext> options)
             : base(options)

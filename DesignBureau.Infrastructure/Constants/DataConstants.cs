@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesignBureau.Infrastructure.Constants
+﻿namespace DesignBureau.Infrastructure.Constants
 {
     public static class DataConstants
     {
@@ -17,8 +11,8 @@ namespace DesignBureau.Infrastructure.Constants
         public const int DisciplineNameMinLength = 2;
 
         // Designer
-        public const int DesignerNameMaxLength = 50;
-        public const int DesignerNameMinLength = 2;
+        public const int DesignerPhoneNumberMaxLength = 15;
+        public const int DesignerPhoneNumberMinLength = 7;
 
         public const int DesignerMaxExperience = 80;
         public const int DesignerMinExperience = 0;
@@ -45,6 +39,13 @@ namespace DesignBureau.Infrastructure.Constants
 
         public const int ProjectYearMaxValue = 2100;
         public const int ProjectYearMinValue = 1994;
+
+        //ApplicationUser
+        public const int UserFirstNameMaxLength = 15;
+        public const int UserFirstNameMinLength = 1;
+
+        public const int UserLastNameMaxLength = 20;
+        public const int UserLastNameMinLength = 3;
 
     }
 }

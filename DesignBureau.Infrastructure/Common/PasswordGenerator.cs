@@ -7,7 +7,7 @@ namespace DesignBureau.Infrastructure.Common
     {
         public static string Generate()
         {
-            var password = String.Empty;
+            var password = new StringBuilder();
             var random = new Random();
 
             while (password.Length < 12)
@@ -17,7 +17,7 @@ namespace DesignBureau.Infrastructure.Common
                 password.Append((char)random.Next(48, 57));
             }
 
-            return password;
+            return password.ToString().Trim();
         }
 
         public static string GetHash(string input)

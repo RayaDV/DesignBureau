@@ -24,8 +24,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
 
             builder.HasData(new Designer[]
             {
-                data.Architect,
-                data.StructuralEngineer
+                data.FirstDesigner
             });
         }
     }

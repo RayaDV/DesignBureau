@@ -1,13 +1,9 @@
 ﻿using DesignBureau.Attributes;
 using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Models.Designer;
-using DesignBureau.Infrastructure.Common;
+using DesignBureau.Core.Models.User;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Controllers
@@ -16,9 +12,11 @@ namespace DesignBureau.Controllers
 	public class DesignerController : Controller
 	{
 		private readonly IDesignerService designerService;
-        public DesignerController(IDesignerService designerService)
+		private readonly IUserService userService;
+        public DesignerController(IDesignerService designerService, IUserService userService)
         {
-			this.designerService = designerService;	
+			this.designerService = designerService;
+			this.userService = userService;
         }
 
         [HttpGet]
@@ -44,32 +42,35 @@ namespace DesignBureau.Controllers
 				ModelState.AddModelError(nameof(model.Email), EmailExists);
 			}
 
+            if (await designerService.ExistsByPhoneNumberAsync(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.PhoneNumber), PhoneNumberExists);
+            }
+
             if (await designerService.DisciplineExistsAsync(model.DisciplineId) == false)
             {
-                ModelState.AddModelError(nameof(model.DisciplineId), DisciplineNotExists);
+                ModelState.AddModelError(nameof(model.DisciplineId), DisciplineDoesNotExist);
             }
 
-            if (!ModelState.IsValid)
-            {
-                model.Disciplines = await designerService.AllDisciplinesAsync();
+			if (!ModelState.IsValid)
+			{
+				model.Disciplines = await designerService.AllDisciplinesAsync();
 
-                return View(model);
-            }
+				return View(model);
+			}
 
-			var pass = PasswordGenerator.Generate();
-			var passHash = PasswordGenerator.GetHash(pass);
-
-			var user = new IdentityUser()
+			var userModel = new RegisterUserViewModel()
 			{
 				Email = model.Email,
-				PasswordHash = passHash
+				FirstName = model.FirstName,
+				LastName = model.LastName,
 			};
 
-			int userId = await designerService.GetDesignerIdAsync(User.Id());
+			string id = await userService.CreateAsync(userModel);
 
-			//int newDesignerId = await designerService.CreateAsync(model, userId);
+            await designerService.CreateAsync(model, id);
 
-            return RedirectToAction(nameof(ProjectController.All), "Project");
+			return RedirectToAction(nameof(ProjectController.All), "Project");
 		}
 	}
 }

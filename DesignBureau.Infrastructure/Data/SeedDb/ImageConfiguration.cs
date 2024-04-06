@@ -27,7 +27,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 data.FirstProjectFirstImage,
                 data.FirstProjectSecondImage,
                 data.SecondProjectFirstImage,
-                data.SecondProjectSecondImage
+                data.SecondProjectSecondImage,
             });
         }
     }
