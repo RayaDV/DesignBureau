@@ -3,6 +3,7 @@ using DesignBureau.Core.Services;
 using DesignBureau.Data;
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection  // the namespace changed from DesignBureau.Extensions
@@ -38,10 +39,11 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
             })
-                    .AddEntityFrameworkStores<DesignBureauDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DesignBureauDbContext>();
 
             services.AddControllersWithViews();
 

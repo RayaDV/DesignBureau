@@ -1,10 +1,16 @@
 ﻿using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using static DesignBureau.Infrastructure.Constants.CustomClaims;
 
 namespace DesignBureau.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
+        public IdentityUserClaim<string> AdminUserClaim { get; set; }
+        public IdentityUserClaim<string> DesignerUserClaim { get; set; }
+        public IdentityUserClaim<string> GuestUserClaim { get; set; }
+
+        public ApplicationUser AdminUser { get; set; }
         public ApplicationUser DesignerUser { get; set; }
         public ApplicationUser GuestUser { get; set; }
 
@@ -59,12 +65,20 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 LastName = "Dimitrova",
             };
 
+            DesignerUserClaim = new IdentityUserClaim<string>()
+            {
+                Id = 1,
+                ClaimType = UserFullNameClaim,
+                ClaimValue = "Raya Dimitrova",
+                UserId = "2f08c4b6-7afe-4bba-beaa-36d800c03e44"
+            };
+
             DesignerUser.PasswordHash =
                  hasher.HashPassword(DesignerUser, "raya123");
 
             GuestUser = new ApplicationUser()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "dimitar@mail.com",
                 NormalizedUserName = "DIMITAR@MAIL.COM",
                 Email = "dimitar@mail.com",
@@ -73,8 +87,38 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 LastName = "Dimitrov",
             };
 
+            GuestUserClaim = new IdentityUserClaim<string>()
+            {
+                Id = 2,
+                ClaimType = UserFullNameClaim,
+                ClaimValue = "Dimitar Dimitrov",
+                UserId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e"
+            };
+
             GuestUser.PasswordHash =
             hasher.HashPassword(GuestUser, "dimitar123");
+
+            AdminUser = new ApplicationUser()
+            {
+                Id = "e43ce836-997d-4927-ac59-74e8c41bbfd3",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "ADMIN@MAIL.COM",
+                Email = "admin@mail.com",
+                NormalizedEmail = "ADMIN@MAIL.COM",
+                FirstName = "The",
+                LastName = "Admin"
+            };
+
+            AdminUserClaim = new IdentityUserClaim<string>()
+            {
+                Id = 3,
+                ClaimType = UserFullNameClaim,
+                UserId = "e43ce836-997d-4927-ac59-74e8c41bbfd3",
+                ClaimValue = "The Admin"
+            };
+
+            AdminUser.PasswordHash =
+            hasher.HashPassword(AdminUser, "admin123");
         }
 
         private void SeedDisciplines()
@@ -98,6 +142,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 DisciplineId = StructureDiscipline.Id,
                 UserId = DesignerUser.Id,
             };
+
         }
         private void SeedCategories()
         {
@@ -174,34 +219,6 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                     ProjectId = SecondProject.Id
                 };
 
-            //FirstProjectImages = new List<Image>() {
-            //    new Image()
-            //    {
-            //        Id = 1,
-            //        ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg",
-            //        ProjectId = FirstProject.Id
-            //    },
-            //    new Image()
-            //    {
-            //        Id = 2,
-            //        ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg",
-            //        ProjectId = FirstProject.Id
-            //    }
-            //};
-            //SecondProjectImages = new List<Image>() {
-            //    new Image()
-            //    {
-            //        Id = 3,
-            //        ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg",
-            //        ProjectId = SecondProject.Id
-            //    },
-            //    new Image()
-            //    {
-            //        Id = 4,
-            //        ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg",
-            //        ProjectId = SecondProject.Id
-            //    }
-            // };
         }
     }
 }

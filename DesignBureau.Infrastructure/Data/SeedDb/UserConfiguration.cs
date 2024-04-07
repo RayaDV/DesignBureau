@@ -15,7 +15,8 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             builder.HasData(new ApplicationUser[] 
             { 
                 data.DesignerUser,
-                data.GuestUser
+                data.GuestUser,
+                data.AdminUser,
             });
         }
     }
