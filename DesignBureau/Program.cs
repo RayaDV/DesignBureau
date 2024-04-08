@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using DesignBureau.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
 else
@@ -38,9 +42,9 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-        name: "House Details",
-        pattern: "/House/Details/{id}/{information}",
-        defaults: new { Controller = "House", Action = "Details" }
+        name: "Project Details",
+        pattern: "/Project/Details/{id}/{description}",
+        defaults: new { Controller = "Project", Action = "Details" }
     );
 
     endpoints.MapControllerRoute(
