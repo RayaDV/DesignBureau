@@ -17,6 +17,8 @@ builder.Services.AddControllersWithViews(options =>
 builder.Services.AddApplicationServices();
 builder.Services.AddMemoryCache();
 
+builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -55,6 +57,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapDefaultControllerRoute();
     endpoints.MapRazorPages();
 });
+
 
 await app.CreateAdminRoleAsync();
 
