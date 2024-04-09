@@ -32,6 +32,11 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
         public Category FamilyHousesCategory { get; set; }
         public Category ReconstructionsAndRebuildingsCategory { get; set; }
 
+        public Phase Design { get; set; }
+        public Phase Construction { get; set; }
+        public Phase Use { get; set; }
+        public Phase EndOfService { get; set; }
+
         public Project FirstProject { get; set; }
         public Project SecondProject { get; set; }
 
@@ -46,9 +51,11 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             SeedDisciplines();
             SeedDesigners();
             SeedCategories();
+            SeedPhases();
             SeedProjects();
             SeedImages();
         }
+
 
         private void SeedUsers()
         {
@@ -79,10 +86,10 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             GuestUser = new ApplicationUser()
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                UserName = "dimitar@mail.com",
-                NormalizedUserName = "DIMITAR@MAIL.COM",
-                Email = "dimitar@mail.com",
-                NormalizedEmail = "DIMITAR@MAIL.COM",
+                UserName = "dimitar@gmail.com",
+                NormalizedUserName = "DIMITAR@GMAIL.COM",
+                Email = "dimitar@gmail.com",
+                NormalizedEmail = "DIMITAR@GMAIL.COM",
                 FirstName = "Dimitar",
                 LastName = "Dimitrov",
             };
@@ -101,11 +108,11 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             AdminUser = new ApplicationUser()
             {
                 Id = "e43ce836-997d-4927-ac59-74e8c41bbfd3",
-                UserName = "admin@mail.com",
-                NormalizedUserName = "ADMIN@MAIL.COM",
-                Email = "admin@mail.com",
-                NormalizedEmail = "ADMIN@MAIL.COM",
-                FirstName = "The",
+                UserName = "admin@gmail.com",
+                NormalizedUserName = "ADMIN@GMAIL.COM",
+                Email = "admin@gmail.com",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
+                FirstName = "Master",
                 LastName = "Admin"
             };
 
@@ -114,7 +121,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 Id = 3,
                 ClaimType = UserFullNameClaim,
                 UserId = "e43ce836-997d-4927-ac59-74e8c41bbfd3",
-                ClaimValue = "The Admin"
+                ClaimValue = "Master Admin"
             };
 
             AdminUser.PasswordHash =
@@ -155,6 +162,14 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             ReconstructionsAndRebuildingsCategory = new Category() { Id = 7, Name = "Reconstructions And Rebuildings" };
         }
 
+        private void SeedPhases()
+        {
+            Design = new Phase() { Id = 1, Name = "Design" };
+            Construction = new Phase() { Id = 2, Name = "Construction" };
+            Use = new Phase() { Id = 3, Name = "Use" };
+            EndOfService = new Phase() { Id = 4, Name = "End Of Service" };
+        }
+
         private void SeedProjects()
         {
             FirstProject = new Project()
@@ -165,10 +180,10 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 Town = "Sofia",
                 MainImageUrl = "https://localhost:7134/img/ONYX/ONYX-01.jpg",
                 Architect = "ProArch",
-                Phase = Models.Enums.PhaseType.Construction,
                 YearDesigned = 2019,
                 Description = "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.",
                 CategoryId = OfficeAndResidentialBuildingsCategory.Id,
+                PhaseId = Construction.Id,
                 DesignerId = FirstDesigner.Id
             };
 
@@ -180,10 +195,10 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 Town = "Krivina",
                 MainImageUrl = "https://localhost:7134/img/SEG/SEG-01.jpg",
                 Architect = "Ivo Petrov Architects",
-                Phase = Models.Enums.PhaseType.Use,
                 YearDesigned = 2018,
                 Description = "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.",
                 CategoryId = IndustrialBuildingsCategory.Id,
+                PhaseId = Use.Id,
                 DesignerId = FirstDesigner.Id
             };
         }

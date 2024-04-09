@@ -1,5 +1,4 @@
-﻿using DesignBureau.Infrastructure.Data.Models.Enums;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static DesignBureau.Infrastructure.Constants.DataConstants;
@@ -43,10 +42,6 @@ namespace DesignBureau.Infrastructure.Data.Models
         public string Architect { get; set; } = string.Empty;
 
         [Required]
-        [Comment("Project phase")]
-        public PhaseType Phase { get; set; }
-
-        [Required]
         [Comment("Project year of design")]
         //[Range(ProjectYearMinValue, ProjectYearMaxValue)] 
         public int YearDesigned { get; set; }
@@ -62,6 +57,13 @@ namespace DesignBureau.Infrastructure.Data.Models
         public virtual int CategoryId { get; set; }
 
         public virtual Category Category { get; set; } = null!;
+
+        [Required]
+        [Comment("Phase identifier")]
+        [ForeignKey(nameof(Phase))]
+        public virtual int PhaseId { get; set; }
+
+        public virtual Phase Phase { get; set; } = null!;
 
         [Required]
         [Comment("Designer identifier")]

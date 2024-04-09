@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesignBureau.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DesignBureauDbContext))]
-    [Migration("20240406221155_InitialMigrationWithApplicationUser")]
-    partial class InitialMigrationWithApplicationUser
+    [Migration("20240409111704_PhaseEntityAndUserClaimsAdded")]
+    partial class PhaseEntityAndUserClaimsAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.25")
+                .HasAnnotation("ProductVersion", "6.0.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -120,7 +120,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         {
                             Id = "2f08c4b6-7afe-4bba-beaa-36d800c03e44",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e9e4c0e9-e72c-49b2-a405-f5c4e891f015",
+                            ConcurrencyStamp = "59109ffc-9d1f-402b-8e8e-624cb3f679cb",
                             Email = "raya@e.kroumov.com",
                             EmailConfirmed = false,
                             FacebookPage = "",
@@ -130,33 +130,54 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "RAYA@E.KROUMOV.COM",
                             NormalizedUserName = "RAYA@E.KROUMOV.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPzOIpjm1W8Bb3j05IbFGOOqPrPoRok0I+Q46G7sGbggK6iGj25lJRZJZGEVDWeSqQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDHcIxOR2ZXaPLduIJVaClRyLbxx6t814YzUmZURT7jL0Y4TgYpg1cXLBWFclTlj9Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "107c9355-cb01-4519-b98e-c73b55c3764f",
+                            SecurityStamp = "ec79ceb9-48f8-4934-af9d-679525461841",
                             SkypeProfile = "",
                             TwoFactorEnabled = false,
                             UserName = "raya@e.kroumov.com"
                         },
                         new
                         {
-                            Id = "2ebb7ac0-f9b8-4067-a775-97db2b221a0b",
+                            Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3c434882-dc92-4e41-8012-d40c6b194435",
-                            Email = "dimitar@mail.com",
+                            ConcurrencyStamp = "ccdb3ef1-0c18-445c-bb51-631620cb7f1d",
+                            Email = "dimitar@gmail.com",
                             EmailConfirmed = false,
                             FacebookPage = "",
                             FirstName = "Dimitar",
                             LastName = "Dimitrov",
                             LinkedInPage = "",
                             LockoutEnabled = false,
-                            NormalizedEmail = "DIMITAR@MAIL.COM",
-                            NormalizedUserName = "DIMITAR@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECmPY+UEBohLdL43xyefUy0fZ+BjLqaIwWlKwNrZojbQhYAfXllxdnzs4121dF8ShA==",
+                            NormalizedEmail = "DIMITAR@GMAIL.COM",
+                            NormalizedUserName = "DIMITAR@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAECCnRA6QvdAXjofY9EkpoWlcu4CkH0q4tl3ORPdo07YmL1RprXVF4ojoddaF/zF4Bw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6714d114-8a12-439a-aad3-71f2d0acb0db",
+                            SecurityStamp = "1233fe1f-27d7-4b69-94f2-75ce506e6c85",
                             SkypeProfile = "",
                             TwoFactorEnabled = false,
-                            UserName = "dimitar@mail.com"
+                            UserName = "dimitar@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "e43ce836-997d-4927-ac59-74e8c41bbfd3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6083ae63-45e8-43d8-bceb-9f5e34005046",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            FacebookPage = "",
+                            FirstName = "Master",
+                            LastName = "Admin",
+                            LinkedInPage = "",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKxNbg55JVJnV3wM2OwJLSuvQXMuNGSXPXqfe5PR9nO/yRQNODatVuBeZbriedh2tQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3a84dd83-fdc6-4965-a6d1-c3e0de1c9e8c",
+                            SkypeProfile = "",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com"
                         });
                 });
 
@@ -376,6 +397,47 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Phase", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasComment("Phase identifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("Phase name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Phases");
+
+                    b.HasComment("Project phase");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Design"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Construction"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Use"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "End Of Service"
+                        });
+                });
+
             modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -416,9 +478,9 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Project main image URL");
 
-                    b.Property<int>("Phase")
+                    b.Property<int>("PhaseId")
                         .HasColumnType("int")
-                        .HasComment("Project phase");
+                        .HasComment("Phase identifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -442,6 +504,8 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
                     b.HasIndex("DesignerId");
 
+                    b.HasIndex("PhaseId");
+
                     b.ToTable("Projects");
 
                     b.HasComment("A project to describe");
@@ -456,7 +520,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Description = "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.",
                             DesignerId = 1,
                             MainImageUrl = "https://localhost:7134/img/ONYX/ONYX-01.jpg",
-                            Phase = 2,
+                            PhaseId = 2,
                             Title = "Multi-purpose building ONYX",
                             Town = "Sofia",
                             YearDesigned = 2019
@@ -470,7 +534,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Description = "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.",
                             DesignerId = 1,
                             MainImageUrl = "https://localhost:7134/img/SEG/SEG-01.jpg",
-                            Phase = 3,
+                            PhaseId = 3,
                             Title = "Multi-purpose building SEG",
                             Town = "Krivina",
                             YearDesigned = 2018
@@ -552,6 +616,29 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "user:fullname",
+                            ClaimValue = "Master Admin",
+                            UserId = "e43ce836-997d-4927-ac59-74e8c41bbfd3"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "user:fullname",
+                            ClaimValue = "Raya Dimitrova",
+                            UserId = "2f08c4b6-7afe-4bba-beaa-36d800c03e44"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "user:fullname",
+                            ClaimValue = "Dimitar Dimitrov",
+                            UserId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -658,9 +745,17 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("DesignBureau.Infrastructure.Data.Models.Phase", "Phase")
+                        .WithMany("Projects")
+                        .HasForeignKey("PhaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
                     b.Navigation("Designer");
+
+                    b.Navigation("Phase");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -727,6 +822,11 @@ namespace DesignBureau.Infrastructure.Data.Migrations
             modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Discipline", b =>
                 {
                     b.Navigation("Designers");
+                });
+
+            modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Phase", b =>
+                {
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Project", b =>

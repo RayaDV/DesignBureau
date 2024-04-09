@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DesignBureau.Infrastructure.Data.Migrations
 {
-    public partial class InitialMigrationWithApplicationUser : Migration
+    public partial class PhaseEntityAndUserClaimsAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,6 +78,19 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                     table.PrimaryKey("PK_Disciplines", x => x.Id);
                 },
                 comment: "Designer discipline");
+
+            migrationBuilder.CreateTable(
+                name: "Phases",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Phase identifier"),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "Phase name")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Phases", x => x.Id);
+                },
+                comment: "Project phase");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -226,10 +239,10 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                     Town = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false, comment: "Project town"),
                     MainImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Project main image URL"),
                     Architect = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false, comment: "Architect of the project"),
-                    Phase = table.Column<int>(type: "int", nullable: false, comment: "Project phase"),
                     YearDesigned = table.Column<int>(type: "int", nullable: false, comment: "Project year of design"),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false, comment: "Project description"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Category identifier"),
+                    PhaseId = table.Column<int>(type: "int", nullable: false, comment: "Phase identifier"),
                     DesignerId = table.Column<int>(type: "int", nullable: false, comment: "Designer identifier")
                 },
                 constraints: table =>
@@ -247,6 +260,12 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         principalTable: "Designers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_Phases_PhaseId",
+                        column: x => x.PhaseId,
+                        principalTable: "Phases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 },
                 comment: "A project to describe");
 
@@ -276,8 +295,9 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FacebookPage", "FirstName", "LastName", "LinkedInPage", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SkypeProfile", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "2ebb7ac0-f9b8-4067-a775-97db2b221a0b", 0, "3c434882-dc92-4e41-8012-d40c6b194435", "dimitar@mail.com", false, "", "Dimitar", "Dimitrov", "", false, null, "DIMITAR@MAIL.COM", "DIMITAR@MAIL.COM", "AQAAAAEAACcQAAAAECmPY+UEBohLdL43xyefUy0fZ+BjLqaIwWlKwNrZojbQhYAfXllxdnzs4121dF8ShA==", null, false, "6714d114-8a12-439a-aad3-71f2d0acb0db", "", false, "dimitar@mail.com" },
-                    { "2f08c4b6-7afe-4bba-beaa-36d800c03e44", 0, "e9e4c0e9-e72c-49b2-a405-f5c4e891f015", "raya@e.kroumov.com", false, "", "Raya", "Dimitrova", "", false, null, "RAYA@E.KROUMOV.COM", "RAYA@E.KROUMOV.COM", "AQAAAAEAACcQAAAAEPzOIpjm1W8Bb3j05IbFGOOqPrPoRok0I+Q46G7sGbggK6iGj25lJRZJZGEVDWeSqQ==", null, false, "107c9355-cb01-4519-b98e-c73b55c3764f", "", false, "raya@e.kroumov.com" }
+                    { "2f08c4b6-7afe-4bba-beaa-36d800c03e44", 0, "59109ffc-9d1f-402b-8e8e-624cb3f679cb", "raya@e.kroumov.com", false, "", "Raya", "Dimitrova", "", false, null, "RAYA@E.KROUMOV.COM", "RAYA@E.KROUMOV.COM", "AQAAAAEAACcQAAAAEDHcIxOR2ZXaPLduIJVaClRyLbxx6t814YzUmZURT7jL0Y4TgYpg1cXLBWFclTlj9Q==", null, false, "ec79ceb9-48f8-4934-af9d-679525461841", "", false, "raya@e.kroumov.com" },
+                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "ccdb3ef1-0c18-445c-bb51-631620cb7f1d", "dimitar@gmail.com", false, "", "Dimitar", "Dimitrov", "", false, null, "DIMITAR@GMAIL.COM", "DIMITAR@GMAIL.COM", "AQAAAAEAACcQAAAAECCnRA6QvdAXjofY9EkpoWlcu4CkH0q4tl3ORPdo07YmL1RprXVF4ojoddaF/zF4Bw==", null, false, "1233fe1f-27d7-4b69-94f2-75ce506e6c85", "", false, "dimitar@gmail.com" },
+                    { "e43ce836-997d-4927-ac59-74e8c41bbfd3", 0, "6083ae63-45e8-43d8-bceb-9f5e34005046", "admin@gmail.com", false, "", "Master", "Admin", "", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAEKxNbg55JVJnV3wM2OwJLSuvQXMuNGSXPXqfe5PR9nO/yRQNODatVuBeZbriedh2tQ==", null, false, "3a84dd83-fdc6-4965-a6d1-c3e0de1c9e8c", "", false, "admin@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -308,18 +328,39 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Phases",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Design" },
+                    { 2, "Construction" },
+                    { 3, "Use" },
+                    { 4, "End Of Service" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "user:fullname", "Raya Dimitrova", "2f08c4b6-7afe-4bba-beaa-36d800c03e44" },
+                    { 2, "user:fullname", "Dimitar Dimitrov", "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e" },
+                    { 3, "user:fullname", "Master Admin", "e43ce836-997d-4927-ac59-74e8c41bbfd3" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Designers",
                 columns: new[] { "Id", "DesignExperience", "DesignerImageUrl", "DisciplineId", "PhoneNumber", "UserId" },
                 values: new object[] { 1, 13, "https://localhost:7134/img/Designers/Raya.jpg", 2, "+359883494948", "2f08c4b6-7afe-4bba-beaa-36d800c03e44" });
 
             migrationBuilder.InsertData(
                 table: "Projects",
-                columns: new[] { "Id", "Architect", "CategoryId", "Country", "Description", "DesignerId", "MainImageUrl", "Phase", "Title", "Town", "YearDesigned" },
+                columns: new[] { "Id", "Architect", "CategoryId", "Country", "Description", "DesignerId", "MainImageUrl", "PhaseId", "Title", "Town", "YearDesigned" },
                 values: new object[] { 1, "ProArch", 3, "Bulgaria", "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.", 1, "https://localhost:7134/img/ONYX/ONYX-01.jpg", 2, "Multi-purpose building ONYX", "Sofia", 2019 });
 
             migrationBuilder.InsertData(
                 table: "Projects",
-                columns: new[] { "Id", "Architect", "CategoryId", "Country", "Description", "DesignerId", "MainImageUrl", "Phase", "Title", "Town", "YearDesigned" },
+                columns: new[] { "Id", "Architect", "CategoryId", "Country", "Description", "DesignerId", "MainImageUrl", "PhaseId", "Title", "Town", "YearDesigned" },
                 values: new object[] { 2, "Ivo Petrov Architects", 5, "Bulgaria", "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.", 1, "https://localhost:7134/img/SEG/SEG-01.jpg", 3, "Multi-purpose building SEG", "Krivina", 2018 });
 
             migrationBuilder.InsertData(
@@ -396,6 +437,11 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                 name: "IX_Projects_DesignerId",
                 table: "Projects",
                 column: "DesignerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_PhaseId",
+                table: "Projects",
+                column: "PhaseId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -429,6 +475,9 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Designers");
+
+            migrationBuilder.DropTable(
+                name: "Phases");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

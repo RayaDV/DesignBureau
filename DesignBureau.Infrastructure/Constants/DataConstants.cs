@@ -6,6 +6,10 @@
         public const int CategoryNameMaxLength = 50;
         public const int CategoryNameMinLength = 2;
 
+        // Phase
+        public const int PhaseNameMaxLength = 20;
+        public const int PhaseNameMinLength = 3;
+
         // Discipline
         public const int DisciplineNameMaxLength = 30;
         public const int DisciplineNameMinLength = 2;

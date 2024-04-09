@@ -51,5 +51,8 @@ namespace DesignBureau.Infrastructure.Common
                 DbSet<T>().Remove(entity);
             }
         }
+
+
+    
     }
 }
