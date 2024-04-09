@@ -55,11 +55,11 @@ namespace DesignBureau.Core.Services
             return designer.Id;
         }
 
-        public async Task<IEnumerable<DesignerDisciplineViewModel>> AllDisciplinesAsync()
+        public async Task<IEnumerable<DesignerDisciplineServiceModel>> AllDisciplinesAsync()
         {
             return await repository
                 .AllReadOnly<Discipline>()
-                .Select(d => new DesignerDisciplineViewModel
+                .Select(d => new DesignerDisciplineServiceModel
                 {
                     Id = d.Id,
                     Name = d.Name

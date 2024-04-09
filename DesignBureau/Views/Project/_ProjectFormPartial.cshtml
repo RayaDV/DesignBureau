@@ -1,0 +1,68 @@
+﻿@model ProjectFormViewModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" placeholder="Add project title here ...">
+                <span asp-validation-for="Title" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Country"></label>
+                <input asp-for="Country" class="form-control" placeholder="Add project country here ...">
+                <span asp-validation-for="Country" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Town"></label>
+                <input asp-for="Town" class="form-control" placeholder="Add project town here ...">
+                <span asp-validation-for="Town" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MainImageUrl"></label>
+                <input asp-for="MainImageUrl" class="form-control" placeholder="Add project main image URL here ...">
+                <span asp-validation-for="MainImageUrl" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Architect"></label>
+                <input asp-for="Architect" class="form-control" placeholder="Add project architect here ...">
+                <span asp-validation-for="Architect" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="YearDesigned"></label>
+                <input asp-for="YearDesigned" class="form-control" placeholder="Add project year of design here ...">
+                <span asp-validation-for="YearDesigned" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Add project description here ..."></textarea>
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-select" area-label="Select a category">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PhaseId"></label>
+                <select asp-for="PhaseId" class="form-select" area-label="Select a phase">
+                    @foreach (var phase in Model.Phases)
+                    {
+                        <option value="@phase.Id">@phase.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="PhaseId" class="small text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <button formmethod="post" class="btn btn-primary mt-3" type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+</div>

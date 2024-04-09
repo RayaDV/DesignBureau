@@ -1,6 +1,6 @@
-﻿namespace DesignBureau.Core.Models.Designer
+﻿namespace DesignBureau.Core.Models.Project
 {
-    public class DesignerDisciplineViewModel
+    public class ProjectCategoryServiceModel
     {
         public int Id { get; set; }
 

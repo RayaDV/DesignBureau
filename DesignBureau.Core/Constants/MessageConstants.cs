@@ -12,5 +12,9 @@
 
         public const string DisciplineDoesNotExist = "This discipline does not exist. Enter another one!";
 
+        public const string CategoryDoesNotExist = "This category does not exist. Enter another one!";
+
+        public const string PhaseDoesNotExist = "This phase does not exist. Enter another one!";
+
     }
 }

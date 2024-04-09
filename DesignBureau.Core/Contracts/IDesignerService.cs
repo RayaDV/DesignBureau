@@ -14,7 +14,7 @@ namespace DesignBureau.Core.Contracts
 
         Task<int> GetDesignerIdAsync(string userId);
 
-        Task<IEnumerable<DesignerDisciplineViewModel>> AllDisciplinesAsync();
+        Task<IEnumerable<DesignerDisciplineServiceModel>> AllDisciplinesAsync();
 
         Task<bool> DisciplineExistsAsync(int disciplineId);
     }

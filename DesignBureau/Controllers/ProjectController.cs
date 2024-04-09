@@ -1,12 +1,23 @@
-﻿using DesignBureau.Core.Models.Project;
+﻿using DesignBureau.Attributes;
+using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Models.Project;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Controllers
 {
-    [Authorize]
-    public class ProjectController : Controller
+    public class ProjectController : BaseController
     {
+		private readonly IProjectService projectService;
+		private readonly IDesignerService designerService;
+        public ProjectController(IProjectService projectService, IDesignerService designerService)
+        {
+            this.projectService = projectService;
+			this.designerService = designerService;
+        }
+
         [AllowAnonymous]
 		[HttpGet]
         public async Task<IActionResult> All()
@@ -31,15 +42,45 @@ namespace DesignBureau.Controllers
 
 
 		[HttpGet]
+		[MustBeDesigner]
 		public async Task<IActionResult> Add()
 		{
-			return View();
+			var model = new ProjectFormViewModel
+			{
+				Categories = await projectService.AllCategoriesAsync(),
+				Phases = await projectService.AllPhasesAsync(),
+            };
+
+			return View(model);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Add(ProjectFormViewModel model)
+        [MustBeDesigner]
+        public async Task<IActionResult> Add(ProjectFormViewModel model)
 		{
-			return RedirectToAction(nameof(Details), new { id = "1" });
+			if (await projectService.CategoryExistAsync(model.CategoryId) == false)
+			{
+				this.ModelState.AddModelError(nameof(model.CategoryId), CategoryDoesNotExist);
+			}
+
+            if (await projectService.PhaseExistAsync(model.PhaseId) == false)
+            {
+                this.ModelState.AddModelError(nameof(model.PhaseId), PhaseDoesNotExist);
+            }
+
+            if (!ModelState.IsValid)
+			{
+				model.Categories = await projectService.AllCategoriesAsync();
+				model.Phases = await projectService.AllPhasesAsync();
+
+				return View(model);
+			}
+
+			int designerId = await designerService.GetDesignerIdAsync(User.Id());
+
+			int newProjectId = await projectService.CreateAsync(model, designerId);
+
+			return RedirectToAction(nameof(Details), new { id = newProjectId });
 		}
 
 

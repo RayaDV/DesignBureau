@@ -47,7 +47,7 @@ namespace DesignBureau.Core.Services
             return id;
         }
 
-        public async Task<string> UserFullNameAsync(string userId)
+        public async Task<string> UserFullNameAsync(string userId)  // never used in nav bar, because it is made with claim
         {
             string result = string.Empty;
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);

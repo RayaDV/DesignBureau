@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace DesignBureau.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IProjectService projectService;
 

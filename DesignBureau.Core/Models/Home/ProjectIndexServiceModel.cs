@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesignBureau.Core.Models.Home
 {
-    public class IndexViewModel
+    public class ProjectIndexServiceModel
     {
         public int Id { get; set; }
 

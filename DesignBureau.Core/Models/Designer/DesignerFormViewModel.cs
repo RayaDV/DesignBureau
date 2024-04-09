@@ -34,25 +34,18 @@ namespace DesignBureau.Core.Models.Designer
         [Range(DesignerMinExperience, DesignerMaxExperience, 
             ConvertValueInInvariantCulture = true, 
             ErrorMessage = "Work experience must be not a negative number less than {2} years")]
-        [Display(Name = "Work experience in years")]
+        [Display(Name = "Work Experience in years")]
         public int DesignExperience { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Designer Image URL")]
         public string DesignerImageUrl { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Discipline")]
-        [ForeignKey(nameof(Discipline))]
         public int DisciplineId { get; set; }
 
-        public IEnumerable<DesignerDisciplineViewModel> Disciplines { get; set; }
-            = new List<DesignerDisciplineViewModel>();
-
-        [Required]
-        [ForeignKey(nameof(User))]
-        [Comment("User identifier")]
-        public virtual string UserId { get; set; } = string.Empty;
+        public IEnumerable<DesignerDisciplineServiceModel> Disciplines { get; set; }
+            = new List<DesignerDisciplineServiceModel>();
 
     }
 }

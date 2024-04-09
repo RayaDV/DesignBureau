@@ -8,8 +8,7 @@ using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Controllers
 {
-    [Authorize]
-	public class DesignerController : Controller
+	public class DesignerController : BaseController
 	{
 		private readonly IDesignerService designerService;
 		private readonly IUserService userService;
