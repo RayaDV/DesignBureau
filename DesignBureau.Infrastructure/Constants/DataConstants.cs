@@ -35,10 +35,10 @@
         public const int ProjectTownMaxLength = 40;
         public const int ProjectTownMinLength = 2;
 
-        public const int ProjectDescriptionMaxLength = 500;
+        public const int ProjectDescriptionMaxLength = 1000;
         public const int ProjectDescriptionMinLength = 50;
 
-        public const int ProjectArchitectMaxLength = 40;
+        public const int ProjectArchitectMaxLength = 60;
         public const int ProjectArchitectMinLength = 2;
 
         public const int ProjectYearMaxValue = 2100;

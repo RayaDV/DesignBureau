@@ -20,9 +20,23 @@ namespace DesignBureau.Controllers
 
         [AllowAnonymous]
 		[HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllProjectsViewModel model)
         {
-            var model = new AllProjectsViewModel();
+			var projects = await projectService.AllAsync(
+                model.Category,
+                model.Phase,
+                model.Town,
+                model.SearchTerm,
+                model.Sorting,
+                model.CurrentPage,
+                AllProjectsViewModel.HousesPerPage);
+
+			model.TotalProjectsCount = projects.TotalProjectsCount;
+			model.Projects = projects.Projects;
+			model.Categories = await projectService.AllCategoriesNamesAsync();
+			model.Phases = await projectService.AllPhasesNamesAsync();
+			model.Towns = await projectService.AllTownsNamesAsync();
+
             return View(model);
         }
 

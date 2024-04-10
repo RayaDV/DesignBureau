@@ -1,4 +1,5 @@
-﻿using DesignBureau.Core.Models.Home;
+﻿using DesignBureau.Core.Enums;
+using DesignBureau.Core.Models.Home;
 using DesignBureau.Core.Models.Project;
 
 namespace DesignBureau.Core.Contracts
@@ -19,6 +20,20 @@ namespace DesignBureau.Core.Contracts
 
         Task<IEnumerable<ProjectImageServiceModel>> AllImagesByProjectIdAsync(int projectId);
 
+        Task<ProjectQueryServiceModel> AllAsync(
+                string? category = null,
+                string? phase = null,
+                string? town = null,
+                string? searchTerm = null,
+                ProjectSorting sorting = ProjectSorting.LastAdded,
+                int currentPage = 1,
+                int housesPerPage = 1);
+
+        Task<IEnumerable<string>> AllCategoriesNamesAsync();
+
+        Task<IEnumerable<string>> AllPhasesNamesAsync();
+
+        Task<IEnumerable<string>> AllTownsNamesAsync();
 
 
     }
