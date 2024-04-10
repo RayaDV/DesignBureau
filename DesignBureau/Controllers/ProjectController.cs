@@ -22,7 +22,7 @@ namespace DesignBureau.Controllers
 		[HttpGet]
         public async Task<IActionResult> All([FromQuery] AllProjectsViewModel model)
         {
-			var projects = await projectService.AllAsync(
+			var projects = await projectService.AllProjectsAsync(
                 model.Category,
                 model.Phase,
                 model.Town,
@@ -41,9 +41,28 @@ namespace DesignBureau.Controllers
         }
 
 		[HttpGet]
-		public async Task<IActionResult> Mine()
+		public async Task<IActionResult> Mine([FromQuery] MyProjectsViewModel model)
 		{
-			var model = new AllProjectsViewModel();
+			var userId = User.Id();
+
+			//if (User.IsAdmin())
+			//{
+			//	return RedirectToAction("Mine", "Project", new { area = "Admin" });
+			//}
+
+			if (await designerService.ExistsByIdAsync(userId))
+			{
+				int designerId = await designerService.GetDesignerIdAsync(userId);
+
+                var projects = await projectService.AllProjectsByDesignerIdAsync(
+                        designerId,
+                        model.CurrentPage,
+						MyProjectsViewModel.HousesPerPage);
+
+                model.TotalProjectsCount = projects.TotalProjectsCount;
+                model.Projects = projects.Projects;
+            }
+
 			return View(model);
 		}
 

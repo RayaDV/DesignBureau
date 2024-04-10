@@ -17,7 +17,7 @@ namespace DesignBureau.Core.Services
             this.repository = repository;
         }
 
-        public async Task<ProjectQueryServiceModel> AllAsync(
+        public async Task<ProjectQueryServiceModel> AllProjectsAsync(
             string? category = null, 
             string? phase = null, 
             string? town = null, 
@@ -127,6 +127,29 @@ namespace DesignBureau.Core.Services
                 .Select(ph => ph.Name)
                 .Distinct()
                 .ToListAsync();
+        }
+
+        public async Task<ProjectQueryServiceModel> AllProjectsByDesignerIdAsync(
+            int designerId, 
+            int currentPage = 1,
+            int housesPerPage = 1)
+        {
+            var projects = repository.AllReadOnly<Project>()
+                .Where(p => p.DesignerId == designerId);
+
+            int totalProjectsCount = await projects.CountAsync();
+
+            var projectsToShow = await projects
+                .Skip((currentPage - 1) * housesPerPage)
+                .Take(housesPerPage)
+                .ConvertToProjectServiceModel()
+                .ToListAsync();
+
+            return new ProjectQueryServiceModel()
+            {
+                TotalProjectsCount = totalProjectsCount,
+                Projects = projectsToShow
+            };
         }
 
         public async Task<IEnumerable<ProjectIndexServiceModel>> AllProjectsFromLastAsync()

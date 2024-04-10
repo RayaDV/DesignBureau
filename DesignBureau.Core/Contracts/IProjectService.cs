@@ -20,7 +20,7 @@ namespace DesignBureau.Core.Contracts
 
         Task<IEnumerable<ProjectImageServiceModel>> AllImagesByProjectIdAsync(int projectId);
 
-        Task<ProjectQueryServiceModel> AllAsync(
+        Task<ProjectQueryServiceModel> AllProjectsAsync(
                 string? category = null,
                 string? phase = null,
                 string? town = null,
@@ -34,6 +34,13 @@ namespace DesignBureau.Core.Contracts
         Task<IEnumerable<string>> AllPhasesNamesAsync();
 
         Task<IEnumerable<string>> AllTownsNamesAsync();
+
+        Task<ProjectQueryServiceModel> AllProjectsByDesignerIdAsync(
+                int designerId,
+                int currentPage = 1,
+                int housesPerPage = 1);
+
+
 
 
     }
