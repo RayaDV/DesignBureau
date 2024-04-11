@@ -3,6 +3,7 @@ using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Models.Project;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.Security.Claims;
 using static DesignBureau.Core.Constants.MessageConstants;
 
@@ -179,13 +180,48 @@ namespace DesignBureau.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var model = new ProjectDetailsServiceModel();
+			if (await projectService.ExistsByIdAsync(id) == false)
+			{
+				return BadRequest();
+			}
+
+			if (await projectService.HasDesignerWithIdAsync(id, User.Id()) == false
+				&& User.IsAdmin() == false)
+			{
+				return Unauthorized();
+			}
+
+			var project = await projectService.ProjectToDeleteByIdAsync(id);
+
+			var model = new ProjectServiceModel()
+			{
+				Id = id,
+				Title = project.Title,
+				Country = project.Country,
+				Town = project.Town,
+				MainImageUrl = project.MainImageUrl,
+				YearDesigned = project.YearDesigned,
+			};
+
 			return View(model);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id, ProjectDetailsServiceModel model)
+		public async Task<IActionResult> Delete(ProjectServiceModel model)
 		{
+			if (await projectService.ExistsByIdAsync(model.Id) == false)
+			{
+				return BadRequest();
+			}
+
+			if (await projectService.HasDesignerWithIdAsync(model.Id, User.Id()) == false
+				&& User.IsAdmin() == false)
+			{
+				return Unauthorized();
+			}
+
+			await projectService.DeleteAsync(model.Id);
+
 			return RedirectToAction(nameof(All));
 		}
 

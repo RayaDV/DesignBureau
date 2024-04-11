@@ -10,9 +10,9 @@ namespace DesignBureau.Core.Contracts
 
         Task<IEnumerable<ProjectCategoryServiceModel>> AllCategoriesAsync();
 
-        Task<bool> CategoryExistAsync(int categoryId);
-
         Task<IEnumerable<ProjectPhaseServiceModel>> AllPhasesAsync();
+
+        Task<bool> CategoryExistAsync(int categoryId);
 
         Task<bool> PhaseExistAsync(int phaseId);
 
@@ -50,6 +50,10 @@ namespace DesignBureau.Core.Contracts
 
         Task<ProjectFormViewModel?> GetProjectFormViewModelByIdAsync(int id);
 
+        Task DeleteAsync(int projectId);
 
-    }
+		Task<ProjectServiceModel> ProjectToDeleteByIdAsync(int id);
+
+
+	}
 }

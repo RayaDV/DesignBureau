@@ -1,4 +1,5 @@
-﻿@model ProjectDetailsServiceModel
+﻿@model ProjectServiceModel
+@inject IProjectService projectService
 
 @{
 	ViewBag.Title = "Delete Project";
@@ -6,3 +7,35 @@
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr /> 
+
+<form asp-action="Delete">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="card-img-top" src="@Model.MainImageUrl" alt="House Image">
+        </div>
+        <div class="col-md-8">
+            <div class="mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" disabled="disabled" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" disabled="disabled" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Town" class="control-label"></label>
+                <input asp-for="Town" class="form-control" disabled="disabled" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="YearDesigned" class="control-label"></label>
+                <input asp-for="YearDesigned" class="form-control" disabled="disabled" />
+            </div>
+            <p></p>
+            <div class="mb-3 text-center">
+                <input type="submit" value="Delete" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr />

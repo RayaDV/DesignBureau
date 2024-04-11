@@ -264,5 +264,19 @@ namespace DesignBureau.Core.Services
 
             return project;
         }
-    }
+
+        public async Task DeleteAsync(int projectId)
+        {
+            await repository.DeleteAsync<Project>(projectId);
+            await repository.SaveChangesAsync();
+        }
+
+		public async Task<ProjectServiceModel> ProjectToDeleteByIdAsync(int id)
+		{
+			return await repository.AllReadOnly<Project>()
+				.Where(p => p.Id == id)
+				.ConvertToProjectServiceModel()
+				.FirstAsync();
+		}
+	}
 }
