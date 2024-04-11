@@ -44,5 +44,22 @@ namespace System.Linq
                     
                 });
 		}
-	}
+
+        public static IQueryable<ProjectFormViewModel> ConvertToProjectFormViewModel(this IQueryable<Project> projects)
+        {
+            return projects
+                .Select(p => new ProjectFormViewModel()
+                {
+                    Title = p.Title,
+                    Country = p.Country,
+                    Town = p.Town,
+                    MainImageUrl = p.MainImageUrl,
+                    YearDesigned = p.YearDesigned,
+                    Architect = p.Architect,
+                    Description = p.Description,
+                    CategoryId  = p.CategoryId,
+                    PhaseId = p.PhaseId,
+                });
+        }
+    }
 }

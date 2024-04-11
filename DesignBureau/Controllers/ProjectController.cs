@@ -122,14 +122,57 @@ namespace DesignBureau.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			var model = new ProjectFormViewModel();
-			return View(model);
-		}
+            if (await projectService.ExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await projectService.HasDesignerWithIdAsync(id, User.Id()) == false
+                && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            var model = await projectService.GetProjectFormViewModelByIdAsync(id);
+
+            return View(model);
+        }
 
 		[HttpPost]
 		public async Task<IActionResult> Edit(int id, ProjectFormViewModel model)
 		{
-			return RedirectToAction(nameof(Details), new { id = "1" });
+            if (await projectService.ExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await projectService.HasDesignerWithIdAsync(id, User.Id()) == false
+                && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+			if (await projectService.CategoryExistAsync(model.CategoryId) == false)
+			{
+                ModelState.AddModelError(nameof(model.CategoryId), CategoryDoesNotExist);
+            }
+
+            if (await projectService.PhaseExistAsync(model.PhaseId) == false)
+            {
+                ModelState.AddModelError(nameof(model.PhaseId), PhaseDoesNotExist);
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                model.Categories = await projectService.AllCategoriesAsync();
+                model.Phases = await projectService.AllPhasesAsync();
+
+                return View(model);
+            }
+
+			await projectService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(Details), new { id = id });
 		}
 
 

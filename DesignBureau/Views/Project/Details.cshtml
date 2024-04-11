@@ -17,6 +17,7 @@
             <div class="form-inline text-center mt-5">
                 <a asp-controller="Project" asp-action="Gallery" asp-route-id="@Model.Id"
                    class="btn btn-success">Gallery</a>
+                <p></p>
                 @if (this.User.Identity.IsAuthenticated)
                 {
                     if (await projectService.HasDesignerWithIdAsync(Model.Id, User.Id())
@@ -27,6 +28,7 @@
                         <a class="ml-2 btn btn-danger" asp-controller="Project" asp-action="Delete"
                            asp-route-id="@Model.Id">Delete</a>
                     }
+                    <p></p>
                     <a class="ml-2 btn btn-primary" asp-controller="Project" asp-action="Comment"
                        asp-route-id="@Model.Id">Comment</a>
                 }

@@ -227,5 +227,42 @@ namespace DesignBureau.Core.Services
             return await repository.AllReadOnly<Project>()
                 .AnyAsync(p => p.Id == projectId && p.Designer.UserId == userId);
         }
+
+        public async Task EditAsync(int projectId, ProjectFormViewModel model)
+        {
+            var project = await repository.GetByIdAsync<Project>(projectId);
+
+            if (project != null)
+            {
+                project.Title = model.Title;
+                project.Country = model.Country;
+                project.Town = model.Town;
+                project.MainImageUrl = model.MainImageUrl;
+                project.Architect = model.Architect;
+                project.YearDesigned = model.YearDesigned;
+                project.Description = model.Description;
+                project.CategoryId = model.CategoryId;
+                project.PhaseId = model.PhaseId;
+
+                await repository.SaveChangesAsync();
+            }
+
+        }
+
+        public async Task<ProjectFormViewModel?> GetProjectFormViewModelByIdAsync(int id)
+        {
+            var project = await repository.AllReadOnly<Project>()
+                .Where(h => h.Id == id)
+                .ConvertToProjectFormViewModel()
+                .FirstOrDefaultAsync();
+
+            if (project != null)
+            {
+                project.Categories = await AllCategoriesAsync();
+                project.Phases = await AllPhasesAsync();
+            }
+
+            return project;
+        }
     }
 }

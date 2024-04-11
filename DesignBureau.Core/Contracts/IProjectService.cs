@@ -46,6 +46,10 @@ namespace DesignBureau.Core.Contracts
 
         Task<bool> HasDesignerWithIdAsync(int projectId, string userId);
 
+        Task EditAsync(int projectId, ProjectFormViewModel model);
+
+        Task<ProjectFormViewModel?> GetProjectFormViewModelByIdAsync(int id);
+
 
     }
 }
