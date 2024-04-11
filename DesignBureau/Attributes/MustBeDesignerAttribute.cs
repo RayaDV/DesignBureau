@@ -19,7 +19,9 @@ namespace DesignBureau.Attributes
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            if (designerService != null && designerService.ExistsByIdAsync(context.HttpContext.User.Id()).Result == false)
+            if (designerService != null && 
+                designerService.ExistsByIdAsync(context.HttpContext.User.Id()).Result == false &&
+                context.HttpContext.User.IsAdmin())
             {
                 context.Result = new RedirectToActionResult(nameof(DesignerController.Create), "Designer", null);
             }

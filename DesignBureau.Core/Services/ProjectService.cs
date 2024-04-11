@@ -207,5 +207,25 @@ namespace DesignBureau.Core.Services
             return await repository.AllReadOnly<Phase>()
                 .AnyAsync(ph => ph.Id == phaseId);
         }
+
+		public async Task<bool> ExistsByIdAsync(int id)
+		{
+			return await repository.AllReadOnly<Project>()
+                .AnyAsync(p => p.Id == id);
+		}
+
+        public async Task<ProjectDetailsServiceModel> ProjectDetailsByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Project>()
+                .Where(p => p.Id == id)
+                .ConvertToProjectDetailsServiceModel()
+                .FirstAsync();
+        }
+
+        public async Task<bool> HasDesignerWithIdAsync(int projectId, string userId)
+        {
+            return await repository.AllReadOnly<Project>()
+                .AnyAsync(p => p.Id == projectId && p.Designer.UserId == userId);
+        }
     }
 }

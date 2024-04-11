@@ -19,14 +19,7 @@ namespace DesignBureau.Core.Models.Project
         [Display(Name = "Project main image URL")]
         public string MainImageUrl { get; set; } = string.Empty;
 
-        [Display(Name = "Architect of the project")]
-        public string Architect { get; set; } = string.Empty;
-
         [Display(Name = "Project year of design")]
         public int YearDesigned { get; set; }
-
-        [Display(Name = "Project description")]
-        public string Description { get; set; } = string.Empty;
-
     }
 }

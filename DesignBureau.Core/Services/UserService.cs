@@ -3,6 +3,7 @@ using DesignBureau.Core.Models.User;
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -45,6 +46,12 @@ namespace DesignBureau.Core.Services
             await repository.SaveChangesAsync();
 
             return id;
+        }
+
+        public async Task<bool> ExistsByIdAsync(string userId)
+        {
+            return await repository.AllReadOnly<ApplicationUser>()
+                .AnyAsync(u => u.Id == userId);
         }
 
         public async Task<string> UserFullNameAsync(string userId)  // never used in nav bar, because it is made with claim

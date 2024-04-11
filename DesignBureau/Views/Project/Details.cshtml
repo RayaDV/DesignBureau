@@ -1,4 +1,5 @@
-﻿@model ProjectDetailsViewModel
+﻿@model ProjectDetailsServiceModel
+@inject IProjectService projectService
 
 @{
 	ViewBag.Title = "Project Details";
@@ -6,3 +7,50 @@
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
+
+<h3 class="text-center"><u>@Model.Title</u></h3>
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;" src="@Model.MainImageUrl" alt="Project Image">
+            <div class="form-inline text-center mt-5">
+                <a asp-controller="Project" asp-action="Gallery" asp-route-id="@Model.Id"
+                   class="btn btn-success">Gallery</a>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    if (await projectService.HasDesignerWithIdAsync(Model.Id, User.Id())
+                    || User.IsAdmin())
+                    {
+                        <a class="btn btn-warning" asp-controller="Project" asp-action="Edit"
+                           asp-route-id="@Model.Id">Edit</a>
+                        <a class="ml-2 btn btn-danger" asp-controller="Project" asp-action="Delete"
+                           asp-route-id="@Model.Id">Delete</a>
+                    }
+                    <a class="ml-2 btn btn-primary" asp-controller="Project" asp-action="Comment"
+                       asp-route-id="@Model.Id">Comment</a>
+                }
+            </div>
+        </div>
+        <div class="card col-8 border-0 p-xl-1">
+            <p><b>Country: </b>@Model.Country</p>
+            <p><b>Town: </b>@Model.Town</p>
+            <p><b>Year of Design: </b>@Model.YearDesigned</p>
+            <p><b>Architect: </b>@Model.Architect</p>
+            <p><b>Description: </b>@Model.Description</p>
+            <p><b>Category: </b>@Model.Category</p>
+            <p><b>Phase: </b>@Model.Phase</p>
+
+            <p></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Designer Info:</h5>
+                    <p></p>
+                    <p class="card-text">Full Name:  @Model.Designer.FullName</p>
+                    <p class="card-text">Email:  @Model.Designer.Email</p>
+                    <p class="card-text">Phone Number: @Model.Designer.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

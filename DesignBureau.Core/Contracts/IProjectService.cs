@@ -40,7 +40,11 @@ namespace DesignBureau.Core.Contracts
                 int currentPage = 1,
                 int housesPerPage = 1);
 
+		Task<bool> ExistsByIdAsync(int id);
 
+		Task<ProjectDetailsServiceModel> ProjectDetailsByIdAsync(int id);
+
+        Task<bool> HasDesignerWithIdAsync(int projectId, string userId);
 
 
     }

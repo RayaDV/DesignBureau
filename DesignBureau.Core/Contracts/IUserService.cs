@@ -8,5 +8,7 @@ namespace DesignBureau.Core.Contracts
 
         Task<string> UserFullNameAsync(string userId);
 
+        Task<bool> ExistsByIdAsync(string userId);
+
     }
 }

@@ -45,12 +45,7 @@ namespace DesignBureau.Controllers
 		{
 			var userId = User.Id();
 
-			//if (User.IsAdmin())
-			//{
-			//	return RedirectToAction("Mine", "Project", new { area = "Admin" });
-			//}
-
-			if (await designerService.ExistsByIdAsync(userId))
+			if (await designerService.ExistsByIdAsync(userId) && User.IsAdmin() == false)
 			{
 				int designerId = await designerService.GetDesignerIdAsync(userId);
 
@@ -67,9 +62,16 @@ namespace DesignBureau.Controllers
 		}
 
 		[HttpGet]
+		[AllowAnonymous]
 		public async Task<IActionResult> Details(int id)
 		{
-			var model = new ProjectDetailsViewModel();
+			if (await projectService.ExistsByIdAsync(id) == false)
+			{
+				return BadRequest();
+			}
+
+			var model = await projectService.ProjectDetailsByIdAsync(id);
+
 			return View(model);
 		}
 
@@ -134,12 +136,12 @@ namespace DesignBureau.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var model = new ProjectDetailsViewModel();
+			var model = new ProjectDetailsServiceModel();
 			return View(model);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id, ProjectDetailsViewModel model)
+		public async Task<IActionResult> Delete(int id, ProjectDetailsServiceModel model)
 		{
 			return RedirectToAction(nameof(All));
 		}

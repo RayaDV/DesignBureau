@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IDesignerService designerService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,12 +26,15 @@
                         </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Mine">My Projects</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Add">Add Project</a>
-                            </li>
+                            if (await designerService.ExistsByIdAsync(User.Id()) || User.IsAdmin())
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Mine">My Projects</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Add">Add Project</a>
+                                </li>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial" />
