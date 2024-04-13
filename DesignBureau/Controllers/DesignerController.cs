@@ -20,7 +20,7 @@ namespace DesignBureau.Controllers
 
         [HttpGet]
 		[NotDesigner]
-		public async Task<IActionResult> Create()
+		public async Task<IActionResult> Add()
 		{
 			var disciplines = await this.designerService.AllDisciplinesAsync();
 
@@ -34,7 +34,7 @@ namespace DesignBureau.Controllers
 
 		[HttpPost]
         [NotDesigner]
-        public async Task<IActionResult> Create(DesignerFormViewModel model)
+        public async Task<IActionResult> Add(DesignerFormViewModel model)
 		{
 			if (await designerService.ExistsByEmailAsync(model.Email))
 			{

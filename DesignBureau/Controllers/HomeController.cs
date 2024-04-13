@@ -1,8 +1,9 @@
 ﻿using DesignBureau.Core.Contracts;
-using DesignBureau.Core.Models.Home;
 using DesignBureau.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
+using static DesignBureau.Core.Constants.AdminConstants;
 
 namespace DesignBureau.Controllers
 {
@@ -17,6 +18,11 @@ namespace DesignBureau.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (User.IsAdmin())
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            }
+
             var model = await projectService.AllProjectsFromLastAsync();
 
             return View(model);

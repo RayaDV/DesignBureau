@@ -23,7 +23,7 @@ namespace DesignBureau.Attributes
                 designerService.ExistsByIdAsync(context.HttpContext.User.Id()).Result == false &&
                 context.HttpContext.User.IsAdmin())
             {
-                context.Result = new RedirectToActionResult(nameof(DesignerController.Create), "Designer", null);
+                context.Result = new RedirectToActionResult(nameof(DesignerController.Add), "Designer", null);
             }
         }
     }

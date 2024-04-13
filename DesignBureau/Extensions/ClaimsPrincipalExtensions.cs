@@ -1,4 +1,4 @@
-﻿using static DesignBureau.Infrastructure.Data.Models.AdminUser;
+﻿using static DesignBureau.Core.Constants.AdminConstants;
 
 namespace System.Security.Claims
 {

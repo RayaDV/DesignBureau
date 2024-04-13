@@ -2,7 +2,7 @@
 @inject IProjectService projectService
 
 <div class="col-md-4">
-    <div class="card mb-3">
+    <div class="card text-bg-light mb-3 ">
         <img class="card-img-top" src="@Model.MainImageUrl" alt="Project Main Image">
         <div class="card-body text-center">
             <h4>@Model.Title</h4>
@@ -10,10 +10,10 @@
             <h6>Town: <b>@Model.Town</b></h6>
             <h6>Year of design: <b>@Model.YearDesigned</b></h6>
             <br />
-            <a asp-controller="Project" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
+            <a asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-secondary">Details</a>
             <a asp-controller="Project" asp-action="Gallery" asp-route-id="@Model.Id"
-               class="btn btn-success">Gallery</a>
+               class="btn btn-secondary">Gallery</a>
             <p></p>
             @if (this.User.Identity.IsAuthenticated)
             {
@@ -21,13 +21,13 @@
                 || User.IsAdmin())
                 {
                     <a asp-controller="Project" asp-action="Edit" asp-route-id="@Model.Id"
-                       class="btn btn-warning">Edit</a>
+                       class="btn btn-dark">Edit</a>
                     <a asp-controller="Project" asp-action="Delete" asp-route-id="@Model.Id"
-                       class="btn btn-danger">Delete</a>
+                       class="btn btn-dark">Delete</a>
                 }
                 <p></p>
                 <a asp-controller="Project" asp-action="Comment" asp-route-id="@Model.Id"
-                   class="btn btn-primary">Comment</a>
+                   class="btn btn-secondary">Comment</a>
                 <p></p>
             }
         </div>

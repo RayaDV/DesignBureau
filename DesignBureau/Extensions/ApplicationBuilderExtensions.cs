@@ -1,6 +1,6 @@
 ﻿using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
-using static DesignBureau.Infrastructure.Data.Models.AdminUser;
+using static DesignBureau.Core.Constants.AdminConstants;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -22,7 +22,7 @@ namespace Microsoft.AspNetCore.Builder
 
                 if (admin != null)
                 {
-                    await userManager.AddToRoleAsync(admin, role.Name);
+                    await userManager.AddToRoleAsync(admin, AdminRoleName);
                 }
             }
         }

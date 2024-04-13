@@ -44,14 +44,13 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-        name: "Project Details",
-        pattern: "/Project/Details/{id}/{description}",
-        defaults: new { Controller = "Project", Action = "Details" }
-    );
-
-    endpoints.MapControllerRoute(
-            name: "areas",
+            name: "Areas",
             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapControllerRoute(
+        name: "Project Details",
+        pattern: "/Project/Details/{id}/{information}",
+        defaults: new { Controller = "Project", Action = "Details" }
     );
 
     endpoints.MapDefaultControllerRoute();
