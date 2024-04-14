@@ -12,6 +12,8 @@
 
         Task<T?> GetByIdAsync<T>(object id) where T : class;
 
+        Task<T?> GetByEmailAsync<T>(object email) where T : class;
+
         Task DeleteAsync<T>(object id) where T : class;
 
 

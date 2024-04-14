@@ -52,7 +52,9 @@ namespace DesignBureau.Infrastructure.Common
             }
         }
 
-
-    
+        public async Task<T?> GetByEmailAsync<T>(object email) where T : class
+        {
+            return await DbSet<T>().FindAsync(email);
+        }
     }
 }

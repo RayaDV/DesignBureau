@@ -16,21 +16,21 @@
             <img class="card-img-top" style="width: 20rem;" src="@Model.MainImageUrl" alt="Project Image">
             <div class="form-inline text-center mt-5">
                 <a asp-controller="Project" asp-action="Gallery" asp-route-id="@Model.Id"
-                   class="btn btn-success">Gallery</a>
-                <p></p>
+                   class="btn btn-primary m-1">Gallery</a>
                 @if (this.User.Identity.IsAuthenticated)
                 {
+                    <a asp-controller="Project" asp-action="Comment" asp-route-id="@Model.Id"
+                       class="btn btn-primary m-1">Comment</a>
+                    <p></p>
                     if (await projectService.HasDesignerWithIdAsync(Model.Id, User.Id())
                     || User.IsAdmin())
                     {
-                        <a class="btn btn-warning" asp-controller="Project" asp-action="Edit"
-                           asp-route-id="@Model.Id">Edit</a>
-                        <a class="ml-2 btn btn-danger" asp-controller="Project" asp-action="Delete"
-                           asp-route-id="@Model.Id">Delete</a>
+                        <a asp-controller="Project" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-dark m-1">Edit</a>
+                        <a asp-controller="Project" asp-action="Delete" asp-route-id="@Model.Id"
+                           class="btn btn-dark m-1">Delete</a>
+                        <p></p>
                     }
-                    <p></p>
-                    <a class="ml-2 btn btn-primary" asp-controller="Project" asp-action="Comment"
-                       asp-route-id="@Model.Id">Comment</a>
                 }
             </div>
         </div>

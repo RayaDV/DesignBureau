@@ -1,15 +1,11 @@
 ﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Models.Designer;
 using DesignBureau.Core.Models.User;
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static DesignBureau.Infrastructure.Constants.CustomClaims;
 
 namespace DesignBureau.Core.Services
 {
@@ -22,10 +18,8 @@ namespace DesignBureau.Core.Services
             this.repository = repository;
         }
 
-        public async Task<string> CreateAsync(RegisterUserViewModel model)
+        public async Task<string> CreateAsync(UserServiceModel model)
         {
-            var pass = PasswordGenerator.Generate();
-
             string id = Guid.NewGuid().ToString();
 
             var user = new ApplicationUser()
@@ -39,8 +33,17 @@ namespace DesignBureau.Core.Services
                 Id = id,
             };
 
+            //var pass = PasswordGenerator.Generate();
+            var pass = $"{user.FirstName.ToLower()}{user.LastName.ToLower()}123";
             var hasher = new PasswordHasher<ApplicationUser>();
             user.PasswordHash = hasher.HashPassword(user, pass);
+
+            var userClaim = new IdentityUserClaim<string>()
+            {
+                ClaimType = UserFullNameClaim,
+                ClaimValue = $"{model.FirstName} {model.LastName}",
+                UserId = id
+            };
 
             await repository.AddAsync(user);
             await repository.SaveChangesAsync();
@@ -48,10 +51,26 @@ namespace DesignBureau.Core.Services
             return id;
         }
 
+        public async Task DeleteAsync(string userId)
+        {
+            await repository.DeleteAsync<ApplicationUser>(userId);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<bool> ExistsByIdAsync(string userId)
         {
             return await repository.AllReadOnly<ApplicationUser>()
                 .AnyAsync(u => u.Id == userId);
+        }
+
+        public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
+        {
+            return await repository.GetByEmailAsync<ApplicationUser>(email);
+        }
+
+        public async Task<ApplicationUser?> GetUserByIdAsync(string userId)
+        {
+            return await repository.GetByIdAsync<ApplicationUser>(userId);
         }
 
         public async Task<string> UserFullNameAsync(string userId)  // never used in nav bar, because it is made with claim

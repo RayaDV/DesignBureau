@@ -1,0 +1,31 @@
+﻿@model DesignerDetailsServiceModel
+@inject IDesignerService designerService
+
+<div class="row-md-3">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-6 col-lg-3">
+                <div class="rounded-start" style="height: 100%; width:100%; background-image: url(@Model.DesignerImageUrl); background-position:center; background-repeat:no-repeat; background-size: cover;"></div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="card-body">
+                    <h3>@Model.FullName</h3>
+                    <h6>Discipline: <b>@Model.Discipline</b></h6>
+                    <h6>Phone number: <b>@Model.PhoneNumber</b></h6>
+                    <h6>Email: <b>@Model.Email</b></h6>
+                    <h6>Designer work experience: <b>@Model.DesignExperience</b> years</h6>
+                    <h6>Designer projects count: <b>@Model.ProjectsCount</b></h6>
+                    <br />
+                    @if (this.User.IsAdmin())
+                    {
+                        <a asp-area="Admin" asp-controller="Designer" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-dark m-1">Edit</a>
+                        <a asp-area="Admin" asp-controller="Designer" asp-action="Delete" asp-route-id="@Model.Id"
+                           class="btn btn-dark m-1">Delete</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

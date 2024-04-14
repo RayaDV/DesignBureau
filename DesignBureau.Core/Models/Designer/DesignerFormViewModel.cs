@@ -35,7 +35,7 @@ namespace DesignBureau.Core.Models.Designer
             ConvertValueInInvariantCulture = true, 
             ErrorMessage = "Work experience must be not a negative number less than {2} years")]
         [Display(Name = "Work Experience in years")]
-        public int DesignExperience { get; set; }
+        public int? DesignExperience { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Designer Image URL")]

@@ -22,17 +22,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="All">All Projects</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="All">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Designer" asp-action="Team">Team</a>
                         </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
-                            if (await designerService.ExistsByIdAsync(User.Id()) || User.IsAdmin())
+                            if (await designerService.ExistsByUserIdAsync(User.Id()) && User.IsAdmin() == false)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Mine">My Projects</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Add">Add Project</a>
+                                </li>
+                            }
+                            if (User.IsAdmin())
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Designer" asp-action="Add">Add Designer</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="All">Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Comment" asp-action="All">Comments</a>
                                 </li>
                             }
                         }

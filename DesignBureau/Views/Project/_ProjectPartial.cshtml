@@ -2,8 +2,9 @@
 @inject IProjectService projectService
 
 <div class="col-md-4">
-    <div class="card text-bg-light mb-3 ">
-        <img class="card-img-top" src="@Model.MainImageUrl" alt="Project Main Image">
+    <div class="card text-bg-light mb-3" style="height: 750px">
+        <div class="rounded-top" style="height: 50%; width:100%; background-image: url(@Model.MainImageUrl); background-position:center; background-repeat:no-repeat; background-size: cover;"></div>
+        @* <img class="card-img-top" src="@Model.MainImageUrl" alt="Project Main Image"> *@
         <div class="card-body text-center">
             <h4>@Model.Title</h4>
             <h6>Country: <b>@Model.Country</b></h6>
@@ -11,24 +12,23 @@
             <h6>Year of design: <b>@Model.YearDesigned</b></h6>
             <br />
             <a asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-secondary">Details</a>
+               class="btn btn-primary m-1">Details</a>
             <a asp-controller="Project" asp-action="Gallery" asp-route-id="@Model.Id"
-               class="btn btn-secondary">Gallery</a>
-            <p></p>
+               class="btn btn-primary m-1">Gallery</a>
             @if (this.User.Identity.IsAuthenticated)
             {
+                <a asp-controller="Project" asp-action="Comment" asp-route-id="@Model.Id"
+                   class="btn btn-primary m-1">Comment</a>
+                <p></p>
                 if (await projectService.HasDesignerWithIdAsync(Model.Id, User.Id())
                 || User.IsAdmin())
                 {
                     <a asp-controller="Project" asp-action="Edit" asp-route-id="@Model.Id"
-                       class="btn btn-dark">Edit</a>
+                       class="btn btn-dark m-1">Edit</a>
                     <a asp-controller="Project" asp-action="Delete" asp-route-id="@Model.Id"
-                       class="btn btn-dark">Delete</a>
+                       class="btn btn-dark m-1">Delete</a>
+                    <p></p>
                 }
-                <p></p>
-                <a asp-controller="Project" asp-action="Comment" asp-route-id="@Model.Id"
-                   class="btn btn-secondary">Comment</a>
-                <p></p>
             }
         </div>
     </div>

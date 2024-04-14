@@ -1,6 +1,6 @@
 ﻿namespace DesignBureau.Core.Models.User
 {
-    public class RegisterUserViewModel
+    public class UserServiceModel
     {
         public string FirstName { get; set; } = string.Empty;
 

@@ -1,0 +1,51 @@
+﻿@model DesignerFormViewModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="Add designer Email here ...">
+                <span asp-validation-for="Email" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="Add designer First Name here ...">
+                <span asp-validation-for="FirstName" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Add designer Last Name here ...">
+                <span asp-validation-for="LastName" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Add designer Phone Number here ...">
+                <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DesignExperience"></label>
+                <input asp-for="DesignExperience" class="form-control" placeholder="Add designer work experience here ...">
+                <span asp-validation-for="DesignExperience" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DesignerImageUrl"></label>
+                <input asp-for="DesignerImageUrl" class="form-control" placeholder="Add designer image URL here ...">
+                <span asp-validation-for="DesignerImageUrl" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DisciplineId"></label>
+                <select asp-for="DisciplineId" class="form-select" area-label="Select a discipline">
+                    @foreach (var discipline in Model.Disciplines)
+                    {
+                        <option value="@discipline.Id">@discipline.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="DisciplineId" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <button formmethod="post" class="btn btn-dark mt-3" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

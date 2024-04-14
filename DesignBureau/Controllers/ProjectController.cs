@@ -46,7 +46,7 @@ namespace DesignBureau.Controllers
 		{
 			var userId = User.Id();
 
-			if (await designerService.ExistsByIdAsync(userId) && User.IsAdmin() == false)
+			if (await designerService.ExistsByUserIdAsync(userId) && User.IsAdmin() == false)
 			{
 				int designerId = await designerService.GetDesignerIdAsync(userId);
 

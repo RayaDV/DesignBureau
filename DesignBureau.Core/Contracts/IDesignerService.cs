@@ -1,10 +1,12 @@
-﻿using DesignBureau.Core.Models.Designer;
+﻿using DesignBureau.Core.Enums;
+using DesignBureau.Core.Models.Designer;
+using DesignBureau.Core.Models.Project;
 
 namespace DesignBureau.Core.Contracts
 {
     public interface IDesignerService
     {
-        Task<bool> ExistsByIdAsync(string userId);
+        Task<bool> ExistsByUserIdAsync(string userId);
 
         Task<bool> ExistsByPhoneNumberAsync(string email);
 
@@ -17,5 +19,24 @@ namespace DesignBureau.Core.Contracts
         Task<IEnumerable<DesignerDisciplineServiceModel>> AllDisciplinesAsync();
 
         Task<bool> DisciplineExistsAsync(int disciplineId);
+
+        Task<DesignerQueryServiceModel> TeamAsync(
+        string? discipline = null,
+        string? searchTerm = null,
+        DesignerSorting sorting = DesignerSorting.NameAlphabetically,
+        int currentPage = 1,
+        int designersPerPage = 1);
+
+        Task<IEnumerable<string>> AllDisciplinesNamesAsync();
+
+        Task<bool> ExistsByIdAsync(int Id);
+
+        Task<DesignerFormViewModel?> GetDesignerFormViewModelByIdAsync(int id);
+
+        Task EditAsync(int designerId, DesignerFormViewModel model);
+
+        Task DeleteAsync(int designerId);
+
+        Task<DesignerDetailsServiceModel> DesignerToDeleteByIdAsync(int designerId);
     }
 }

@@ -18,7 +18,7 @@ namespace DesignBureau.Attributes
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            if (designerService != null && designerService.ExistsByIdAsync(context.HttpContext.User.Id()).Result)
+            if (designerService != null && designerService.ExistsByUserIdAsync(context.HttpContext.User.Id()).Result)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);
             }

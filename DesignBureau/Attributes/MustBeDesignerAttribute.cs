@@ -20,10 +20,10 @@ namespace DesignBureau.Attributes
             }
 
             if (designerService != null && 
-                designerService.ExistsByIdAsync(context.HttpContext.User.Id()).Result == false &&
+                designerService.ExistsByUserIdAsync(context.HttpContext.User.Id()).Result == false &&
                 context.HttpContext.User.IsAdmin())
             {
-                context.Result = new RedirectToActionResult(nameof(DesignerController.Add), "Designer", null);
+                context.Result = new RedirectToActionResult(nameof(Areas.Admin.Controllers.DesignerController.Add), "Designer", null);
             }
         }
     }

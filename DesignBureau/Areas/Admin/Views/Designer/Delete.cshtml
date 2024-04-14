@@ -1,0 +1,45 @@
+﻿@model DesignerDetailsServiceModel
+@inject IDesignerService designerService
+
+@{
+    ViewBag.Title = "Delete Designer";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form asp-action="Delete">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="card-img-top" src="@Model.DesignerImageUrl" alt="Designer Image">
+        </div>
+        <div class="col-md-8">
+            <div class="mb-3">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" disabled="disabled" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" disabled="disabled" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" disabled="disabled" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Discipline" class="control-label"></label>
+                <input asp-for="Discipline" class="form-control" disabled="disabled" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="DesignExperience" class="control-label"></label>
+                <input asp-for="DesignExperience" class="form-control" disabled="disabled" />
+            </div>
+            <p></p>
+            <div class="mb-3 text-center">
+                <input type="submit" value="Delete" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr />
