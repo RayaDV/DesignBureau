@@ -18,11 +18,6 @@ namespace DesignBureau.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (User.IsAdmin())
-            {
-                return RedirectToAction("Index", "Home", new { Area = "Admin" });
-            }
-
             var model = await projectService.AllProjectsFromLastAsync();
 
             return View(model);

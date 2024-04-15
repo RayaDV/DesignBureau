@@ -15,7 +15,5 @@ namespace DesignBureau.Core.Models.Project
 
         public DesignerServiceModel Designer { get; set; } = null!;
 
-		public IEnumerable<ProjectImageServiceModel> Gallery { get; set; }
-				= new List<ProjectImageServiceModel>();
 	}
 }

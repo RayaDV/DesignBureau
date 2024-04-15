@@ -53,7 +53,5 @@ namespace DesignBureau.Core.Models.Project
         public IEnumerable<ProjectPhaseServiceModel> Phases { get; set; }
             = new List<ProjectPhaseServiceModel>();
 
-        public IEnumerable<ProjectImageServiceModel> Gallery {  get; set; } 
-            = new List<ProjectImageServiceModel>();
     }
 }

@@ -61,5 +61,31 @@ namespace System.Linq
                     PhaseId = p.PhaseId,
                 });
         }
+
+        public static IQueryable<ProjectAllGalleryServiceModel> ConvertToProjectAllGalleryServiceModel(this IQueryable<Project> projects)
+        {
+            return projects
+                .Select(p => new ProjectAllGalleryServiceModel()
+                {
+                    ProjectId = p.Id,
+                    Title = p.Title,
+                    MainImageUrl = p.MainImageUrl,
+                });
+        }
+
+        public static IQueryable<ProjectGalleryServiceModel> ConvertToProjectGalleryServiceModel(this IQueryable<Project> projects)
+        {
+            return projects
+                .Select(p => new ProjectGalleryServiceModel()
+                {
+                    ProjectId = p.Id,
+                    Title = p.Title,
+                    Gallery = p.Images.Select(i => new ImageServiceModel()
+                    {
+                        Id = i.Id,
+                        ImageUrl = i.ImageUrl,
+                    })
+                });
+        }
     }
 }

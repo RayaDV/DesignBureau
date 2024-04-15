@@ -1,8 +1,8 @@
-﻿namespace DesignBureau.Core.Models.Home
+﻿namespace DesignBureau.Core.Models.Project
 {
-    public class ProjectIndexServiceModel
+    public class ProjectAllGalleryServiceModel
     {
-        public int Id { get; set; }
+        public int ProjectId { get; set; }
 
         public string Title { get; set; } = string.Empty;
 

@@ -5,7 +5,7 @@ namespace DesignBureau.Core.Models.Project
 {
     public class AllProjectsViewModel
     {
-        public const int HousesPerPage = 3;
+        public const int ProjectsPerPage = 3;
 
         public string Category { get; init; } = null!;
 

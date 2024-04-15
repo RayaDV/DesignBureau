@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Designer" asp-action="Team">Team</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="AllGallery">Gallery</a>
+                        </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             if (await designerService.ExistsByUserIdAsync(User.Id()) && User.IsAdmin() == false)

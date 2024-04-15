@@ -1,11 +1,14 @@
 ﻿using DesignBureau.Attributes;
 using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Models.Project;
+using DesignBureau.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Claims;
 using static DesignBureau.Core.Constants.MessageConstants;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DesignBureau.Controllers
 {
@@ -30,7 +33,7 @@ namespace DesignBureau.Controllers
                 model.SearchTerm,
                 model.Sorting,
                 model.CurrentPage,
-                AllProjectsViewModel.HousesPerPage);
+                AllProjectsViewModel.ProjectsPerPage);
 
 			model.TotalProjectsCount = projects.TotalProjectsCount;
 			model.Projects = projects.Projects;
@@ -225,5 +228,116 @@ namespace DesignBureau.Controllers
 			return RedirectToAction(nameof(All));
 		}
 
-	}
+		[HttpGet]
+		public async Task<IActionResult> AddImages()
+		{
+			var model = new ImageFormViewModel();
+
+			return View(model);
+		}
+
+		[HttpPost]
+        public async Task<IActionResult> AddImages(ImageFormViewModel model)
+        {
+
+
+            return RedirectToAction(nameof(Gallery));
+        }
+
+		[HttpGet]
+        public async Task<IActionResult> Gallery(int id)
+        {
+            if (await projectService.ExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await projectService.AllImagesByProjectIdAsync(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Gallery(ProjectGalleryServiceModel model)
+        {
+			bool galleryChanged = false;
+
+            //if (await projectService.ExistsByIdAsync(model.ProjectId) == false)
+            //{
+            //    return BadRequest();
+            //}
+
+			//if (model.UploadedImages.Count() > 0)
+			//{
+			//	// add uploaded images urls to database for this projectId
+			//	// add uploaded images urls to current model
+			//	galleryChanged = true;
+   //         }
+
+   //         if (model.DeletedImages.Count() > 0)
+			//{
+   //             // remove deleted images urls from database for this projectId
+   //             // remove deleted images urls to current model
+   //             galleryChanged = true;
+   //         }
+
+			if (galleryChanged)
+			{
+				// save database
+			}
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImages(IFormFile file)
+        {
+            bool galleryChanged = false;
+
+            //if (await projectService.ExistsByIdAsync(model.ProjectId) == false)
+            //{
+            //    return BadRequest();
+            //}
+
+            //if (model.UploadedImages.Count() > 0)
+            //{
+            //	// add uploaded images urls to database for this projectId
+            //	// add uploaded images urls to current model
+            //	galleryChanged = true;
+            //         }
+
+            //         if (model.DeletedImages.Count() > 0)
+            //{
+            //             // remove deleted images urls from database for this projectId
+            //             // remove deleted images urls to current model
+            //             galleryChanged = true;
+            //         }
+
+            if (galleryChanged)
+            {
+                // save database
+            }
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> AllGallery([FromQuery] AllProjectsGalleryViewModel model)
+        {
+            var projects = await projectService.AllProjectsGalleryAsync(
+                model.Category,
+                model.Sorting,
+                model.CurrentPage,
+                AllProjectsGalleryViewModel.ProjectsPerPage);
+
+            model.TotalProjectsCount = projects.TotalProjectsCount;
+            model.Projects = projects.Projects;
+            model.Categories = await projectService.AllCategoriesNamesAsync();
+
+            return View(model);
+        }
+
+
+    }
 }

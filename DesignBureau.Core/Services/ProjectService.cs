@@ -24,7 +24,7 @@ namespace DesignBureau.Core.Services
             string? searchTerm = null, 
             ProjectSorting sorting = ProjectSorting.LastAdded, 
             int currentPage = 1, 
-            int housesPerPage = 1)
+            int projectsPerPage = 1)
         {
             var projects = repository.AllReadOnly<Project>();
 
@@ -66,8 +66,8 @@ namespace DesignBureau.Core.Services
             int totalProjectsCount = await projects.CountAsync();
 
             var projectsToShow = await projects
-                .Skip((currentPage - 1) * housesPerPage)
-                .Take(housesPerPage)
+                .Skip((currentPage - 1) * projectsPerPage)
+                .Take(projectsPerPage)
                 .ConvertToProjectServiceModel()
                 .ToListAsync();
 
@@ -98,17 +98,6 @@ namespace DesignBureau.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProjectImageServiceModel>> AllImagesByProjectIdAsync(int projectId)
-        {
-            return await repository.AllReadOnly<Image>()
-                .Where(i => i.ProjectId == projectId)
-                .Select(i => new ProjectImageServiceModel()
-                {
-                    Id = i.Id,
-                    ImageUrl = i.ImageUrl,
-                })
-                .ToListAsync();
-        }
 
         public async Task<IEnumerable<ProjectPhaseServiceModel>> AllPhasesAsync()
         {
@@ -278,5 +267,62 @@ namespace DesignBureau.Core.Services
 				.ConvertToProjectServiceModel()
 				.FirstAsync();
 		}
-	}
+
+        public async Task<ProjectGalleryServiceModel> AllImagesByProjectIdAsync(int projectId)
+        {
+            var gallery = await repository.AllReadOnly<Image>()
+                .Where(i => i.ProjectId == projectId)
+                .Select(i => new ImageServiceModel()
+                {
+                    Id = i.Id,
+                    ImageUrl = i.ImageUrl,
+                })
+                .ToListAsync();
+
+            var project = await repository.AllReadOnly<Project>()
+                .FirstAsync(p => p.Id == projectId);
+
+            return new ProjectGalleryServiceModel()
+            {
+                ProjectId = projectId,
+                Title = project.Title,
+                Gallery = gallery,
+            };
+        }
+
+        public async Task<AllProjectsGalleryViewModel> AllProjectsGalleryAsync(
+            string? category = null,
+            ProjectSorting sorting = ProjectSorting.LastAdded,
+            int currentPage = 1,
+            int projectsPerPage = 1)
+        {
+            var projects = repository.AllReadOnly<Project>();
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                projects = projects.Where(p => p.Category.Name == category);
+            }
+
+            projects = sorting switch
+            {
+                ProjectSorting.LastDesigned => projects.OrderByDescending(p => p.YearDesigned)
+                                                       .ThenByDescending(p => p.Id),
+                ProjectSorting.TownAlphabetically => projects.OrderBy(p => p.Town)
+                                                       .ThenByDescending(p => p.Id),
+                _ => projects.OrderByDescending(p => p.Id)
+            };
+
+            var projectsToShow = await projects
+                .Skip((currentPage - 1) * projectsPerPage)
+                .Take(projectsPerPage)
+                .ConvertToProjectAllGalleryServiceModel()
+                .ToListAsync();
+
+            return new AllProjectsGalleryViewModel()
+            {
+                Projects = projectsToShow,
+                TotalProjectsCount = projects.Count()
+            };
+        }
+    }
 }

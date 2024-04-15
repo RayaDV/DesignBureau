@@ -20,10 +20,9 @@ namespace DesignBureau.Attributes
             }
 
             if (designerService != null && 
-                designerService.ExistsByUserIdAsync(context.HttpContext.User.Id()).Result == false &&
-                context.HttpContext.User.IsAdmin())
+                designerService.ExistsByUserIdAsync(context.HttpContext.User.Id()).Result == false)
             {
-                context.Result = new RedirectToActionResult(nameof(Areas.Admin.Controllers.DesignerController.Add), "Designer", null);
+                context.Result = new StatusCodeResult(StatusCodes.Status401Unauthorized);
             }
         }
     }

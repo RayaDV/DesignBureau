@@ -18,8 +18,6 @@ namespace DesignBureau.Core.Contracts
 
         Task<int> CreateAsync(ProjectFormViewModel model, int designerId);
 
-        Task<IEnumerable<ProjectImageServiceModel>> AllImagesByProjectIdAsync(int projectId);
-
         Task<ProjectQueryServiceModel> AllProjectsAsync(
                 string? category = null,
                 string? phase = null,
@@ -27,7 +25,7 @@ namespace DesignBureau.Core.Contracts
                 string? searchTerm = null,
                 ProjectSorting sorting = ProjectSorting.LastAdded,
                 int currentPage = 1,
-                int housesPerPage = 1);
+                int projectsPerPage = 1);
 
         Task<IEnumerable<string>> AllCategoriesNamesAsync();
 
@@ -54,6 +52,14 @@ namespace DesignBureau.Core.Contracts
 
 		Task<ProjectServiceModel> ProjectToDeleteByIdAsync(int id);
 
+        Task<ProjectGalleryServiceModel> AllImagesByProjectIdAsync(int projectId);
 
-	}
+        Task<AllProjectsGalleryViewModel> AllProjectsGalleryAsync(
+            string? category = null,
+            ProjectSorting sorting = ProjectSorting.LastAdded,
+            int currentPage = 1,
+            int projectsPerPage = 1);
+
+
+    }
 }

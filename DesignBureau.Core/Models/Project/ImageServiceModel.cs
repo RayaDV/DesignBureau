@@ -1,6 +1,6 @@
 ﻿namespace DesignBureau.Core.Models.Project
 {
-    public class ProjectImageServiceModel
+    public class ImageServiceModel
     {
         public int Id { get; set; }
 
