@@ -1,6 +1,5 @@
 ﻿using DesignBureau.Core.Enums;
 using DesignBureau.Core.Models.Designer;
-using DesignBureau.Core.Models.Project;
 
 namespace DesignBureau.Core.Contracts
 {
