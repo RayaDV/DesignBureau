@@ -11,6 +11,8 @@ namespace DesignBureau.Infrastructure.Data.Models
         public Project()
         {
             this.Images = new List<Image>();
+            this.Comments = new List<Comment>();
+            this.Rates = new List<Rate>();
         }
 
         [Key]
@@ -75,5 +77,11 @@ namespace DesignBureau.Infrastructure.Data.Models
         [Required]
         [Comment("Project collection of images")]
         public virtual IEnumerable<Image> Images { get; set; }
+
+        [Comment("Project collection of comments")]
+        public virtual IEnumerable<Comment> Comments { get; set; }
+
+        [Comment("Project collection of rates")]
+        public virtual IEnumerable<Rate> Rates { get; set; }
     }
 }

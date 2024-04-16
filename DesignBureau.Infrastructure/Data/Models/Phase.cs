@@ -22,6 +22,7 @@ namespace DesignBureau.Infrastructure.Data.Models
         [Comment("Phase name")]
         public string Name { get; set; } = string.Empty;
 
+        [Comment("Projects in same phase")]
         public virtual IEnumerable<Project> Projects { get; set; }
     }
 }

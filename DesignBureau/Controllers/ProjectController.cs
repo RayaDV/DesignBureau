@@ -1,14 +1,10 @@
 ﻿using DesignBureau.Attributes;
 using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Models.Project;
-using DesignBureau.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Claims;
 using static DesignBureau.Core.Constants.MessageConstants;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DesignBureau.Controllers
 {
@@ -228,7 +224,24 @@ namespace DesignBureau.Controllers
 			return RedirectToAction(nameof(All));
 		}
 
-		[HttpGet]
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> AllGallery([FromQuery] AllProjectsGalleryViewModel model)
+        {
+            var projects = await projectService.AllProjectsGalleryAsync(
+                model.Category,
+                model.Sorting,
+                model.CurrentPage,
+                AllProjectsGalleryViewModel.ProjectsPerPage);
+
+            model.TotalProjectsCount = projects.TotalProjectsCount;
+            model.Projects = projects.Projects;
+            model.Categories = await projectService.AllCategoriesNamesAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
 		public async Task<IActionResult> AddImages()
 		{
 			var model = new ImageFormViewModel();
@@ -321,22 +334,7 @@ namespace DesignBureau.Controllers
             return View();
         }
 
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> AllGallery([FromQuery] AllProjectsGalleryViewModel model)
-        {
-            var projects = await projectService.AllProjectsGalleryAsync(
-                model.Category,
-                model.Sorting,
-                model.CurrentPage,
-                AllProjectsGalleryViewModel.ProjectsPerPage);
 
-            model.TotalProjectsCount = projects.TotalProjectsCount;
-            model.Projects = projects.Projects;
-            model.Categories = await projectService.AllCategoriesNamesAsync();
-
-            return View(model);
-        }
 
 
     }

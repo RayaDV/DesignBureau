@@ -18,6 +18,8 @@ namespace DesignBureau.Data
         public DbSet<Phase> Phases { get; set; } = null!;
         public DbSet<Project> Projects { get; set; } = null!;
         public DbSet<Image> Images { get; set; } = null!;
+        public DbSet<Comment> Comments { get; set; } = null!;
+        public DbSet<Rate> Rates { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -29,6 +31,8 @@ namespace DesignBureau.Data
             builder.ApplyConfiguration(new ProjectConfiguration());
             builder.ApplyConfiguration(new ImageConfiguration());
             builder.ApplyConfiguration(new UserClaimsConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
+            builder.ApplyConfiguration(new RateConfiguration());
 
             base.OnModelCreating(builder);
         }

@@ -45,6 +45,7 @@ namespace DesignBureau.Infrastructure.Data.Models
 
         public virtual ApplicationUser User { get; set; } = null!;
 
+        [Comment("Designer collection of projects")]
         public virtual IEnumerable<Project> Projects { get; set; }
     }
 }

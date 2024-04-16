@@ -45,6 +45,12 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
         public Image SecondProjectFirstImage { get; set; }
         public Image SecondProjectSecondImage { get; set; }
 
+        public Comment FirstProjectComment { get; set; }
+        public Comment SecondProjectComment { get; set; }
+
+        public Rate FirstProjectRate { get; set; }
+        public Rate SecondProjectRate { get; set; }
+
         public SeedData()
         {
             SeedUsers();
@@ -54,6 +60,8 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             SeedPhases();
             SeedProjects();
             SeedImages();
+            SeedComments();
+            SeedRates();
         }
 
 
@@ -233,7 +241,44 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                     ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg",
                     ProjectId = SecondProject.Id
                 };
+        }
 
+        private void SeedComments()
+        {
+            FirstProjectComment = new Comment()
+            {
+                Id = 1,
+                Content = "This is a very difficult project!",
+                Date = DateTime.UtcNow,
+                AuthorId = GuestUser.Id,
+                ProjectId = FirstProject.Id,
+            };
+            SecondProjectComment = new Comment()
+            {
+                Id = 2,
+                Content = "Pipe System made wonderful construction following the workshops. Great job!",
+                Date = DateTime.UtcNow.AddMonths(-1),
+                AuthorId = GuestUser.Id,
+                ProjectId = SecondProject.Id,
+            };
+        }
+
+        private void SeedRates()
+        {
+            FirstProjectRate = new Rate()
+            {
+                Id = 1,
+                IsPositive = true,
+                AuthorId = GuestUser.Id,
+                ProjectId = FirstProject.Id,
+            };
+            SecondProjectRate = new Rate()
+            {
+                Id = 2,
+                IsPositive = true,
+                AuthorId = GuestUser.Id,
+                ProjectId = SecondProject.Id,
+            };
         }
     }
 }

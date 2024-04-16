@@ -15,6 +15,11 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
             builder
+                .HasOne(p => p.Phase)
+                .WithMany(ph => ph.Projects)
+                .HasForeignKey(p => p.PhaseId)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder
                 .HasOne(p => p.Designer)
                 .WithMany(d => d.Projects)
                 .HasForeignKey(p => p.DesignerId)

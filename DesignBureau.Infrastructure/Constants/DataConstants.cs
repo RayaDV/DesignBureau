@@ -51,5 +51,11 @@
         public const int UserLastNameMaxLength = 20;
         public const int UserLastNameMinLength = 3;
 
+        //Comment
+        public const int CommentContentMaxLength = 1000;
+        public const int CommentContentMinLength = 5;
+
+        public const string DateFormat = "dd/MM/yyyy HH:mm";
+
     }
 }
