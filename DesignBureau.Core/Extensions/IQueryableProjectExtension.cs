@@ -1,6 +1,8 @@
 ﻿using DesignBureau.Core.Models.Project;
 using DesignBureau.Infrastructure.Data.Models;
 using DesignBureau.Core.Models.Designer;
+using DesignBureau.Core.Models.Comment;
+using DesignBureau.Infrastructure.Constants;
 
 namespace System.Linq
 {
@@ -41,8 +43,17 @@ namespace System.Linq
                         Email = p.Designer.User.Email,
 						FullName = $"{p.Designer.User.FirstName} {p.Designer.User.LastName}",
 					},
-                    
-                });
+                    Comments = p.Comments.Select(c => new CommentServiceModel()
+                    {
+                        Id = c.Id,
+                        Content = c.Content,
+                        Date = c.Date.ToString(DataConstants.DateFormat),
+                        Title = c.Project.Title,
+                        ProjectImageUrl = c.Project.MainImageUrl,
+                        FullName = $"{c.Author.FirstName} {c.Author.LastName}",
+                        Email = c.Author.Email,
+                    }),
+        });
 		}
 
         public static IQueryable<ProjectFormViewModel> ConvertToProjectFormViewModel(this IQueryable<Project> projects)

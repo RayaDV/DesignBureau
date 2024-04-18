@@ -20,5 +20,17 @@ namespace System.Linq
                     Email = c.Author.Email,
                 });
         }
+
+        public static IQueryable<CommentFormViewModel> ConvertToCommentFormViewModel(this IQueryable<Comment> comments)
+        {
+            return comments
+                .Select(c => new CommentFormViewModel()
+                {
+                    Content = c.Content,
+                    Date = c.Date.ToString(DataConstants.DateFormat),
+                    AuthorId = c.AuthorId,
+                    ProjectId = c.ProjectId,
+                });
+        }
     }
 }

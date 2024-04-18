@@ -1,5 +1,5 @@
-﻿using DesignBureau.Core.Models.Designer;
-using System.ComponentModel.DataAnnotations;
+﻿using DesignBureau.Core.Models.Comment;
+using DesignBureau.Core.Models.Designer;
 
 namespace DesignBureau.Core.Models.Project
 {
@@ -14,6 +14,8 @@ namespace DesignBureau.Core.Models.Project
         public string Phase { get; set; } = string.Empty;
 
         public DesignerServiceModel Designer { get; set; } = null!;
+
+        public IEnumerable<CommentServiceModel> Comments { get; set; } = new List<CommentServiceModel>();
 
 	}
 }

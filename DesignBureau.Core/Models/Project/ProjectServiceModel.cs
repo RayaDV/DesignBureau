@@ -1,8 +1,4 @@
-﻿using DesignBureau.Infrastructure.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DesignBureau.Core.Models.Project
 {

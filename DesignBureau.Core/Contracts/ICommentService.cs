@@ -1,6 +1,7 @@
 ﻿using DesignBureau.Core.Enums;
 using DesignBureau.Core.Models.Comment;
 using DesignBureau.Core.Models.Project;
+using DesignBureau.Infrastructure.Data.Models;
 
 namespace DesignBureau.Core.Contracts
 {
@@ -15,5 +16,16 @@ namespace DesignBureau.Core.Contracts
                 int commentsPerPage = 1);
 
         Task<bool> HasAuthorWithIdAsync(int commentId, string userId);
+
+        Task<CommentFormViewModel?> GetCommentFormViewModelByIdAsync(int id);
+
+        Task EditAsync(int id, CommentFormViewModel model);
+
+        Task<bool> ExistsByIdAsync(int id);
+
+        Task DeleteAsync(int id);
+
+        Task<Comment> CommentToDeleteByIdAsync(int id);
+
     }
 }

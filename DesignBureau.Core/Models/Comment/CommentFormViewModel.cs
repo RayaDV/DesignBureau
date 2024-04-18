@@ -12,15 +12,15 @@ namespace DesignBureau.Core.Models.Comment
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Date and Time")]
-        public DateTime Date { get; set; }
+        public string Date { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Author")]
-        public virtual string AuthorId { get; set; } = string.Empty;
+        public string AuthorId { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Project")]
-        public virtual int ProjectId { get; set; }
+        public int ProjectId { get; set; }
 
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace DesignBureau.Core.Constants
+﻿using DesignBureau.Infrastructure.Constants;
+
+namespace DesignBureau.Core.Constants
 {
     public class MessageConstants
     {
@@ -15,6 +17,8 @@
         public const string CategoryDoesNotExist = "This category does not exist. Enter another one!";
 
         public const string PhaseDoesNotExist = "This phase does not exist. Enter another one!";
+
+        public const string InvalidDate = $"Invalid date! Format must be: {DataConstants.DateFormat}";
 
     }
 }

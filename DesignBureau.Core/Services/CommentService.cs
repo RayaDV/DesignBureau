@@ -1,11 +1,9 @@
 ﻿using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Enums;
 using DesignBureau.Core.Models.Comment;
-using DesignBureau.Core.Models.Project;
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 
 namespace DesignBureau.Core.Services
 {
@@ -56,12 +54,19 @@ namespace DesignBureau.Core.Services
             };
         }
 
+        public async Task<Comment> CommentToDeleteByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Comment>()
+                .Where(c => c.Id == id)
+                .FirstAsync();
+        }
+
         public async Task CreateAsync(CommentFormViewModel model, int projectId)
         {
             Comment comment = new Comment()
             {
                 Content = model.Content,
-                Date = model.Date,
+                Date = DateTime.Now,
                 AuthorId = model.AuthorId,
                 ProjectId = projectId,
             };
@@ -70,10 +75,46 @@ namespace DesignBureau.Core.Services
             await repository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            await repository.DeleteAsync<Comment>(id);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(int id, CommentFormViewModel model)
+        {
+            var comment = await repository.GetByIdAsync<Comment>(id);
+
+            if (comment != null)
+            {
+                comment.Content = model.Content;
+                comment.Date = DateTime.Now;
+                comment.AuthorId = model.AuthorId;
+                comment.ProjectId = model.ProjectId;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Comment>()
+                .AnyAsync(c => c.Id == id);
+        }
+
+        public async Task<CommentFormViewModel?> GetCommentFormViewModelByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Comment>()
+                .Where(c => c.Id == id)
+                .ConvertToCommentFormViewModel()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> HasAuthorWithIdAsync(int commentId, string userId)
         {
             return await repository.AllReadOnly<Comment>()
                 .AnyAsync(c => c.Id == commentId && c.AuthorId == userId);
         }
+
     }
 }

@@ -1,12 +1,13 @@
 ﻿using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Models.Comment;
 using DesignBureau.Core.Models.Project;
-using DesignBureau.Core.Services;
-using DesignBureau.Infrastructure.Data.Models;
+using DesignBureau.Infrastructure.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
+using System.Globalization;
 using System.Security.Claims;
+using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Controllers
 {
@@ -48,11 +49,12 @@ namespace DesignBureau.Controllers
 
             var model = new CommentFormViewModel
             {
-                Date = DateTime.UtcNow,
+                Date = DateTime.Now.ToString(DataConstants.DateFormat),
+                AuthorId = User.Id(),
                 ProjectId = projectId,
             };
 
-            return View(model);
+            return View("_PartialAddComment", model);
         }
 
         [HttpPost]
@@ -63,17 +65,76 @@ namespace DesignBureau.Controllers
                 return BadRequest();
             };
 
-            if (!ModelState.IsValid)
+            await commentService.CreateAsync(model, projectId);
+
+            return RedirectToAction("Details", "Project", new { id = projectId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            if (await commentService.ExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            };
+
+            if (await commentService.HasAuthorWithIdAsync(id, User.Id()) == false
+                    && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            var model = await commentService.GetCommentFormViewModelByIdAsync(id);
+
+            return View("_PartialAddComment", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CommentFormViewModel model)
+        {
+
+            if (await commentService.ExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            };
+
+            if (await commentService.HasAuthorWithIdAsync(id, User.Id()) == false
+                    && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            if (ModelState.IsValid == false)
             {
                 return View(model);
             }
 
-            await commentService.CreateAsync(model, projectId);
+            await commentService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await commentService.ExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            }
 
+            if (await commentService.HasAuthorWithIdAsync(id, User.Id()) == false
+                    && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            var comment = await commentService.CommentToDeleteByIdAsync(id);
+
+            await commentService.DeleteAsync(id);
+
+            return RedirectToAction("Details", "Project", new { id = comment.ProjectId });
+        }
 
 
     }
