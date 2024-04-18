@@ -4,6 +4,7 @@ using DesignBureau.Core.Models.Project;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using DesignBureau.Core.Extensions;
 using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Controllers
@@ -63,7 +64,7 @@ namespace DesignBureau.Controllers
 
 		[HttpGet]
 		[AllowAnonymous]
-		public async Task<IActionResult> Details(int id)
+		public async Task<IActionResult> Details(int id, string information)
 		{
 			if (await projectService.ExistsByIdAsync(id) == false)
 			{
@@ -72,7 +73,12 @@ namespace DesignBureau.Controllers
 
 			var model = await projectService.ProjectDetailsByIdAsync(id);
 
-			return View(model);
+            if (information != model.GetInformation())
+            {
+                return BadRequest();
+            }
+
+            return View(model);
 		}
 
 
@@ -115,7 +121,7 @@ namespace DesignBureau.Controllers
 
 			int newProjectId = await projectService.CreateAsync(model, designerId);
 
-			return RedirectToAction(nameof(Details), new { id = newProjectId });
+			return RedirectToAction(nameof(Details), new { id = newProjectId, information = model.GetInformation() });
 		}
 
 
@@ -172,7 +178,7 @@ namespace DesignBureau.Controllers
 
 			await projectService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(Details), new { id = id });
+            return RedirectToAction(nameof(Details), new { id = id, information = model.GetInformation() });
 		}
 
 

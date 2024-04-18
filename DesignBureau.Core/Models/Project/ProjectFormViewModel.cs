@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DesignBureau.Core.Contracts;
+using System.ComponentModel.DataAnnotations;
 using static DesignBureau.Core.Constants.MessageConstants;
 using static DesignBureau.Infrastructure.Constants.DataConstants;
 
 namespace DesignBureau.Core.Models.Project
 {
-    public class ProjectFormViewModel
+    public class ProjectFormViewModel : IProjectModel
 	{
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(ProjectTitleMaxLength, MinimumLength = ProjectTitleMinLength, ErrorMessage = LengthMessage)]

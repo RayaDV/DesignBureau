@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DesignBureau.Core.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace DesignBureau.Core.Models.Project
 {
-    public class ProjectServiceModel
+    public class ProjectServiceModel : IProjectModel
     {
         public int Id { get; set; }
 

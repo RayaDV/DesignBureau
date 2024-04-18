@@ -150,7 +150,9 @@ namespace DesignBureau.Core.Services
                 {
                     Id = p.Id,
                     Title = p.Title,
-                    MainImageUrl = p.MainImageUrl
+                    MainImageUrl = p.MainImageUrl,
+                    Country = p.Country,
+                    Town = p.Town,
                 })
                 .ToListAsync();
         }
