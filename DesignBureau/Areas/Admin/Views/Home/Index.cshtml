@@ -16,3 +16,36 @@
     <a asp-area="Admin" asp-controller="User" asp-action="All" class="btn btn-dark btn-lg m-1">Users</a>
     <a asp-area="" asp-controller="Comment" asp-action="All" class="btn btn-dark btn-lg m-1">Comments</a>
 </div>
+
+
+<div class="mb-5"></div>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <button class="btn btn-dark btn-lg m-1" id="statistics-button">Show Statistics</button>
+    </div>
+</div>
+
+<div class="mt-4 p-5 bg-light d-none" id="statistics">
+    <div class="row">
+        <h2 class="col-md-3 text-center" id="total-projects"></h2>
+        <h2 class="col-md-3 text-center" id="total-comments"></h2>
+        <h2 class="col-md-3 text-center" id="team-count"></h2>
+        <h2 class="col-md-3 text-center" id="users-count"></h2>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#statistics-button').on('click', ev => {
+            $.get('/api/statistic', data => {
+                $('#total-projects').text(data.totalProjects + ' Projects');
+                $('#total-comments').text(data.totalComments + ' Comments');
+                $('#team-count').text(data.teamCount + ' Designers');
+                $('#users-count').text(data.usersCount + ' Users');
+                $('#statistics').removeClass('d-none');
+                $('#statistics-button').hide();
+            });
+        });
+    </script>
+}
