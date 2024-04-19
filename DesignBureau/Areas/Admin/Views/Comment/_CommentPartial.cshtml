@@ -122,7 +122,7 @@
         // set event handler on "Apply" button
         $(`#js-apply-@Model.Id`).on('click', () => {
             console.log("apply: ", newContent);
-            $.get(`/Comment/Edit/@Model.Id`, {
+            $.get(`Admin/Comment/Edit/@Model.Id`, {
                 Content: newContent,
                 AuthorId: '@Model.AuthorId',
                 ProjectId: @Model.ProjectId
@@ -132,7 +132,7 @@
 
     // set event handler on "Delete" button
     $(`#js-delete-@Model.Id`).on('click', () => {
-        $.get(`/Comment/Delete/@Model.Id`, () => {
+        $.get(`Admin/Comment/Delete/@Model.Id`, () => {
             window.location.reload()
         });
     })

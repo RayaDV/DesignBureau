@@ -18,5 +18,7 @@ namespace DesignBureau.Core.Contracts
 
         Task DeleteAsync(string userId);
 
+        Task<IEnumerable<UserAllServiceModel>> AllAsync();
+
     }
 }

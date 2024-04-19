@@ -46,5 +46,7 @@ namespace DesignBureau.Infrastructure.Data.Models
 
         [Comment("User collection of rates")]
         public virtual IEnumerable<Rate> Rates { get; set; }
+
+        public Designer? Designer { get; set; }
     }
 }

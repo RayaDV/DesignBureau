@@ -18,6 +18,21 @@ namespace DesignBureau.Core.Services
             this.repository = repository;
         }
 
+        public async Task<IEnumerable<UserAllServiceModel>> AllAsync()
+        {
+            return await repository.AllReadOnly<ApplicationUser>()
+                .Include(u => u.Designer)
+                .Select(u => new UserAllServiceModel()
+                {
+                    Email = u.Email,
+                    FullName = $"{u.FirstName} {u.LastName}",
+                    PhoneNumber = u.Designer != null ? u.Designer.PhoneNumber : null,
+                    IsDesigner = u.Designer != null,
+                    CommentsCount = u.Comments.Count(),
+                })
+                .ToListAsync();
+        }
+
         public async Task<string> CreateAsync(UserServiceModel model)
         {
             string id = Guid.NewGuid().ToString();

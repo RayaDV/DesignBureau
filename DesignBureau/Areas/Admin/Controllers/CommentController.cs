@@ -30,6 +30,7 @@ namespace DesignBureau.Areas.Admin.Controllers
             return View(model);
         }
 
+
         public async Task<IActionResult> Edit(int id, CommentFormViewModel model)
         {
 
@@ -42,6 +43,7 @@ namespace DesignBureau.Areas.Admin.Controllers
 
             return RedirectToAction("All", "Comment", new { Area = "Admin" });
         }
+
 
         public async Task<IActionResult> Delete(int id)
         {
