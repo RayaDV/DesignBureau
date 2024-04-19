@@ -1,4 +1,5 @@
 ﻿using DesignBureau.Core.Enums;
+using DesignBureau.Core.Models.Admin.Designer;
 using DesignBureau.Core.Models.Designer;
 
 namespace DesignBureau.Core.Contracts

@@ -1,5 +1,6 @@
 ﻿using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Enums;
+using DesignBureau.Core.Models.Admin.Comment;
 using DesignBureau.Core.Models.Comment;
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;

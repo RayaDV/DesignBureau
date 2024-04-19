@@ -1,4 +1,5 @@
 ﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Models.Admin.Comment;
 using DesignBureau.Core.Models.Comment;
 using Microsoft.AspNetCore.Mvc;
 

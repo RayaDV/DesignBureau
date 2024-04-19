@@ -1,6 +1,7 @@
 ﻿using DesignBureau.Attributes;
 using DesignBureau.Controllers;
 using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Models.Admin.Designer;
 using DesignBureau.Core.Models.Designer;
 using DesignBureau.Core.Models.Project;
 using DesignBureau.Core.Models.User;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DesignBureau.Core.Models.Comment
+namespace DesignBureau.Core.Models.Admin.Comment
 {
     public class CommentServiceModel
     {

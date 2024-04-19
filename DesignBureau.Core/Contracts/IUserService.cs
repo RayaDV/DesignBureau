@@ -1,4 +1,5 @@
-﻿using DesignBureau.Core.Models.Designer;
+﻿using DesignBureau.Core.Models.Admin.User;
+using DesignBureau.Core.Models.Designer;
 using DesignBureau.Core.Models.User;
 using DesignBureau.Infrastructure.Data.Models;
 

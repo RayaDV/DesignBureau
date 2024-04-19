@@ -1,4 +1,5 @@
-﻿using DesignBureau.Core.Models.Comment;
+﻿using DesignBureau.Core.Models.Admin.Comment;
+using DesignBureau.Core.Models.Comment;
 using DesignBureau.Infrastructure.Constants;
 using DesignBureau.Infrastructure.Data.Models;
 

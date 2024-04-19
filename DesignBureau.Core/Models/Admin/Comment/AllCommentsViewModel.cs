@@ -1,8 +1,7 @@
 ﻿using DesignBureau.Core.Enums;
-using DesignBureau.Core.Models.Designer;
 using System.ComponentModel.DataAnnotations;
 
-namespace DesignBureau.Core.Models.Comment
+namespace DesignBureau.Core.Models.Admin.Comment
 {
     public class AllCommentsViewModel
     {

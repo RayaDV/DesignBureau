@@ -1,4 +1,4 @@
-﻿namespace DesignBureau.Core.Models.Designer
+﻿namespace DesignBureau.Core.Models.Admin.Designer
 {
     public class DesignerDisciplineServiceModel
     {

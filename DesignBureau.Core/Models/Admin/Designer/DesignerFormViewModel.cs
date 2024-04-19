@@ -1,15 +1,11 @@
-﻿using DesignBureau.Infrastructure.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using static DesignBureau.Infrastructure.Constants.DataConstants;
+﻿using System.ComponentModel.DataAnnotations;
 using static DesignBureau.Core.Constants.MessageConstants;
+using static DesignBureau.Infrastructure.Constants.DataConstants;
 
-namespace DesignBureau.Core.Models.Designer
+namespace DesignBureau.Core.Models.Admin.Designer
 {
     public class DesignerFormViewModel
-	{
+    {
         [Required(ErrorMessage = RequiredMessage)]
         [EmailAddress]
         [Display(Name = "Designer Email Address")]
@@ -31,8 +27,8 @@ namespace DesignBureau.Core.Models.Designer
         public string PhoneNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(DesignerMinExperience, DesignerMaxExperience, 
-            ConvertValueInInvariantCulture = true, 
+        [Range(DesignerMinExperience, DesignerMaxExperience,
+            ConvertValueInInvariantCulture = true,
             ErrorMessage = "Work experience must be not a negative number less than {2} years")]
         [Display(Name = "Work Experience in years")]
         public int? DesignExperience { get; set; }

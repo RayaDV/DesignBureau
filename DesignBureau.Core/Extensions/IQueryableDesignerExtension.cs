@@ -1,4 +1,5 @@
-﻿using DesignBureau.Core.Models.Designer;
+﻿using DesignBureau.Core.Models.Admin.Designer;
+using DesignBureau.Core.Models.Designer;
 using DesignBureau.Core.Models.Project;
 using DesignBureau.Infrastructure.Data.Models;
 using System;

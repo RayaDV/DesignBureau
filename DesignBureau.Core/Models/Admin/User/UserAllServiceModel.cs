@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DesignBureau.Core.Models.User
+namespace DesignBureau.Core.Models.Admin.User
 {
     public class UserAllServiceModel
     {

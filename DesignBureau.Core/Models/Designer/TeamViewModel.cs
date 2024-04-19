@@ -1,11 +1,5 @@
 ﻿using DesignBureau.Core.Enums;
-using DesignBureau.Core.Models.Project;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DesignBureau.Core.Models.Designer
 {

@@ -1,5 +1,6 @@
 ﻿using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Enums;
+using DesignBureau.Core.Models.Admin.Designer;
 using DesignBureau.Core.Models.Designer;
 using DesignBureau.Core.Models.Project;
 using DesignBureau.Core.Models.User;
