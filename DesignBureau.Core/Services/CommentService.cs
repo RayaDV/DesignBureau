@@ -89,8 +89,6 @@ namespace DesignBureau.Core.Services
             {
                 comment.Content = model.Content;
                 comment.Date = DateTime.Now;
-                comment.AuthorId = model.AuthorId;
-                comment.ProjectId = model.ProjectId;
 
                 await repository.SaveChangesAsync();
             }

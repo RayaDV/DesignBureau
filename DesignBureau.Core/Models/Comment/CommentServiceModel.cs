@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DesignBureau.Core.Models.Comment
 {
@@ -10,6 +9,10 @@ namespace DesignBureau.Core.Models.Comment
         public string Content { get; set; } = string.Empty;
 
         public string Date { get; set; } = string.Empty;
+
+        public string AuthorId { get; set; } = string.Empty;
+
+        public int ProjectId { get; set; }
 
         [Display(Name = "Author full name")]
         public string FullName { get; set; } = string.Empty;

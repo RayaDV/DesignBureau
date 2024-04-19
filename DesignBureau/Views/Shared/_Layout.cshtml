@@ -30,9 +30,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="AllGallery">Gallery</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="All">Comments</a>
-                        </li>
+
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             if (await designerService.ExistsByUserIdAsync(User.Id()) && User.IsAdmin() == false)
@@ -51,6 +49,9 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="All">Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Comment" asp-action="All">Comments</a>
                                 </li>
                             }
                         }

@@ -41,19 +41,18 @@ namespace System.Linq
                     {
                         PhoneNumber = p.Designer.PhoneNumber,
                         Email = p.Designer.User.Email,
-						FullName = $"{p.Designer.User.FirstName} {p.Designer.User.LastName}",
-					},
-                    Comments = p.Comments.Select(c => new CommentServiceModel()
+                        FullName = $"{p.Designer.User.FirstName} {p.Designer.User.LastName}",
+                    },
+                    Comments = p.Comments.Select(c => new ProjectCommentServiceModel()
                     {
                         Id = c.Id,
+                        ProjectId = c.ProjectId,
+                        AuthorId = c.AuthorId,
                         Content = c.Content,
                         Date = c.Date.ToString(DataConstants.DateFormat),
-                        Title = c.Project.Title,
-                        ProjectImageUrl = c.Project.MainImageUrl,
                         FullName = $"{c.Author.FirstName} {c.Author.LastName}",
-                        Email = c.Author.Email,
                     }),
-        });
+                }); ;
 		}
 
         public static IQueryable<ProjectFormViewModel> ConvertToProjectFormViewModel(this IQueryable<Project> projects)
@@ -96,6 +95,18 @@ namespace System.Linq
                         Id = i.Id,
                         ImageUrl = i.ImageUrl,
                     })
+                });
+        }
+
+        public static IQueryable<ProjectInformationModel> ConvertToProjectInformationModel(this IQueryable<Project> projects)
+        {
+            return projects
+                .Select(p => new ProjectInformationModel()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Country = p.Country,
+                    Town = p.Town,
                 });
         }
     }

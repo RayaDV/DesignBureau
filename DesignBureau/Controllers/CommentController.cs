@@ -1,13 +1,10 @@
 ﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Extensions;
 using DesignBureau.Core.Models.Comment;
-using DesignBureau.Core.Models.Project;
 using DesignBureau.Infrastructure.Constants;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
-using System.Globalization;
+using Microsoft.VisualBasic;
 using System.Security.Claims;
-using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Controllers
 {
@@ -22,22 +19,6 @@ namespace DesignBureau.Controllers
             this.projectService = projectService;
         }
 
-
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> All([FromQuery] AllCommentsViewModel model)
-        {
-            var comments = await commentService.AllCommentsAsync(
-                model.SearchTerm,
-                model.Sorting,
-                model.CurrentPage,
-                AllCommentsViewModel.CommentsPerPage);
-
-            model.TotalCommentsCount = comments.TotalCommentsCount;
-            model.Comments = comments.Comments;
-
-            return View(model);
-        }
 
         [HttpGet]
         public async Task<IActionResult> Add(int projectId)
@@ -67,30 +48,14 @@ namespace DesignBureau.Controllers
 
             await commentService.CreateAsync(model, projectId);
 
-            return RedirectToAction("Details", "Project", new { id = projectId });
+            var project = await projectService.GetProjectInformationModelByIdAsync(projectId);
+
+            string information = project != null ? project.GetInformation() : string.Empty;
+
+            return RedirectToAction("Details", "Project", new { id = projectId, information = information });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
-        {
 
-            if (await commentService.ExistsByIdAsync(id) == false)
-            {
-                return BadRequest();
-            };
-
-            if (await commentService.HasAuthorWithIdAsync(id, User.Id()) == false
-                    && User.IsAdmin() == false)
-            {
-                return Unauthorized();
-            }
-
-            var model = await commentService.GetCommentFormViewModelByIdAsync(id);
-
-            return View("_PartialAddComment", model);
-        }
-
-        [HttpPost]
         public async Task<IActionResult> Edit(int id, CommentFormViewModel model)
         {
 
@@ -105,17 +70,16 @@ namespace DesignBureau.Controllers
                 return Unauthorized();
             }
 
-            if (ModelState.IsValid == false)
-            {
-                return View(model);
-            }
-
             await commentService.EditAsync(id, model);
 
-            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+            var project = await projectService.GetProjectInformationModelByIdAsync(model.ProjectId);
+
+            string information = project != null ? project.GetInformation() : string.Empty;
+            
+            return Redirect($"/Project/Details/{model.ProjectId}/{information}");
         }
 
-        [HttpPost]
+
         public async Task<IActionResult> Delete(int id)
         {
             if (await commentService.ExistsByIdAsync(id) == false)
@@ -131,9 +95,13 @@ namespace DesignBureau.Controllers
 
             var comment = await commentService.CommentToDeleteByIdAsync(id);
 
+            var project = await projectService.GetProjectInformationModelByIdAsync(comment.ProjectId);
+
+            string information = project != null ? project.GetInformation() : string.Empty;
+
             await commentService.DeleteAsync(id);
 
-            return RedirectToAction("Details", "Project", new { id = comment.ProjectId });
+            return Redirect($"/Project/Details/{comment.ProjectId}/{information}");
         }
 
 

@@ -15,7 +15,7 @@ namespace DesignBureau.Core.Models.Project
 
         public DesignerServiceModel Designer { get; set; } = null!;
 
-        public IEnumerable<CommentServiceModel> Comments { get; set; } = new List<CommentServiceModel>();
+        public IEnumerable<ProjectCommentServiceModel> Comments { get; set; } = new List<ProjectCommentServiceModel>();
 
 	}
 }

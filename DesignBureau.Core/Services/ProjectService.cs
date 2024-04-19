@@ -326,5 +326,13 @@ namespace DesignBureau.Core.Services
                 TotalProjectsCount = projects.Count()
             };
         }
+
+        public async Task<ProjectInformationModel?> GetProjectInformationModelByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Project>()
+                .Where(h => h.Id == id)
+                .ConvertToProjectInformationModel()
+                .FirstOrDefaultAsync();
+        }
     }
 }

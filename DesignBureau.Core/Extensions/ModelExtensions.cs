@@ -7,7 +7,7 @@ namespace DesignBureau.Core.Extensions
     {
         public static string GetInformation(this IProjectModel project)
         {
-            string info = project.Country.Replace(" ", "-") + project.Town.Replace(" ", "-") + GetTitle(project.Title);
+            string info = $"{project.Country.Replace(" ", "-")}-{project.Town.Replace(" ", "-")}-{GetTitle(project.Title)}";
             info = Regex.Replace(info, @"[^a-zA-Z0-9\-]", string.Empty);
 
             return info;

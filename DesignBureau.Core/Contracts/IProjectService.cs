@@ -60,6 +60,8 @@ namespace DesignBureau.Core.Contracts
             int currentPage = 1,
             int projectsPerPage = 1);
 
+        Task<ProjectInformationModel?> GetProjectInformationModelByIdAsync(int id);
+
 
     }
 }

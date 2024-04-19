@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DesignBureau.Core.Contracts;
+using System.ComponentModel.DataAnnotations;
 using static DesignBureau.Core.Constants.MessageConstants;
 using static DesignBureau.Infrastructure.Constants.DataConstants;
 
@@ -6,6 +7,7 @@ namespace DesignBureau.Core.Models.Comment
 {
     public class CommentFormViewModel
     {
+
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(CommentContentMaxLength, MinimumLength = CommentContentMinLength, ErrorMessage = LengthMessage)]
         public string Content { get; set; } = string.Empty;
