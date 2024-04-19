@@ -7,5 +7,7 @@
         public const string AdminEmail = "admin@gmail.com";
 
         public const string AdminAreaName = "Admin";
+
+        public const string UsersCacheKey = "UsersCacheKey";
     }
 }

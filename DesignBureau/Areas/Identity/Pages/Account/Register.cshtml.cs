@@ -8,12 +8,15 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Caching.Memory;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 using static DesignBureau.Core.Constants.MessageConstants;
+using static DesignBureau.Core.Constants.AdminConstants;
 using static DesignBureau.Infrastructure.Constants.CustomClaims;
 using static DesignBureau.Infrastructure.Constants.DataConstants;
+
 
 namespace DesignBureau.Areas.Identity.Pages.Account
 {
@@ -25,18 +28,21 @@ namespace DesignBureau.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly IMemoryCache _cache;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger)
+            ILogger<RegisterModel> logger,
+            IMemoryCache cache)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
+            _cache = cache;
         }
 
         [BindProperty]
@@ -118,7 +124,8 @@ namespace DesignBureau.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await _signInManager.SignInAsync(user, isPersistent: false); 
+                        _cache.Remove(UsersCacheKey);      //Clear the Cache when Creating a New User
                         return LocalRedirect(returnUrl);
                     }
                 }

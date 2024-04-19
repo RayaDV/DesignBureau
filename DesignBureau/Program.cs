@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 builder.Services.AddApplicationServices();
-builder.Services.AddMemoryCache();
+builder.Services.AddMemoryCache(); // Register the cache service. This will improve the overall app's performance. The IMemoryCache interface will allow us to refresh a given page on a set amount of time, no matter if there is a new data to be extracted from the database.
 
 builder.Services.AddRazorPages();
 
