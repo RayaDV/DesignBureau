@@ -20,5 +20,14 @@ namespace DesignBureau.Core.Constants
 
         public const string InvalidDate = $"Invalid date! Format must be: {DataConstants.DateFormat}";
 
+        public const string UserMessageSuccess = "UserMessageSuccess";
+
+        public const string UserMessageError = "UserMessageError";
+
+        public const string UserMessageInfo = "UserMessageInfo";
+
+        public const string UserMessageWarning = "UserMessageWarning";
+
+
     }
 }

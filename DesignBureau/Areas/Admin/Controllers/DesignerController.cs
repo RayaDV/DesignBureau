@@ -1,13 +1,8 @@
-﻿using DesignBureau.Attributes;
-using DesignBureau.Controllers;
-using DesignBureau.Core.Contracts;
+﻿using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Models.Admin.Designer;
 using DesignBureau.Core.Models.Designer;
-using DesignBureau.Core.Models.Project;
 using DesignBureau.Core.Models.User;
-using DesignBureau.Core.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Areas.Admin.Controllers
@@ -71,6 +66,8 @@ namespace DesignBureau.Areas.Admin.Controllers
 
             await designerService.CreateAsync(model, id);
 
+            TempData[UserMessageSuccess] = "You have successfully added a new designer";
+
             return RedirectToAction(nameof(DesignBureau.Controllers.DesignerController.Team), new { Area = "" });
         }
 
@@ -109,6 +106,8 @@ namespace DesignBureau.Areas.Admin.Controllers
 
             await designerService.EditAsync(id, model);
 
+            TempData[UserMessageSuccess] = "You have successfully edited a designer";
+
             return RedirectToAction(nameof(DesignBureau.Controllers.DesignerController.Team), new { Area = ""});
         }
 
@@ -146,6 +145,8 @@ namespace DesignBureau.Areas.Admin.Controllers
             }
 
             await designerService.DeleteAsync(model.Id);
+
+            TempData[UserMessageSuccess] = "You have successfully deleted the designer";
 
             return RedirectToAction(nameof(DesignBureau.Controllers.DesignerController.Team), new { Area = "" });
         }

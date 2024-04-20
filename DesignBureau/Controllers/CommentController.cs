@@ -3,8 +3,8 @@ using DesignBureau.Core.Extensions;
 using DesignBureau.Core.Models.Comment;
 using DesignBureau.Infrastructure.Constants;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using System.Security.Claims;
+using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Controllers
 {
@@ -52,6 +52,8 @@ namespace DesignBureau.Controllers
 
             string information = project != null ? project.GetInformation() : string.Empty;
 
+            TempData[UserMessageSuccess] = "You have successfully added a comment";
+
             return RedirectToAction("Details", "Project", new { id = projectId, information = information });
         }
 
@@ -75,7 +77,9 @@ namespace DesignBureau.Controllers
             var project = await projectService.GetProjectInformationModelByIdAsync(model.ProjectId);
 
             string information = project != null ? project.GetInformation() : string.Empty;
-            
+
+            TempData[UserMessageSuccess] = "You have successfully edited a comment";
+
             return Redirect($"/Project/Details/{model.ProjectId}/{information}");
         }
 
@@ -100,6 +104,8 @@ namespace DesignBureau.Controllers
             string information = project != null ? project.GetInformation() : string.Empty;
 
             await commentService.DeleteAsync(id);
+
+            TempData[UserMessageSuccess] = "You have successfully deleted a comment";
 
             return Redirect($"/Project/Details/{comment.ProjectId}/{information}");
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using DesignBureau.Core.Extensions;
 using static DesignBureau.Core.Constants.MessageConstants;
+using Microsoft.Win32;
 
 namespace DesignBureau.Controllers
 {
@@ -121,7 +122,9 @@ namespace DesignBureau.Controllers
 
 			int newProjectId = await projectService.CreateAsync(model, designerId);
 
-			return RedirectToAction(nameof(Details), new { id = newProjectId, information = model.GetInformation() });
+            TempData[UserMessageSuccess] = "You have successfully added a project";
+
+            return RedirectToAction(nameof(Details), new { id = newProjectId, information = model.GetInformation() });
 		}
 
 
@@ -178,6 +181,8 @@ namespace DesignBureau.Controllers
 
 			await projectService.EditAsync(id, model);
 
+            TempData[UserMessageSuccess] = "You have successfully edited a project";
+
             return RedirectToAction(nameof(Details), new { id = id, information = model.GetInformation() });
 		}
 
@@ -227,7 +232,9 @@ namespace DesignBureau.Controllers
 
 			await projectService.DeleteAsync(model.Id);
 
-			return RedirectToAction(nameof(All));
+            TempData[UserMessageSuccess] = "You have successfully deleted a project";
+
+            return RedirectToAction(nameof(All));
 		}
 
         [AllowAnonymous]
@@ -250,9 +257,8 @@ namespace DesignBureau.Controllers
         [HttpGet]
 		public async Task<IActionResult> AddImages()
 		{
-			var model = new ImageFormViewModel();
 
-			return View(model);
+			return View();
 		}
 
 		[HttpPost]

@@ -2,6 +2,7 @@
 using DesignBureau.Core.Models.Admin.Comment;
 using DesignBureau.Core.Models.Comment;
 using Microsoft.AspNetCore.Mvc;
+using static DesignBureau.Core.Constants.MessageConstants;
 
 namespace DesignBureau.Areas.Admin.Controllers
 {
@@ -42,6 +43,8 @@ namespace DesignBureau.Areas.Admin.Controllers
 
             await commentService.EditAsync(id, model);
 
+            TempData[UserMessageSuccess] = "You have successfully edited a comment";
+
             return RedirectToAction("All", "Comment", new { Area = "Admin" });
         }
 
@@ -54,6 +57,8 @@ namespace DesignBureau.Areas.Admin.Controllers
             }
 
             await commentService.DeleteAsync(id);
+
+            TempData[UserMessageSuccess] = "You have successfully deleted a comment";
 
             return RedirectToAction("All", "Comment", new { Area = "Admin" });
         }
