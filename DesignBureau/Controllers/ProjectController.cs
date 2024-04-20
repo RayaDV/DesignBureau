@@ -7,6 +7,8 @@ using System.Security.Claims;
 using DesignBureau.Core.Extensions;
 using static DesignBureau.Core.Constants.MessageConstants;
 using Microsoft.Win32;
+using DesignBureau.Infrastructure.Common;
+using DesignBureau.Infrastructure.Data.Models;
 
 namespace DesignBureau.Controllers
 {
@@ -120,7 +122,7 @@ namespace DesignBureau.Controllers
 
 			int designerId = await designerService.GetDesignerIdAsync(User.Id());
 
-			int newProjectId = await projectService.CreateAsync(model, designerId);
+            int newProjectId = await projectService.CreateAsync(model, designerId);
 
             TempData[UserMessageSuccess] = "You have successfully added a project";
 
@@ -252,21 +254,6 @@ namespace DesignBureau.Controllers
             model.Categories = await projectService.AllCategoriesNamesAsync();
 
             return View(model);
-        }
-
-        [HttpGet]
-		public async Task<IActionResult> AddImages()
-		{
-
-			return View();
-		}
-
-		[HttpPost]
-        public async Task<IActionResult> AddImages(ImageFormViewModel model)
-        {
-
-
-            return RedirectToAction(nameof(Gallery));
         }
 
 		[HttpGet]

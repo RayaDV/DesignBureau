@@ -4,6 +4,7 @@ using DesignBureau.Core.Models.Home;
 using DesignBureau.Core.Models.Project;
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace DesignBureau.Core.Services
@@ -11,10 +12,12 @@ namespace DesignBureau.Core.Services
     public class ProjectService : IProjectService
     {
         private readonly IRepository repository;
+        private readonly IWebHostEnvironment webHostEnv;
 
-        public ProjectService(IRepository repository)
+        public ProjectService(IRepository repository, IWebHostEnvironment webHostEnv)
         {
             this.repository = repository;
+            this.webHostEnv = webHostEnv;
         }
 
         public async Task<ProjectQueryServiceModel> AllProjectsAsync(
@@ -190,6 +193,8 @@ namespace DesignBureau.Core.Services
             await repository.AddAsync(project);
             await repository.SaveChangesAsync();
 
+            Directory.CreateDirectory(this.webHostEnv.WebRootPath + $"/img/Projects/{project.Id}");
+
             return project.Id;
         }
 
@@ -277,6 +282,7 @@ namespace DesignBureau.Core.Services
                 .Select(i => new ImageServiceModel()
                 {
                     Id = i.Id,
+                    ProjectId = i.ProjectId,
                     ImageUrl = i.ImageUrl,
                 })
                 .ToListAsync();
@@ -333,6 +339,11 @@ namespace DesignBureau.Core.Services
                 .Where(h => h.Id == id)
                 .ConvertToProjectInformationModel()
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<Project?> GetProjectByIdAsync(int id)
+        {
+            return await repository.GetByIdAsync<Project>(id);
         }
     }
 }

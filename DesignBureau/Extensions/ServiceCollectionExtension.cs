@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IStatisticService, StatisticService>();
+            services.AddScoped<IImageService, ImageService>();
 
             return services;
         }

@@ -23,6 +23,11 @@
                 <input asp-for="MainImageUrl" class="form-control" placeholder="Add project main image URL here ...">
                 <span asp-validation-for="MainImageUrl" class="small text-danger"></span>
             </div>
+            @* <div class="btn btn-primary btn-lg text-center"
+                 role="button" onclick="document.getElementById('main-image').click(); return false;">
+                Add Image
+            </div>
+            <input type="file" asp-for="UploadedImage" id="main-image" accept="image/*" style="visibility: hidden;"/> *@
             <div class="mb-3">
                 <label asp-for="Architect"></label>
                 <input asp-for="Architect" class="form-control" placeholder="Add project architect here ...">

@@ -8,6 +8,8 @@
 
         Task AddAsync<T>(T entity) where T : class;
 
+        Task AddRangeAsync<T>(List<T> entity) where T : class;
+
         Task<int> SaveChangesAsync();   // return the count of changed entities
 
         Task<T?> GetByIdAsync<T>(object id) where T : class;

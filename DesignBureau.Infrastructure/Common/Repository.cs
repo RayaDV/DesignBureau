@@ -32,6 +32,11 @@ namespace DesignBureau.Infrastructure.Common
             await DbSet<T>().AddAsync(entity);
         }
 
+        public async Task AddRangeAsync<T>(List<T> entites) where T : class
+        {
+            await DbSet<T>().AddRangeAsync(entites); ;
+        }
+
         public async Task<int> SaveChangesAsync()
         {
             return await context.SaveChangesAsync();

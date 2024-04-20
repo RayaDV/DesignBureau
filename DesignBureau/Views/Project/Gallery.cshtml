@@ -6,6 +6,8 @@
     var gallery = Model.Gallery.ToList();
 }
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
@@ -55,19 +57,28 @@
     </button>
 </div>
 
-<form method="post" class="m-4 text-center">
+
     @if (await designerService.ExistsByUserIdAsync(User.Id()) || User.IsAdmin())
     {
-        <div class="btn btn-primary btn-lg text-center"
-             role="button" onclick="document.getElementById('file').click(); return false;">
-            Add Images
-        </div>
-        /*<input asp-for="ProjectId" id="projectId" style="visibility: hidden;" value="ProjectId" />
-        <input asp-for="Title" id="title" style="visibility: hidden;" value="Title" />
-        <input asp-for="Gallery" id="gallery" style="visibility: hidden;" value="Gallery" /> */
-        <input type="file" name="file" id="file" accept="image/*" style="visibility: hidden;" onchange="document.getElementById('submit').click(); return false;" />
-        <button asp-area="" asp-controller="Project" asp-action="UploadImages" class="btn btn-primary btn-lg text-center type="submit" id="submit">Submit</button>
+        <form method="post" class="m-4 text-center" asp-area="" asp-controller="Image" asp-action="AddImages" enctype="multipart/form-data">
+            <div class="btn btn-primary btn-lg text-center"
+                 role="button" onclick="document.getElementById('js-add-img').click(); return false;">
+                Add Images
+            </div>
+            <input asp-for="ProjectId" id="projectId" style="visibility: hidden;" value="@Model.ProjectId" />
+            <input asp-for="Title" id="title" style="visibility: hidden;" value="@Model.Title" />
+            <input asp-for="Gallery" id="gallery" style="visibility: hidden;" value="@Model.Gallery" />
+            <input type="file" asp-for="UploadedImages" id="js-add-img" accept="image/*" style="visibility: hidden;" multiple onchange="document.getElementById('submit').click(); return false;"/>
+        <button class="btn btn-primary btn-lg text-center" type="submit" id="submit" style="visibility: hidden;">Submit</button>
+        </form>
     }
-</form>
+
+
+@* <script>
+    $('#js-add-img').on('change', (event) => {
+        console.log(event)
+        console.log(Object.values(event.target.files))//.map(file => file.name));
+    })
+</script> *@
 
 

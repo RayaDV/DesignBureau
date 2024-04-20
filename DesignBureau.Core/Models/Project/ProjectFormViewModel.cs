@@ -1,4 +1,5 @@
 ﻿using DesignBureau.Core.Contracts;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using static DesignBureau.Core.Constants.MessageConstants;
 using static DesignBureau.Infrastructure.Constants.DataConstants;
@@ -25,6 +26,8 @@ namespace DesignBureau.Core.Models.Project
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Project Main Image URL")]
         public string MainImageUrl { get; set; } = string.Empty;
+
+        public  IFormFile UploadedImage { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(ProjectArchitectMaxLength)]

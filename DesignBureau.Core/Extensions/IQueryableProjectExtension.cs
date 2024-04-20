@@ -93,6 +93,7 @@ namespace System.Linq
                     Gallery = p.Images.Select(i => new ImageServiceModel()
                     {
                         Id = i.Id,
+                        ProjectId = i.ProjectId,
                         ImageUrl = i.ImageUrl,
                     })
                 });

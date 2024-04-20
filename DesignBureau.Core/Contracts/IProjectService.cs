@@ -1,6 +1,7 @@
 ﻿using DesignBureau.Core.Enums;
 using DesignBureau.Core.Models.Home;
 using DesignBureau.Core.Models.Project;
+using DesignBureau.Infrastructure.Data.Models;
 
 namespace DesignBureau.Core.Contracts
 {
@@ -61,6 +62,7 @@ namespace DesignBureau.Core.Contracts
             int projectsPerPage = 1);
 
         Task<ProjectInformationModel?> GetProjectInformationModelByIdAsync(int id);
+        Task<Project?> GetProjectByIdAsync(int id);
 
 
     }
