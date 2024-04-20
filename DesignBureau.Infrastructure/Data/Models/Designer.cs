@@ -27,14 +27,13 @@ namespace DesignBureau.Infrastructure.Data.Models
         [Comment("Designer work experience in years")]
         public int? DesignExperience { get; set; }
 
-        [Required]
-        [Comment("Designer image URL")]
+        [Comment("Designer Image URL")]
         public string DesignerImageUrl { get; set; } = string.Empty;
 
         [Required]
         [Comment("Discipline identifier")]
         [ForeignKey(nameof(Discipline))]
-        public int DisciplineId { get; set; }
+        public virtual int DisciplineId { get; set; }
 
         public virtual Discipline Discipline { get; set; } = null!;
 

@@ -40,11 +40,6 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
         public Project FirstProject { get; set; }
         public Project SecondProject { get; set; }
 
-        public Image FirstProjectFirstImage { get; set; }
-        public Image FirstProjectSecondImage { get; set; }
-        public Image SecondProjectFirstImage { get; set; }
-        public Image SecondProjectSecondImage { get; set; }
-
         public Comment FirstProjectComment { get; set; }
         public Comment SecondProjectComment { get; set; }
 
@@ -59,7 +54,6 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             SeedCategories();
             SeedPhases();
             SeedProjects();
-            SeedImages();
             SeedComments();
             SeedRates();
         }
@@ -186,13 +180,15 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 Title = "Multi-purpose building ONYX",
                 Country = "Bulgaria",
                 Town = "Sofia",
-                MainImageUrl = "https://localhost:7134/img/ONYX/ONYX-01.jpg",
                 Architect = "ProArch",
                 YearDesigned = 2019,
                 Description = "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.",
                 CategoryId = OfficeAndResidentialBuildingsCategory.Id,
                 PhaseId = Construction.Id,
-                DesignerId = FirstDesigner.Id
+                DesignerId = FirstDesigner.Id,
+                MainImageUrl = "https://localhost:7134/img/Projects/1/ONYX-01.jpg",
+                Images = new List<string>() { "https://localhost:7134/img/Projects/1/ONYX-02.jpg",
+                                              "https://localhost:7134/img/Projects/1/ONYX-03.jpg"}
             };
 
             SecondProject = new Project()
@@ -201,48 +197,18 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
                 Title = "Multi-purpose building SEG",
                 Country = "Bulgaria",
                 Town = "Krivina",
-                MainImageUrl = "https://localhost:7134/img/SEG/SEG-01.jpg",
                 Architect = "Ivo Petrov Architects",
                 YearDesigned = 2018,
                 Description = "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.",
                 CategoryId = IndustrialBuildingsCategory.Id,
                 PhaseId = Use.Id,
-                DesignerId = FirstDesigner.Id
+                DesignerId = FirstDesigner.Id,
+                MainImageUrl = "https://localhost:7134/img/Projects/2/SEG-01.jpg",
+                Images = new List<string>() { "https://localhost:7134/img/Projects/2/SEG-02.jpg",
+                                              "https://localhost:7134/img/Projects/2/SEG-03.jpg"}
             };
         }
-
-        private void SeedImages()
-        {
-            FirstProjectFirstImage =
-                new Image()
-                {
-                    Id = 1,
-                    ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg",
-                    ProjectId = FirstProject.Id
-                };
-            FirstProjectSecondImage =
-                new Image()
-                {
-                    Id = 2,
-                    ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg",
-                    ProjectId = FirstProject.Id
-                };
-            SecondProjectFirstImage =
-                new Image()
-                {
-                    Id = 3,
-                    ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg",
-                    ProjectId = SecondProject.Id
-                };
-            SecondProjectSecondImage =
-                new Image()
-                {
-                    Id = 4,
-                    ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg",
-                    ProjectId = SecondProject.Id
-                };
-        }
-
+        
         private void SeedComments()
         {
             FirstProjectComment = new Comment()

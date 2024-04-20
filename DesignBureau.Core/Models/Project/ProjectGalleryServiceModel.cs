@@ -12,7 +12,7 @@ namespace DesignBureau.Core.Models.Project
 
         public IFormFileCollection DeletedImages { get; set; }
 
-        public IEnumerable<ImageServiceModel> Gallery { get; set; }
-            = new List<ImageServiceModel>();
+        public IEnumerable<string> Gallery { get; set; }
+            = new List<string>();
     }
 }

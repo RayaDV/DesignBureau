@@ -1,4 +1,5 @@
-﻿using DesignBureau.Core.Contracts;
+﻿using DesignBureau.Core.Constants;
+using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Enums;
 using DesignBureau.Core.Models.Home;
 using DesignBureau.Core.Models.Project;
@@ -21,12 +22,12 @@ namespace DesignBureau.Core.Services
         }
 
         public async Task<ProjectQueryServiceModel> AllProjectsAsync(
-            string? category = null, 
-            string? phase = null, 
-            string? town = null, 
-            string? searchTerm = null, 
-            ProjectSorting sorting = ProjectSorting.LastAdded, 
-            int currentPage = 1, 
+            string? category = null,
+            string? phase = null,
+            string? town = null,
+            string? searchTerm = null,
+            ProjectSorting sorting = ProjectSorting.LastAdded,
+            int currentPage = 1,
             int projectsPerPage = 1)
         {
             var projects = repository.AllReadOnly<Project>();
@@ -49,7 +50,7 @@ namespace DesignBureau.Core.Services
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 string normalizedSearchTerm = searchTerm.ToLower();
-                projects = projects.Where(p => 
+                projects = projects.Where(p =>
                     p.Title.ToLower().Contains(normalizedSearchTerm) ||
                     p.Country.ToLower().Contains(normalizedSearchTerm) ||
                     p.Town.ToLower().Contains(normalizedSearchTerm) ||
@@ -122,7 +123,7 @@ namespace DesignBureau.Core.Services
         }
 
         public async Task<ProjectQueryServiceModel> AllProjectsByDesignerIdAsync(
-            int designerId, 
+            int designerId,
             int currentPage = 1,
             int housesPerPage = 1)
         {
@@ -204,11 +205,11 @@ namespace DesignBureau.Core.Services
                 .AnyAsync(ph => ph.Id == phaseId);
         }
 
-		public async Task<bool> ExistsByIdAsync(int id)
-		{
-			return await repository.AllReadOnly<Project>()
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Project>()
                 .AnyAsync(p => p.Id == id);
-		}
+        }
 
         public async Task<ProjectDetailsServiceModel> ProjectDetailsByIdAsync(int id)
         {
@@ -267,34 +268,25 @@ namespace DesignBureau.Core.Services
             await repository.SaveChangesAsync();
         }
 
-		public async Task<ProjectServiceModel> ProjectToDeleteByIdAsync(int id)
-		{
-			return await repository.AllReadOnly<Project>()
-				.Where(p => p.Id == id)
-				.ConvertToProjectServiceModel()
-				.FirstAsync();
-		}
+        public async Task<ProjectServiceModel> ProjectToDeleteByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Project>()
+                .Where(p => p.Id == id)
+                .ConvertToProjectServiceModel()
+                .FirstAsync();
+        }
 
         public async Task<ProjectGalleryServiceModel> AllImagesByProjectIdAsync(int projectId)
         {
-            var gallery = await repository.AllReadOnly<Image>()
-                .Where(i => i.ProjectId == projectId)
-                .Select(i => new ImageServiceModel()
-                {
-                    Id = i.Id,
-                    ProjectId = i.ProjectId,
-                    ImageUrl = i.ImageUrl,
-                })
-                .ToListAsync();
-
             var project = await repository.AllReadOnly<Project>()
-                .FirstAsync(p => p.Id == projectId);
+                .Where(p => p.Id == projectId)
+                .FirstAsync();
 
             return new ProjectGalleryServiceModel()
             {
                 ProjectId = projectId,
                 Title = project.Title,
-                Gallery = gallery,
+                Gallery = project.Images,
             };
         }
 
@@ -344,6 +336,17 @@ namespace DesignBureau.Core.Services
         public async Task<Project?> GetProjectByIdAsync(int id)
         {
             return await repository.GetByIdAsync<Project>(id);
+        }
+
+        public async Task AddImagesToProjectAsync(List<string> images, int projectId)
+        {
+            var project = await repository.AllReadOnly<Project>()
+                .Where(p => p.Id == projectId)
+                .FirstAsync();
+
+            project.Images.ToList().AddRange(images);
+
+            await repository.SaveChangesAsync();
         }
     }
 }

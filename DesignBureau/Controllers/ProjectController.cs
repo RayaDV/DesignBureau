@@ -16,10 +16,14 @@ namespace DesignBureau.Controllers
     {
 		private readonly IProjectService projectService;
 		private readonly IDesignerService designerService;
-        public ProjectController(IProjectService projectService, IDesignerService designerService)
+        private readonly IFileService fileService;
+        public ProjectController(IProjectService projectService, 
+                                 IDesignerService designerService, 
+                                 IFileService fileService)
         {
             this.projectService = projectService;
 			this.designerService = designerService;
+            this.fileService = fileService;
         }
 
         [AllowAnonymous]
@@ -333,7 +337,42 @@ namespace DesignBureau.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AddImages()
+        {
 
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddImages(ProjectGalleryServiceModel model)
+        {
+            if (await projectService.ExistsByIdAsync(model.ProjectId) == false)
+            {
+                return BadRequest();
+            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(nameof(Gallery), model);
+            //}
+            var images = new List<string>();
+
+            for (int i = 0; i < model.UploadedImages.Count; i++)
+            {
+                var imageFormFile = model.UploadedImages[i];
+                string fileName = imageFormFile.FileName;
+                images.Add($"/img/Projects/{model.ProjectId}/{fileName}");
+            }
+
+            await projectService.AddImagesToProjectAsync(images, model.ProjectId);
+
+            foreach (var image in model.UploadedImages)
+            {
+                fileService.CopyFileToRoot(model.ProjectId, image, "Projects");
+            }
+
+            return RedirectToAction("Gallery", "Project", new { id = model.ProjectId });
+        }
 
 
     }
