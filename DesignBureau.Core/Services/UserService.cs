@@ -6,6 +6,7 @@ using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using static DesignBureau.Infrastructure.Constants.CustomClaims;
 
 namespace DesignBureau.Core.Services
@@ -13,10 +14,12 @@ namespace DesignBureau.Core.Services
     public class UserService : IUserService
     {
         private readonly IRepository repository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public UserService(IRepository repository)
+        public UserService(IRepository repository, UserManager<ApplicationUser> userManager)
         {
             this.repository = repository;
+            this.userManager = userManager;
         }
 
         public async Task<IEnumerable<UserAllServiceModel>> AllAsync()
@@ -50,18 +53,15 @@ namespace DesignBureau.Core.Services
             };
 
             //var pass = PasswordGenerator.Generate();
-            var pass = $"{user.FirstName.ToLower()}{user.LastName.ToLower()}123";
+            var pass = $"{user.FirstName.ToLower()}123";
             var hasher = new PasswordHasher<ApplicationUser>();
             user.PasswordHash = hasher.HashPassword(user, pass);
 
-            var userClaim = new IdentityUserClaim<string>()
-            {
-                ClaimType = UserFullNameClaim,
-                ClaimValue = $"{model.FirstName} {model.LastName}",
-                UserId = id
-            };
-
             await repository.AddAsync(user);
+            await repository.SaveChangesAsync();
+
+            await userManager.AddClaimAsync(user, new Claim(
+                UserFullNameClaim, $"{user.FirstName} {user.LastName}"));
             await repository.SaveChangesAsync();
 
             return id;
