@@ -340,13 +340,24 @@ namespace DesignBureau.Core.Services
 
         public async Task AddImagesToProjectAsync(List<string> images, int projectId)
         {
-            var project = await repository.AllReadOnly<Project>()
-                .Where(p => p.Id == projectId)
-                .FirstAsync();
+            //var project = await repository.AllReadOnly<Project>()
+            //    .Where(p => p.Id == projectId)
+            //    .FirstAsync();
 
-            project.Images.ToList().AddRange(images);
+            var project = await repository.GetByIdAsync<Project>(projectId);
+            //var projectImages = project.Images.ToList();
+            //project.Images.ToList().AddRange(images);
+            //projectImages.AddRange(images);
+            //project.Images = projectImages;
+            if (project != null)
+            {
 
-            await repository.SaveChangesAsync();
+               var projectImages = project.Images.ToList();
+               projectImages.AddRange(images);
+               project.Images = projectImages;
+
+               await repository.SaveChangesAsync();
+            }
         }
     }
 }
