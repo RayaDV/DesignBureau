@@ -1,5 +1,4 @@
-﻿using DesignBureau.Core.Constants;
-using DesignBureau.Core.Contracts;
+﻿using DesignBureau.Core.Contracts;
 using DesignBureau.Core.Enums;
 using DesignBureau.Core.Models.Home;
 using DesignBureau.Core.Models.Project;
@@ -343,13 +342,37 @@ namespace DesignBureau.Core.Services
             var project = await repository.GetByIdAsync<Project>(projectId);
             if (project != null)
             {
+                var projectImages = project.Images.ToHashSet();
+                foreach (var image in images)
+                {
+                    projectImages.Add(image);
+                }
+                project.Images = projectImages;
 
-               var projectImages = project.Images.ToList();
-               projectImages.AddRange(images);
-               project.Images = projectImages;
-
-               await repository.SaveChangesAsync();
+                await repository.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> RemoveImageFromProjectAsync(string image, int projectId)
+        {
+            bool result = false;
+            var project = await repository.GetByIdAsync<Project>(projectId);
+
+            if (project != null)
+            {
+                var projectImages = project.Images.ToList();
+                var removed = projectImages.Remove(image);
+
+                if (removed)
+                {
+                    project.Images = projectImages;
+
+                    await repository.SaveChangesAsync();
+                    result = removed;
+                }
+            }
+
+            return result;
         }
     }
 }

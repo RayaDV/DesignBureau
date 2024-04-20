@@ -27,10 +27,5 @@ namespace DesignBureau.Core.Constants
         public const string UserMessageInfo = "UserMessageInfo";
 
         public const string UserMessageWarning = "UserMessageWarning";
-
-
-        public const string ProjectDoesNotExist = "This project does not exist.";
-
-
     }
 }

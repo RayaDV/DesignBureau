@@ -24,8 +24,8 @@ namespace DesignBureau.Core.Models.Project
         public string Town { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Display(Name = "Project Main Image ID")]
-        public string MainImageUrl { get; set; }
+        [Display(Name = "Project Main Image URL")]
+        public string MainImageUrl { get; set; } = string.Empty;
 
         //public  IFormFile UploadedImage { get; set; }
 

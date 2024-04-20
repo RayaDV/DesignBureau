@@ -34,8 +34,8 @@ namespace DesignBureau.Core.Models.Admin.Designer
         public int? DesignExperience { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Display(Name = "Designer Image")]
-        public string DesignerImageUrl { get; set; }
+        [Display(Name = "Designer Image URL")]
+        public string DesignerImageUrl { get; set; } = string.Empty;
 
         [Display(Name = "Discipline")]
         public int DisciplineId { get; set; }

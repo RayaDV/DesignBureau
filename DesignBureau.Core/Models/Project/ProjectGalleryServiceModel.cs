@@ -8,9 +8,7 @@ namespace DesignBureau.Core.Models.Project
 
         public string Title { get; set; } = string.Empty;
 
-        public IFormFileCollection UploadedImages { get; set; }
-
-        public IFormFileCollection DeletedImages { get; set; }
+        public IFormFileCollection UploadedImages { get; set; } = null!;
 
         public IEnumerable<string> Gallery { get; set; }
             = new List<string>();

@@ -29,56 +29,66 @@
         </p>
     </div>
 }
-
-
-<div id="carouselExampleIndicators" class="carousel slide">
-    <div class="carousel-indicators">
-        @for (int i = 0; i < gallery.Count(); i++)
-        {
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@(i == 0 ? "active" : string.Empty)" aria-current="true" aria-label="Slide @i"></button>
-        }
+else
+{
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="close-btn" id="js-delete-btn">
+        </div>
+        <div class="carousel-indicators">
+            @for (int i = 0; i < gallery.Count(); i++)
+            {
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@(i == 0 ? "active" : string.Empty)" aria-current="true" aria-label="Slide @i"></button>
+            }
+        </div>
+        <div class="carousel-inner">
+            @for (int i = 0; i < gallery.Count(); i++)
+            {
+                var image = gallery[i];
+                <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+                    <img class="d-block w-100" style="height:680px" data-url="@image" src="@image" alt="">
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-    <div class="carousel-inner">
-        @for (int i = 0; i < gallery.Count(); i++)
-        {
-            var image = gallery[i];
-            <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
-                <img class="d-block w-100" style="height:680px" src="@image" alt="">
-            </div>
-        }
+}
+
+@if (await designerService.ExistsByUserIdAsync(User.Id()) || User.IsAdmin())
+{
+    <div class="w-100 my-3" style="display: flex; justify-content: center;">
+        <div class="btn btn-primary btn-lg text-center"
+             role="button" onclick="document.getElementById('js-add-img').click(); return false;">
+            Add Images
+        </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
+    
+    <form method="post" class="m-4 text-center" asp-area="" asp-controller="Project" asp-action="AddImages" enctype="multipart/form-data">
+        <input asp-for="ProjectId" id="projectId" style="visibility: hidden;" value="@Model.ProjectId" />
+        <input asp-for="Title" id="title" style="visibility: hidden;" value="@Model.Title" />
+        <input asp-for="Gallery" id="gallery" style="visibility: hidden;" value="@Model.Gallery" />
+        <input type="file" asp-for="UploadedImages" id="js-add-img" accept="image/*" style="visibility: hidden;" multiple onchange="document.getElementById('submit').click(); return false;"/>
+    <button class="btn btn-primary btn-lg text-center" type="submit" id="submit" style="visibility: hidden;">Submit</button>
+    </form>
+}
 
 
-    @if (await designerService.ExistsByUserIdAsync(User.Id()) || User.IsAdmin())
-    {
-        <form method="post" class="m-4 text-center" asp-area="" asp-controller="Project" asp-action="AddImages" enctype="multipart/form-data">
-            <div class="btn btn-primary btn-lg text-center"
-                 role="button" onclick="document.getElementById('js-add-img').click(); return false;">
-                Add Images
-            </div>
-            <input asp-for="ProjectId" id="projectId" style="visibility: hidden;" value="@Model.ProjectId" />
-            <input asp-for="Title" id="title" style="visibility: hidden;" value="@Model.Title" />
-            <input asp-for="Gallery" id="gallery" style="visibility: hidden;" value="@Model.Gallery" />
-            <input type="file" asp-for="UploadedImages" id="js-add-img" accept="image/*" style="visibility: hidden;" multiple onchange="document.getElementById('submit').click(); return false;"/>
-        <button class="btn btn-primary btn-lg text-center" type="submit" id="submit" style="visibility: hidden;">Submit</button>
-        </form>
-    }
+<script>
+    $('#js-delete-btn').on('click', () => {
+        if (confirm('Are you sure you want to delete this image?')) {
+            var url = document.querySelector(".carousel-item.active img").dataset.url;
 
-
-@* <script>
-    $('#js-add-img').on('change', (event) => {
-        console.log(event)
-        console.log(Object.values(event.target.files))//.map(file => file.name));
+            $.get('/Project/DeleteImage/', { url: url, projectId: @Model.ProjectId }, (removed) => {
+                removed ? window.location.reload() : console.log(removed);
+            });
+        }
     })
-</script> *@
+</script>
 
 

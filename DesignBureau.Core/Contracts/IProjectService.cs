@@ -2,7 +2,6 @@
 using DesignBureau.Core.Models.Home;
 using DesignBureau.Core.Models.Project;
 using DesignBureau.Infrastructure.Data.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DesignBureau.Core.Contracts
 {
@@ -66,5 +65,7 @@ namespace DesignBureau.Core.Contracts
         Task<Project?> GetProjectByIdAsync(int id);
 
         Task AddImagesToProjectAsync(List<string> images, int projectId);
+
+        Task<bool> RemoveImageFromProjectAsync(string image, int projectId);
     }
 }
