@@ -340,15 +340,7 @@ namespace DesignBureau.Core.Services
 
         public async Task AddImagesToProjectAsync(List<string> images, int projectId)
         {
-            //var project = await repository.AllReadOnly<Project>()
-            //    .Where(p => p.Id == projectId)
-            //    .FirstAsync();
-
             var project = await repository.GetByIdAsync<Project>(projectId);
-            //var projectImages = project.Images.ToList();
-            //project.Images.ToList().AddRange(images);
-            //projectImages.AddRange(images);
-            //project.Images = projectImages;
             if (project != null)
             {
 
