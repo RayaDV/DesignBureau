@@ -14,13 +14,21 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url("/img/background.PNG");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .btn-xs {
     height: 1.5rem;
     line-height: 0;
     margin: 0 !important
+}
+
+.container {
+    background-color: white;
 }
 
 .comment-header {
@@ -31,4 +39,19 @@ body {
 .edit-comment-input {
     width: 100%;
     border-color: lightgray;
+}
+
+.close-btn {
+    background-image: url("/svg/close-btn.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 5ex;
+    height: 5ex;
+    right: 20px;
+    top: 20px;
+    position: absolute;
+    z-index: 2;
+    color: lightgrey;
+    cursor: pointer;
 }
