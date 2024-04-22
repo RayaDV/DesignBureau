@@ -215,7 +215,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             {
                 Id = 1,
                 Content = "This is a very difficult project!",
-                Date = DateTime.UtcNow,
+                Date = DateTime.Now,
                 AuthorId = GuestUser.Id,
                 ProjectId = FirstProject.Id,
             };
@@ -223,7 +223,7 @@ namespace DesignBureau.Infrastructure.Data.SeedDb
             {
                 Id = 2,
                 Content = "Pipe System made wonderful construction following the workshops. Great job!",
-                Date = DateTime.UtcNow.AddMonths(-1),
+                Date = DateTime.Now.AddMonths(-1),
                 AuthorId = GuestUser.Id,
                 ProjectId = SecondProject.Id,
             };

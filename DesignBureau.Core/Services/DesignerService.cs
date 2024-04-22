@@ -55,7 +55,7 @@ namespace DesignBureau.Core.Services
         public async Task<int> GetDesignerIdAsync(string userId)
         {
             var designer = await repository.AllReadOnly<Designer>()
-                .FirstOrDefaultAsync(d => d.UserId == userId);
+                .FirstAsync(d => d.UserId == userId);
             return designer.Id;
         }
 

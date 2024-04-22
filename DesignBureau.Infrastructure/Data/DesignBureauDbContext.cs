@@ -7,9 +7,20 @@ namespace DesignBureau.Data
 {
     public class DesignBureauDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DesignBureauDbContext(DbContextOptions<DesignBureauDbContext> options)
+        private bool seedDb;
+        public DesignBureauDbContext(DbContextOptions<DesignBureauDbContext> options, bool seed = true)
             : base(options)
         {
+            //if (Database.IsRelational())
+            //{
+            //    Database.Migrate();
+            //}
+            //else
+            //{
+            //    Database.EnsureCreated();
+            //}
+
+            this.seedDb = seed;
         }
 
         public DbSet<Discipline> Disciplines { get; set; } = null!;
@@ -22,15 +33,18 @@ namespace DesignBureau.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new DisciplineConfiguration());
-            builder.ApplyConfiguration(new DesignerConfiguration());
-            builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new PhaseConfiguration());
-            builder.ApplyConfiguration(new ProjectConfiguration());
-            builder.ApplyConfiguration(new UserClaimsConfiguration());
-            builder.ApplyConfiguration(new CommentConfiguration());
-            builder.ApplyConfiguration(new RateConfiguration());
+            if (this.seedDb)
+            {
+                builder.ApplyConfiguration(new UserConfiguration());
+                builder.ApplyConfiguration(new DisciplineConfiguration());
+                builder.ApplyConfiguration(new DesignerConfiguration());
+                builder.ApplyConfiguration(new CategoryConfiguration());
+                builder.ApplyConfiguration(new PhaseConfiguration());
+                builder.ApplyConfiguration(new ProjectConfiguration());
+                builder.ApplyConfiguration(new UserClaimsConfiguration());
+                builder.ApplyConfiguration(new CommentConfiguration());
+                builder.ApplyConfiguration(new RateConfiguration());
+            }
 
             base.OnModelCreating(builder);
         }
