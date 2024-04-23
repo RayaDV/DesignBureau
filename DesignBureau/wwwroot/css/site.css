@@ -55,3 +55,48 @@ body {
     color: lightgrey;
     cursor: pointer;
 }
+
+.error-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-400-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/400-bad-request.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-401-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/401-unauthorized.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-404-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/404-not-found.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-500-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/500-internal-server-error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
