@@ -16,6 +16,7 @@ namespace Microsoft.AspNetCore.Builder
             if (userManager != null && roleManager != null && await roleManager.RoleExistsAsync(AdminRoleName) == false)
             {
                 var role = new IdentityRole(AdminRoleName);
+
                 await roleManager.CreateAsync(role);
 
                 var admin = await userManager.FindByEmailAsync(AdminEmail);

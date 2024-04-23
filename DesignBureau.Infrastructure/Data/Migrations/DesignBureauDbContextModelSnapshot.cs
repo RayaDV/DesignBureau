@@ -118,7 +118,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         {
                             Id = "2f08c4b6-7afe-4bba-beaa-36d800c03e44",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3fa7dc29-15bd-4ea9-b476-f06b5ebbc1a3",
+                            ConcurrencyStamp = "fbfe395d-06aa-4f46-811c-8bc2fda261eb",
                             Email = "raya@e.kroumov.com",
                             EmailConfirmed = false,
                             FacebookPage = "",
@@ -128,9 +128,9 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "RAYA@E.KROUMOV.COM",
                             NormalizedUserName = "RAYA@E.KROUMOV.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGZV6RQvGP2QQKYtR99+BFP6LSNP3ZkntcO9mCVWf3lBLqliO43fc1IpRJP8ieGrtQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDYtNkWGSrl9KZf77JNDC/nRUNv7Sk+fmbkFkZ2ACdItcR+DFqSXIWLS45z5+Bzc4A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e71ee5ad-363b-46ea-98fa-37101eb61b27",
+                            SecurityStamp = "624dd354-a01f-43be-ad27-75f514e115c6",
                             SkypeProfile = "",
                             TwoFactorEnabled = false,
                             UserName = "raya@e.kroumov.com"
@@ -139,7 +139,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "29680d6a-73d2-40f4-bd6f-544e4056e6c9",
+                            ConcurrencyStamp = "dc2e4365-49c2-4706-adbe-10d333c1b9b6",
                             Email = "dimitar@gmail.com",
                             EmailConfirmed = false,
                             FacebookPage = "",
@@ -149,9 +149,9 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DIMITAR@GMAIL.COM",
                             NormalizedUserName = "DIMITAR@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEANvBUlYQYp5+hE/aTuQh3VCzvpN3cPcHdgOT90Wt+mq/8c7fFfOl2wlJGBFBxxMzw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIb8DwNOtmN90UWEDNXBY2/r2UPI+UOhDI93Me3mT4CScP6Ez1tszrGj5tFobr5npw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fd9419c6-f6a0-4a2f-95f0-345148d25f77",
+                            SecurityStamp = "9fc7eb60-abf7-4e15-8e78-82093320aabf",
                             SkypeProfile = "",
                             TwoFactorEnabled = false,
                             UserName = "dimitar@gmail.com"
@@ -160,7 +160,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         {
                             Id = "e43ce836-997d-4927-ac59-74e8c41bbfd3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3ecb4056-df63-4e1a-b617-a79fe484a04b",
+                            ConcurrencyStamp = "7881d0bf-aaeb-42c7-985b-0ef051ef5e58",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FacebookPage = "",
@@ -170,9 +170,9 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENfFgSQL7sn9IM9dYkYRU90dTuFoTpTBNSL/qP4ROac012HkRbktU6C/4kL9B1GE2Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOxXrbnyYBpm/Qt8ypP0Rt4tlIxDGmN59KoxmQljv1JxyBUd7UnhfrLvx3WgLAj/7w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0a156c88-c8eb-46ac-817f-8c31bb3f9d16",
+                            SecurityStamp = "a939c85a-e437-4224-b928-8df58b2bb737",
                             SkypeProfile = "",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
@@ -279,7 +279,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Id = 1,
                             AuthorId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             Content = "This is a very difficult project!",
-                            Date = new DateTime(2024, 4, 16, 11, 0, 49, 941, DateTimeKind.Utc).AddTicks(4576),
+                            Date = new DateTime(2024, 4, 20, 17, 40, 45, 338, DateTimeKind.Utc).AddTicks(1545),
                             ProjectId = 1
                         },
                         new
@@ -287,7 +287,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Id = 2,
                             AuthorId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             Content = "Pipe System made wonderful construction following the workshops. Great job!",
-                            Date = new DateTime(2024, 3, 16, 11, 0, 49, 941, DateTimeKind.Utc).AddTicks(4580),
+                            Date = new DateTime(2024, 3, 20, 17, 40, 45, 338, DateTimeKind.Utc).AddTicks(1549),
                             ProjectId = 2
                         });
                 });
@@ -309,7 +309,7 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                     b.Property<string>("DesignerImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasComment("Designer image URL");
+                        .HasComment("Designer Image URL");
 
                     b.Property<int>("DisciplineId")
                         .HasColumnType("int")
@@ -330,7 +330,8 @@ namespace DesignBureau.Infrastructure.Data.Migrations
 
                     b.HasIndex("DisciplineId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Designers");
 
@@ -396,59 +397,6 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             Name = "Landscaping"
-                        });
-                });
-
-            modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Image identifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Project Image URL");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int")
-                        .HasComment("Project identifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Images");
-
-                    b.HasComment("Project image");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ImageUrl = "https://localhost:7134/img/ONYX/ONYX-02.jpg",
-                            ProjectId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ImageUrl = "https://localhost:7134/img/ONYX/ONYX-03.jpg",
-                            ProjectId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ImageUrl = "https://localhost:7134/img/SEG/SEG-02.jpg",
-                            ProjectId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ImageUrl = "https://localhost:7134/img/SEG/SEG-03.jpg",
-                            ProjectId = 2
                         });
                 });
 
@@ -528,6 +476,11 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("Designer identifier");
 
+                    b.Property<string>("ImagesSerialized")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Project collection of images");
+
                     b.Property<string>("MainImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -574,7 +527,8 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Country = "Bulgaria",
                             Description = "Total Build Up Area: 12 236,60 m2. Structural design: monolithic reinforced concrete and steel structure. Post-tensioning of the RC plates above lvl.+14.500. At lvl.+11.000 the building is cantilevered over three X-shaped steel columns. 3-dimensional modelling of the structure with Revit Structure. 3D FEM Analysis model with Robot Structural Analysis. Workshop drawings of the steel structure.",
                             DesignerId = 1,
-                            MainImageUrl = "https://localhost:7134/img/ONYX/ONYX-01.jpg",
+                            ImagesSerialized = "[\"https://localhost:7134/img/Projects/1/ONYX-02.jpg\",\"https://localhost:7134/img/Projects/1/ONYX-03.jpg\"]",
+                            MainImageUrl = "https://localhost:7134/img/Projects/1/ONYX-01.jpg",
                             PhaseId = 2,
                             Title = "Multi-purpose building ONYX",
                             Town = "Sofia",
@@ -588,7 +542,8 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                             Country = "Bulgaria",
                             Description = "Total Build Up Area: 5 632 m2. Structural design: monolithic reinforced concrete and steel structure with post-tensioned concrete floors. BIM modeling, 3-dimensional modelling of the structure with Revit Structure. Advanced building simulation and analysis with Robot Structural Analysis. Workshop drawings of the steel structure. Тhis building is a participant in The National Contest „Building Of The Year 2019“ and has won a special award in the „Manufacturing and Logistics Buildings” category.",
                             DesignerId = 1,
-                            MainImageUrl = "https://localhost:7134/img/SEG/SEG-01.jpg",
+                            ImagesSerialized = "[\"https://localhost:7134/img/Projects/2/SEG-02.jpg\",\"https://localhost:7134/img/Projects/2/SEG-03.jpg\"]",
+                            MainImageUrl = "https://localhost:7134/img/Projects/2/SEG-01.jpg",
                             PhaseId = 3,
                             Title = "Multi-purpose building SEG",
                             Town = "Krivina",
@@ -833,25 +788,14 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("DesignBureau.Infrastructure.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Designer")
+                        .HasForeignKey("DesignBureau.Infrastructure.Data.Models.Designer", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Discipline");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Image", b =>
-                {
-                    b.HasOne("DesignBureau.Infrastructure.Data.Models.Project", "Project")
-                        .WithMany("Images")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Project", b =>
@@ -955,6 +899,8 @@ namespace DesignBureau.Infrastructure.Data.Migrations
                 {
                     b.Navigation("Comments");
 
+                    b.Navigation("Designer");
+
                     b.Navigation("Rates");
                 });
 
@@ -981,8 +927,6 @@ namespace DesignBureau.Infrastructure.Data.Migrations
             modelBuilder.Entity("DesignBureau.Infrastructure.Data.Models.Project", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Images");
 
                     b.Navigation("Rates");
                 });

@@ -27,7 +27,7 @@ namespace DesignBureau.Core.Models.Project
         [Display(Name = "Project Main Image URL")]
         public string MainImageUrl { get; set; } = string.Empty;
 
-        public  IFormFile UploadedImage { get; set; }
+        //public  IFormFile UploadedImage { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(ProjectArchitectMaxLength)]

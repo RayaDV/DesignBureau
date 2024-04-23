@@ -55,7 +55,7 @@ namespace DesignBureau.Core.Services
         public async Task<int> GetDesignerIdAsync(string userId)
         {
             var designer = await repository.AllReadOnly<Designer>()
-                .FirstOrDefaultAsync(d => d.UserId == userId);
+                .FirstAsync(d => d.UserId == userId);
             return designer.Id;
         }
 
@@ -77,7 +77,7 @@ namespace DesignBureau.Core.Services
                 .AnyAsync(d => d.Id == disciplineId);
         }
 
-        public async Task<DesignerQueryServiceModel> TeamAsync(
+        public async Task<DesignerQueryServiceModel> AllAsync(
             string? discipline = null, 
             string? searchTerm = null, 
             DesignerSorting sorting = DesignerSorting.NameAlphabetically, 

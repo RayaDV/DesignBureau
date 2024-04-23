@@ -1,14 +1,11 @@
 ﻿using DesignBureau.Attributes;
 using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Extensions;
 using DesignBureau.Core.Models.Project;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using DesignBureau.Core.Extensions;
 using static DesignBureau.Core.Constants.MessageConstants;
-using Microsoft.Win32;
-using DesignBureau.Infrastructure.Common;
-using DesignBureau.Infrastructure.Data.Models;
 
 namespace DesignBureau.Controllers
 {
@@ -16,10 +13,14 @@ namespace DesignBureau.Controllers
     {
 		private readonly IProjectService projectService;
 		private readonly IDesignerService designerService;
-        public ProjectController(IProjectService projectService, IDesignerService designerService)
+        private readonly IFileService fileService;
+        public ProjectController(IProjectService projectService, 
+                                 IDesignerService designerService, 
+                                 IFileService fileService)
         {
             this.projectService = projectService;
 			this.designerService = designerService;
+            this.fileService = fileService;
         }
 
         [AllowAnonymous]
@@ -269,72 +270,57 @@ namespace DesignBureau.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Gallery(ProjectGalleryServiceModel model)
-        {
-			bool galleryChanged = false;
-
-            //if (await projectService.ExistsByIdAsync(model.ProjectId) == false)
-            //{
-            //    return BadRequest();
-            //}
-
-			//if (model.UploadedImages.Count() > 0)
-			//{
-			//	// add uploaded images urls to database for this projectId
-			//	// add uploaded images urls to current model
-			//	galleryChanged = true;
-   //         }
-
-   //         if (model.DeletedImages.Count() > 0)
-			//{
-   //             // remove deleted images urls from database for this projectId
-   //             // remove deleted images urls to current model
-   //             galleryChanged = true;
-   //         }
-
-			if (galleryChanged)
-			{
-				// save database
-			}
-
-            return View(model);
-        }
 
         [HttpPost]
-        public async Task<IActionResult> UploadImages(IFormFile file)
+        public async Task<IActionResult> AddImages(ProjectGalleryServiceModel model)
         {
-            bool galleryChanged = false;
-
-            //if (await projectService.ExistsByIdAsync(model.ProjectId) == false)
-            //{
-            //    return BadRequest();
-            //}
-
-            //if (model.UploadedImages.Count() > 0)
-            //{
-            //	// add uploaded images urls to database for this projectId
-            //	// add uploaded images urls to current model
-            //	galleryChanged = true;
-            //         }
-
-            //         if (model.DeletedImages.Count() > 0)
-            //{
-            //             // remove deleted images urls from database for this projectId
-            //             // remove deleted images urls to current model
-            //             galleryChanged = true;
-            //         }
-
-            if (galleryChanged)
+            if (await projectService.ExistsByIdAsync(model.ProjectId) == false)
             {
-                // save database
+                return BadRequest();
             }
 
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Gallery), model);
+            }
+
+            var images = new List<string>();
+
+            for (int i = 0; i < model.UploadedImages.Count; i++)
+            {
+                var imageFormFile = model.UploadedImages[i];
+                string fileName = imageFormFile.FileName;
+                images.Add($"/img/Projects/{model.ProjectId}/{fileName}");
+            }
+
+            await projectService.AddImagesToProjectAsync(images, model.ProjectId);
+
+            foreach (var image in model.UploadedImages)
+            {
+                fileService.CopyFileToRoot(model.ProjectId, image, "Projects");
+            }
+
+            return RedirectToAction("Gallery", "Project", new { id = model.ProjectId });
         }
 
+        public async Task<bool> DeleteImage(string url, int projectId)
+        {
+            bool result = false;
 
+            if (await projectService.ExistsByIdAsync(projectId) == false || String.IsNullOrEmpty(url))
+            {
+                return result;
+            }
 
+            result = await projectService.RemoveImageFromProjectAsync(url, projectId);
 
+            if (result)
+            {
+                TempData[UserMessageSuccess] = "You have successfully deleted an image";
+            }
+
+            return result;
+
+        }
     }
 }

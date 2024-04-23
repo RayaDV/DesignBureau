@@ -18,7 +18,7 @@ namespace DesignBureau.Controllers
         [HttpGet]
         public async Task<IActionResult> Team([FromQuery] TeamViewModel model)
         {
-            var designers = await designerService.TeamAsync(
+            var designers = await designerService.AllAsync(
                 model.Discipline,
                 model.SearchTerm,
                 model.Sorting,

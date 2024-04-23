@@ -27,7 +27,5 @@ namespace DesignBureau.Core.Constants
         public const string UserMessageInfo = "UserMessageInfo";
 
         public const string UserMessageWarning = "UserMessageWarning";
-
-
     }
 }

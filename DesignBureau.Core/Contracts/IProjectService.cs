@@ -64,6 +64,8 @@ namespace DesignBureau.Core.Contracts
         Task<ProjectInformationModel?> GetProjectInformationModelByIdAsync(int id);
         Task<Project?> GetProjectByIdAsync(int id);
 
+        Task AddImagesToProjectAsync(List<string> images, int projectId);
 
+        Task<bool> RemoveImageFromProjectAsync(string image, int projectId);
     }
 }

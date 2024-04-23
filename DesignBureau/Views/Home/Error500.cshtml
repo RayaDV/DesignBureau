@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Error";
+}
+
+<div>
+    <img src="https://localhost:7134/img/ErrorPages/500-internal-server-error.jpg" alt="Alternative image" style="object-fit: cover;">
+    <h1 class="text-danger">@ViewBag.Title</h1>
+    <h2 class="text-danger">Oops, internal server error!</h2>
+    <br />
+    <br />
+    <div class="text-left h4">  Go back to <a asp-controller="Home" asp-action="Index">Home</a> Page</div>
+</div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 using static DesignBureau.Infrastructure.Constants.DataConstants;
 
 namespace DesignBureau.Infrastructure.Data.Models
@@ -10,7 +11,7 @@ namespace DesignBureau.Infrastructure.Data.Models
     {
         public Project()
         {
-            this.Images = new List<Image>();
+            this.Images = new List<string>();
             this.Comments = new List<Comment>();
             this.Rates = new List<Rate>();
         }
@@ -35,23 +36,21 @@ namespace DesignBureau.Infrastructure.Data.Models
         public string Town { get; set; } = string.Empty;
 
         [Required]
-        [Comment("Project main image URL")]
-        public string MainImageUrl { get; set; } = string.Empty;
-
-        [Required]
         [MaxLength(ProjectArchitectMaxLength)]
         [Comment("Architect of the project")]
         public string Architect { get; set; } = string.Empty;
 
         [Required]
         [Comment("Project year of design")]
-        //[Range(ProjectYearMinValue, ProjectYearMaxValue)] 
         public int YearDesigned { get; set; }
 
         [Required]
         [MaxLength(ProjectDescriptionMaxLength)]
         [Comment("Project description")]
         public string Description { get; set; } = string.Empty;
+
+        [Comment("Project main image URL")]
+        public string MainImageUrl{ get; set; } = string.Empty;
 
         [Required]
         [Comment("Category identifier")]
@@ -74,9 +73,15 @@ namespace DesignBureau.Infrastructure.Data.Models
 
         public virtual Designer Designer { get; set; } = null!;
 
-        [Required]
         [Comment("Project collection of images")]
-        public virtual IEnumerable<Image> Images { get; set; }
+        public virtual string ImagesSerialized { get; set; }
+
+        [NotMapped]
+        public virtual IEnumerable<string> Images
+        {
+            get => ImagesSerialized != null ? JsonSerializer.Deserialize<List<string>>(ImagesSerialized) : new List<string>();
+            set => ImagesSerialized = JsonSerializer.Serialize(value);
+        }
 
         [Comment("Project collection of comments")]
         public virtual IEnumerable<Comment> Comments { get; set; }
