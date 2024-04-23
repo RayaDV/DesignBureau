@@ -17,7 +17,7 @@ namespace DesignBureau.Core.Services
             this.repository = repository;
         }
 
-        public async Task<AllCommentsViewModel> AllCommentsAsync(
+        public async Task<AllCommentsViewModel> AllAsync(
             string? searchTerm = null, 
             CommentSorting sorting = CommentSorting.LastAdded, 
             int currentPage = 1, 
@@ -62,7 +62,7 @@ namespace DesignBureau.Core.Services
                 .FirstAsync();
         }
 
-        public async Task CreateAsync(CommentFormViewModel model, int projectId)
+        public async Task<int> CreateAsync(CommentFormViewModel model, int projectId)
         {
             Comment comment = new Comment()
             {
@@ -74,6 +74,8 @@ namespace DesignBureau.Core.Services
 
             await repository.AddAsync(comment);
             await repository.SaveChangesAsync();
+
+            return comment.Id;
         }
 
         public async Task DeleteAsync(int id)

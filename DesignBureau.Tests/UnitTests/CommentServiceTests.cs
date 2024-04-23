@@ -1,0 +1,195 @@
+﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Models.Admin.Designer;
+using DesignBureau.Core.Models.Comment;
+using DesignBureau.Core.Services;
+using DesignBureau.Infrastructure.Constants;
+using DesignBureau.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace DesignBureau.Tests.UnitTests
+{
+    public class CommentServiceTests : UnitTestsBase
+    {
+        private ICommentService commentService;
+
+        [OneTimeSetUp]
+        public void SetUp()
+            => this.commentService = new CommentService(this.repository);
+
+        [Test]
+        public async Task ExistsByIdAsync_ShouldReturnTrue_WithValidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await commentService.ExistsByIdAsync(Comment.Id);
+            // Assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public async Task ExistsByIdAsync_ShouldReturnFalse_WithInvalidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await commentService.ExistsByIdAsync(2);
+            // Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task HasAuthorWithIdAsync_ShouldReturnTrue_WithValidAuthorIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await commentService.HasAuthorWithIdAsync(Comment.Id, GuestUser.Id);
+            // Assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public async Task HasAuthorWithIdAsync_ShouldReturnFalse_WithInvalidAuthorIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await commentService.HasAuthorWithIdAsync(Comment.Id, "InvalidUserId");
+            // Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task HasAuthorWithIdAsync_ShouldReturnFalse_WithWrongIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await commentService.HasAuthorWithIdAsync(2, GuestUser.Id);
+            // Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task GetCommentFormViewModelByIdAsync_ShouldReturnCorrectCommentModelAsync()
+        {
+            // Arrange, Act
+            var result = await commentService.GetCommentFormViewModelByIdAsync(Comment.Id);
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Content, Is.EqualTo(Comment.Content));
+            Assert.That(result.Date, Is.EqualTo(Comment.Date.ToString(DataConstants.DateFormat)));
+            Assert.That(result.ProjectId, Is.EqualTo(Comment.ProjectId));
+            Assert.That(result.AuthorId, Is.EqualTo(Comment.AuthorId));
+        }
+
+        [Test]
+        public async Task GetCommentFormViewModelByIdAsync_ShouldReturnNullAsync_WithWrongIdAsync()
+        {
+            // Arrange, Act
+            var result = await commentService.GetCommentFormViewModelByIdAsync(2);
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public async Task CreateAsync_ShouldWorkCorrectlyAsync()
+        {
+            // Arrange
+            int initialCommentsCount = repository.AllReadOnly<Comment>().Count();
+            // Act
+            int newCommentId = await commentService.CreateAsync(new CommentFormViewModel()
+            {
+                Content = "It's me again!",
+                Date = DateTime.Now.ToString(DataConstants.DateFormat),
+                ProjectId = Project.Id,
+                AuthorId = GuestUser.Id,
+            },
+            Project.Id);
+            // Assert comments count is changed
+            int commentsCount = repository.AllReadOnly<Comment>().Count();
+            Assert.That(commentsCount, Is.EqualTo(initialCommentsCount + 1));
+            // Assert a new comment is created in db
+            var newComment = await repository.AllReadOnly<Comment>()
+                .Include(c => c.Project)
+                .Include(c => c.Author)
+                .FirstAsync(c => c.Id == newCommentId);
+            Assert.That(newComment, Is.Not.Null);
+            Assert.That(newComment.Id, Is.EqualTo(2));
+            Assert.That(newComment.Content, Is.EqualTo("It's me again!"));
+            Assert.That(newComment.ProjectId, Is.EqualTo(Project.Id));
+            Assert.That(newComment.AuthorId, Is.EqualTo(GuestUser.Id));
+        }
+
+        [Test]
+        public async Task EditAsync_ShouldWorkCorrectlyAsync()
+        {
+            // Arrange
+            var initialCommentsCount = repository.AllReadOnly<Designer>().Count();
+            // Act
+            await commentService.EditAsync(Comment.Id, new CommentFormViewModel()
+            {
+                Content = "It's me again!",
+                Date = DateTime.Now.ToString(DataConstants.DateFormat),
+            });
+            // Assert comments count is changed
+            var commentsCount = repository.AllReadOnly<Comment>().Count();
+            Assert.That(commentsCount, Is.EqualTo(initialCommentsCount));
+            // Assert the comment is edited in db
+            var editedComment = await repository.AllReadOnly<Comment>()
+                .Include(c => c.Project)
+                .Include(c => c.Author)
+                .FirstAsync(c => c.Id == Comment.Id);
+            Assert.That(editedComment, Is.Not.Null);
+            Assert.That(editedComment.Content, Is.EqualTo("It's me again!"));
+            Assert.That(editedComment.ProjectId, Is.EqualTo(Project.Id));
+            Assert.That(editedComment.AuthorId, Is.EqualTo(GuestUser.Id));
+        }
+
+        [Test]
+        public async Task DeleteAsync_ShouldWorkCorrectlyAsync()
+        {
+            // Arrange
+            int initialCommentsCount = repository.AllReadOnly<Comment>().Count();
+            // Act
+            await commentService.DeleteAsync(Designer.Id);
+            // Assert comments count is changed
+            int commentsCount = repository.AllReadOnly<Comment>().Count();
+            Assert.That(commentsCount, Is.EqualTo(initialCommentsCount - 1));
+            // Assert the comment is deleted in db
+            var deletedComment = await repository.AllReadOnly<Comment>().FirstOrDefaultAsync(c => c.Id == Comment.Id);
+            Assert.That(deletedComment, Is.Null);
+        }
+
+        [Test]
+        public async Task CommentToDeleteByIdAsync_ShouldReturnCommentToDeleteAsync()
+        {
+            // Arrange
+            // Act
+            var comment = await commentService.CommentToDeleteByIdAsync(Comment.Id);
+            // Assert
+            Assert.That(comment.Id, Is.EqualTo(Comment.Id));
+            Assert.That(comment.Content, Is.EqualTo(Comment.Content));
+            Assert.That(comment.Date, Is.EqualTo(Comment.Date));
+            Assert.That(comment.ProjectId, Is.EqualTo(Comment.ProjectId));
+            Assert.That(comment.AuthorId, Is.EqualTo(Comment.AuthorId));
+        }
+
+        [Test]
+        public async Task AllAsync_ShouldReturnCorrectUsers()
+        {
+            // Arrange
+            // Act
+            var result = await commentService.AllAsync();
+            // Assert comments count is correct
+            int commentsCount = repository.AllReadOnly<Comment>().Count();
+            Assert.That(result.TotalCommentsCount, Is.EqualTo(commentsCount));
+            Assert.That(result.Comments.Count(), Is.EqualTo(commentsCount));
+            // Assert the comment's data is correct
+            var comment = result.Comments
+                .FirstOrDefault(c => c.Id == Comment.Id);
+            Assert.That(comment, Is.Not.Null);
+            Assert.That(comment.Id, Is.EqualTo(Comment.Id));
+            Assert.That(comment.Content, Is.EqualTo(Comment.Content));
+            Assert.That(comment.Date, Is.EqualTo(Comment.Date.ToString(DataConstants.DateFormat)));
+            Assert.That(comment.ProjectId, Is.EqualTo(Comment.ProjectId));
+            Assert.That(comment.AuthorId, Is.EqualTo(Comment.AuthorId));
+        }
+    }
+}

@@ -8,9 +8,9 @@ namespace DesignBureau.Core.Contracts
 {
     public interface ICommentService
     {
-        Task CreateAsync(CommentFormViewModel model, int projectId);
+        Task<int> CreateAsync(CommentFormViewModel model, int projectId);
 
-        Task<AllCommentsViewModel> AllCommentsAsync(
+        Task<AllCommentsViewModel> AllAsync(
                 string? searchTerm = null,
                 CommentSorting sorting = CommentSorting.LastAdded,
                 int currentPage = 1,
