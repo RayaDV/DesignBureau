@@ -77,7 +77,7 @@ namespace DesignBureau.Core.Services
                 .AnyAsync(d => d.Id == disciplineId);
         }
 
-        public async Task<DesignerQueryServiceModel> TeamAsync(
+        public async Task<DesignerQueryServiceModel> AllAsync(
             string? discipline = null, 
             string? searchTerm = null, 
             DesignerSorting sorting = DesignerSorting.NameAlphabetically, 

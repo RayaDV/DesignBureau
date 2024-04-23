@@ -24,7 +24,7 @@ namespace DesignBureau.Core.Contracts
 
         Task<bool> DisciplineExistsAsync(int disciplineId);
 
-        Task<DesignerQueryServiceModel> TeamAsync(
+        Task<DesignerQueryServiceModel> AllAsync(
         string? discipline = null,
         string? searchTerm = null,
         DesignerSorting sorting = DesignerSorting.NameAlphabetically,

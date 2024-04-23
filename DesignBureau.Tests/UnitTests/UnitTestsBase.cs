@@ -2,6 +2,7 @@
 using DesignBureau.Infrastructure.Common;
 using DesignBureau.Infrastructure.Data.Models;
 using DesignBureau.Tests.Mocks;
+using Microsoft.AspNetCore.Identity;
 
 namespace DesignBureau.Tests.UnitTests
 {

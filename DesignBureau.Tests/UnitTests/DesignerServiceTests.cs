@@ -1,9 +1,8 @@
 ﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Models.Admin.Designer;
 using DesignBureau.Core.Services;
 using DesignBureau.Infrastructure.Data.Models;
-using DesignBureau.Core.Models.Admin.Designer;
 using Microsoft.EntityFrameworkCore;
-using DesignBureau.Core.Models.Designer;
 
 namespace DesignBureau.Tests.UnitTests
 {
@@ -19,7 +18,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByIdAsync_ShouldReturnTrue_WithValidIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByIdAsync(Designer.Id);
             // Assert
             Assert.That(result, Is.True);
@@ -28,7 +28,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByIdAsync_ShouldReturnFalse_WithInvalidIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByIdAsync(20);
             // Assert
             Assert.That(result, Is.False);
@@ -37,7 +38,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByUserIdAsync_ShouldReturnTrue_WithValidUserIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByUserIdAsync(Designer.User.Id);
             // Assert
             Assert.That(result, Is.True);
@@ -46,7 +48,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByUserIdAsync_ShouldReturnFalse_WithInvalidUserIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByUserIdAsync("UserId");
             // Assert
             Assert.That(result, Is.False);
@@ -55,7 +58,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByPhoneNumberAsync_ShouldReturnTrue_WithValidPhoneNumberAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByPhoneNumberAsync(Designer.PhoneNumber);
             // Assert
             Assert.That(result, Is.True);
@@ -64,7 +68,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByPhoneNumberAsync_ShouldReturnFalse_WithInvalidPhoneNumberAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByPhoneNumberAsync("0883494948");
             // Assert
             Assert.That(result, Is.False);
@@ -73,7 +78,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByEmailAsync_ShouldReturnTrue_WithValidEmailAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByEmailAsync(Designer.User.Email);
             // Assert
             Assert.That(result, Is.True);
@@ -82,7 +88,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task ExistsByEmailAsync_ShouldReturnFalse_WithInvalidEmailAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.ExistsByEmailAsync("dimitrova_rd@abv.bg");
             // Assert
             Assert.That(result, Is.False);
@@ -91,7 +98,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task GetDesignerIdAsync_ShouldReturnCorrectUserIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.GetDesignerIdAsync(Designer.UserId);
             // Assert
             Assert.That(result, Is.EqualTo(Designer.Id));
@@ -101,7 +109,7 @@ namespace DesignBureau.Tests.UnitTests
         public async Task CreateAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
-            var initialDesignersCount = repository.AllReadOnly<Designer>().Count();
+            int initialDesignersCount = repository.AllReadOnly<Designer>().Count();
             // Act
             await designerService.CreateAsync(new DesignerFormViewModel()
             {
@@ -112,12 +120,12 @@ namespace DesignBureau.Tests.UnitTests
             }, 
             GuestUser.Id);
             // Assert designers count
-            var designersCount = repository.AllReadOnly<Designer>().Count();
+            int designersCount = repository.AllReadOnly<Designer>().Count();
             Assert.That(designersCount, Is.EqualTo(initialDesignersCount + 1));
             // Assert a new designer is created in db
             var newDesignerId = await designerService.GetDesignerIdAsync(GuestUser.Id);
             var newDesigner = await repository.AllReadOnly<Designer>().Include(d => d.User).FirstAsync(d => d.Id == newDesignerId);
-            Assert.IsNotNull(newDesigner);
+            Assert.That(newDesigner, Is.Not.Null);
             Assert.That(newDesigner.UserId, Is.EqualTo(GuestUser.Id));
             Assert.That(newDesigner.User.FirstName, Is.EqualTo(GuestUser.FirstName));
             Assert.That(newDesigner.User.LastName, Is.EqualTo(GuestUser.LastName));
@@ -130,35 +138,38 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task AllDisciplinesAsync_ShouldReturnAllDisciplinesAsync()
         {
-            // Arrange, Act
-            var disciplines = await designerService.AllDisciplinesAsync();
-            // Assert
-            var discipline = disciplines.ToList()[0];
-            int expectedCount = 1;
-            int expectedId = 1;
-            string expectedName = "Structure";
-            Assert.That(disciplines.Count(), Is.EqualTo(expectedCount));
-            Assert.That(discipline.Id, Is.EqualTo(expectedId));
-            Assert.That(discipline.Name, Is.EqualTo(expectedName));
+            // Arrange
+            // Act
+            var result = await designerService.AllDisciplinesAsync();
+            // Assert the disciplines count is correct
+            int disciplinesCount = repository.AllReadOnly<Discipline>().Count();
+            Assert.That(result.Count(), Is.EqualTo(disciplinesCount));
+            // Assert the returned data is correct
+            var discipline = result.ToList().First();
+            Assert.That(discipline.Id, Is.EqualTo(Discipline.Id));
+            Assert.That(discipline.Name, Is.EqualTo(Discipline.Name));
         }
 
         [Test]
         public async Task AllDisciplinesNamesAsync_ShouldReturnAllDisciplinesNamesAsync()
         {
-            // Arrange, Act
-            var disciplineNames = await designerService.AllDisciplinesNamesAsync();
-            // Assert
-            string disciplineName = disciplineNames.ToList()[0];
-            int expectedCount = 1;
-            string expectedName = "Structure";
-            Assert.That(disciplineNames.Count(), Is.EqualTo(expectedCount));
-            Assert.That(disciplineName, Is.EqualTo(expectedName));
+            // Arrange
+            // Act
+            var result = await designerService.AllDisciplinesNamesAsync();
+            // Assert the disciplines count is correct
+            var disciplinesNames = repository.AllReadOnly<Discipline>().Select(c => c.Name);
+            int disciplinesCount = disciplinesNames.Count();
+            Assert.That(result.Count(), Is.EqualTo(disciplinesCount));
+            // Assert the returned data is correct
+            var disciplineName = result.ToList().First();
+            Assert.That(disciplineName, Is.EqualTo(Discipline.Name));
         }
 
         [Test]
         public async Task DisciplineExistsAsync_ShouldReturnTrue_WithValidDisciplineIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.DisciplineExistsAsync(Discipline.Id);
             // Assert
             Assert.That(result, Is.True);
@@ -167,7 +178,8 @@ namespace DesignBureau.Tests.UnitTests
         [Test]
         public async Task DisciplineExistsAsync_ShouldReturnFalse_WithInvalidDisciplineIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await designerService.DisciplineExistsAsync(2);
             // Assert
             Assert.That(result, Is.False);
@@ -179,7 +191,7 @@ namespace DesignBureau.Tests.UnitTests
             // Arrange, Act
             var result = await designerService.GetDesignerFormViewModelByIdAsync(Designer.Id);
             // Assert
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Email, Is.EqualTo(Designer.User.Email));
             Assert.That(result.FirstName, Is.EqualTo(Designer.User.FirstName));
             Assert.That(result.LastName, Is.EqualTo(Designer.User.LastName));
@@ -187,6 +199,15 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result.DesignExperience, Is.EqualTo(Designer.DesignExperience));
             Assert.That(result.DesignerImageUrl, Is.EqualTo(Designer.DesignerImageUrl));
             Assert.That(result.DisciplineId, Is.EqualTo(Designer.DisciplineId));
+        }
+
+        [Test]
+        public async Task GetDesignerFormViewModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
+        {
+            // Arrange, Act
+            var result = await designerService.GetDesignerFormViewModelByIdAsync(5);
+            // Assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -210,7 +231,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(designersCount, Is.EqualTo(initialDesignersCount));
             // Assert the designer is edited in db
             var editedDesigner = await repository.AllReadOnly<Designer>().Include(d => d.User).FirstAsync(d => d.Id == Designer.Id);
-            Assert.IsNotNull(editedDesigner);
+            Assert.That(editedDesigner, Is.Not.Null);
             Assert.That(editedDesigner.User.FirstName, Is.EqualTo(GuestUser.FirstName));
             Assert.That(editedDesigner.User.LastName, Is.EqualTo(GuestUser.LastName));
             Assert.That(editedDesigner.PhoneNumber, Is.EqualTo("+359883030303"));
@@ -223,15 +244,15 @@ namespace DesignBureau.Tests.UnitTests
         public async Task DeleteAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
-            var initialDesignersCount = repository.AllReadOnly<Designer>().Count();
+            int initialDesignersCount = repository.AllReadOnly<Designer>().Count();
             // Act
             await designerService.DeleteAsync(Designer.Id);
             // Assert designers count is changed
-            var designersCount = repository.AllReadOnly<Designer>().Count();
+            int designersCount = repository.AllReadOnly<Designer>().Count();
             Assert.That(designersCount, Is.EqualTo(initialDesignersCount - 1));
             // Assert the designer is deleted in db
-            var editedDesigner = await repository.AllReadOnly<Designer>().FirstOrDefaultAsync(d => d.Id == Designer.Id);
-            Assert.IsNull(editedDesigner);
+            var deletedDesigner = await repository.AllReadOnly<Designer>().FirstOrDefaultAsync(d => d.Id == Designer.Id);
+            Assert.That(deletedDesigner, Is.Null);
         }
 
         [Test]
@@ -241,28 +262,33 @@ namespace DesignBureau.Tests.UnitTests
             // Act
             var designer = await designerService.DesignerToDeleteByIdAsync(Designer.Id);
             // Assert
-            var expectedDesigner = new DesignerDetailsServiceModel
-            {
-                Id = Designer.Id,
-                DesignerImageUrl = Designer.DesignerImageUrl,
-                DesignExperience = Designer.DesignExperience,
-                Discipline = Designer.Discipline.Name,
-                ProjectsCount = Designer.Projects.Count(),
-                Email = Designer.User.Email,
-                PhoneNumber = Designer.PhoneNumber,
-                FullName = $"{Designer.User.FirstName} {Designer.User.LastName}",
-            };
-            Assert.That(designer.Id, Is.EqualTo(expectedDesigner.Id));
-            Assert.That(designer.DesignerImageUrl, Is.EqualTo(expectedDesigner.DesignerImageUrl));
-            Assert.That(designer.DesignExperience, Is.EqualTo(expectedDesigner.DesignExperience));
-            Assert.That(designer.Discipline, Is.EqualTo(expectedDesigner.Discipline));
-            Assert.That(designer.ProjectsCount, Is.EqualTo(expectedDesigner.ProjectsCount));
-            Assert.That(designer.Email, Is.EqualTo(expectedDesigner.Email));
-            Assert.That(designer.PhoneNumber, Is.EqualTo(expectedDesigner.PhoneNumber));
-            Assert.That(designer.FullName, Is.EqualTo(expectedDesigner.FullName));
+            Assert.That(designer.Id, Is.EqualTo(Designer.Id));
+            Assert.That(designer.DesignerImageUrl, Is.EqualTo(Designer.DesignerImageUrl));
+            Assert.That(designer.DesignExperience, Is.EqualTo(Designer.DesignExperience));
+            Assert.That(designer.Discipline, Is.EqualTo(Designer.Discipline.Name));
+            Assert.That(designer.ProjectsCount, Is.EqualTo(Designer.Projects.Count()));
+            Assert.That(designer.Email, Is.EqualTo(Designer.User.Email));
+            Assert.That(designer.PhoneNumber, Is.EqualTo(Designer.PhoneNumber));
+            Assert.That(designer.FullName, Is.EqualTo($"{Designer.User.FirstName} {Designer.User.LastName}"));
         }
 
-
+        [Test]
+        public async Task TeamAsync_ShouldReturnCorrectUsers()
+        {
+            // Arrange
+            // Act
+            var result = await designerService.AllAsync();
+            // Assert designers count is correct
+            int teamCount = repository.AllReadOnly<Designer>().Count();
+            Assert.That(result.TotalTeamCount, Is.EqualTo(teamCount));
+            Assert.That(result.Team.Count(), Is.EqualTo(teamCount));
+            // Assert the designer's data is correct
+            var designer = result.Team
+                .FirstOrDefault(d => d.Email == Designer.User.Email);
+            Assert.That(designer, Is.Not.Null);
+            Assert.That(designer.FullName, Is.EqualTo($"{Designer.User.FirstName} {Designer.User.LastName}"));
+            Assert.That(designer.PhoneNumber, Is.EqualTo(Designer.PhoneNumber));
+        }
 
     }
 }
