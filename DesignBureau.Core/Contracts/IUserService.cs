@@ -15,8 +15,6 @@ namespace DesignBureau.Core.Contracts
 
         Task<ApplicationUser?> GetUserByIdAsync(string userId);
 
-        Task<ApplicationUser?> GetUserByEmailAsync(string email);
-
         Task DeleteAsync(string userId);
 
         Task<IEnumerable<UserAllServiceModel>> AllAsync();

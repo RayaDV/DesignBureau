@@ -33,6 +33,7 @@ namespace DesignBureau.Core.Services
                     PhoneNumber = u.Designer != null ? u.Designer.PhoneNumber : null,
                     IsDesigner = u.Designer != null,
                     CommentsCount = u.Comments.Count(),
+                    ProjectsCount = u.Designer != null ? u.Designer.Projects.Count() : 0,
                 })
                 .ToListAsync();
         }
@@ -77,11 +78,6 @@ namespace DesignBureau.Core.Services
         {
             return await repository.AllReadOnly<ApplicationUser>()
                 .AnyAsync(u => u.Id == userId);
-        }
-
-        public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
-        {
-            return await repository.GetByEmailAsync<ApplicationUser>(email);
         }
 
         public async Task<ApplicationUser?> GetUserByIdAsync(string userId)
