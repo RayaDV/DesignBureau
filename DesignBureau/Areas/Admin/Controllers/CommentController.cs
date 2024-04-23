@@ -20,7 +20,7 @@ namespace DesignBureau.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> All([FromQuery] AllCommentsViewModel model)
         {
-            var comments = await commentService.AllCommentsAsync(
+            var comments = await commentService.AllAsync(
                 model.SearchTerm,
                 model.Sorting,
                 model.CurrentPage,

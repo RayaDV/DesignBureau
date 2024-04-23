@@ -1,9 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Error";
+    ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-<br />
-<br />
-<div class="text-left h4">  Go back to <a asp-controller="Home" asp-action="Index">Home</a> Page</div>
+<div>
+    <img src="https://localhost:7134/img/ErrorPages/error.jpg" alt="Alternative image" style="object-fit: cover;">
+    <h1 class="text-danger">@ViewBag.Title</h1>
+    <h2 class="text-danger">An error occurred while processing your request.</h2>
+    <br />
+    <br />
+    <div class="text-left h4">  Go back to <a asp-controller="Home" asp-action="Index">Home</a> Page</div>
+</div>

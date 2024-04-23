@@ -46,7 +46,7 @@ namespace DesignBureau.Controllers
                 return BadRequest();
             };
 
-            await commentService.CreateAsync(model, projectId);
+            int newCommentId = await commentService.CreateAsync(model, projectId);
 
             var project = await projectService.GetProjectInformationModelByIdAsync(projectId);
 
