@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DesignBureau.Core\DesignBureau.Core.csproj" />
     <ProjectReference Include="..\DesignBureau.Infrastructure\DesignBureau.Infrastructure.csproj" />
+    <ProjectReference Include="..\DesignBureau\DesignBureau.csproj" />
   </ItemGroup>
 
   <ItemGroup>
