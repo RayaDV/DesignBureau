@@ -257,7 +257,8 @@ namespace DesignBureau.Controllers
             return View(model);
         }
 
-		[HttpGet]
+        [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> Gallery(int id)
         {
             if (await projectService.ExistsByIdAsync(id) == false)
