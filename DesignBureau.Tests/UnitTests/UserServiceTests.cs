@@ -12,12 +12,13 @@ namespace DesignBureau.Tests.UnitTests
     public class UserServiceTests : UnitTestsBase
     {
         private IUserService userService;
-        private UserManager<ApplicationUser> userManager = UserManagerMock.Instance; 
+        private UserManager<ApplicationUser> userManager;
 
 
         [OneTimeSetUp]
         public void Setup()
         {
+            this.userManager = UserManagerMock.Instance;
             this.userService = new UserService(this.repository, this.userManager);
         }
           
@@ -141,7 +142,5 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(designerUser.ProjectsCount, Is.EqualTo(Designer.Projects.Count()));
             Assert.That(designerUser.CommentsCount, Is.EqualTo(Designer.User.Comments.Count()));
         }
-
-
     }
 }

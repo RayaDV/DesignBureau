@@ -1,5 +1,4 @@
 ﻿using DesignBureau.Core.Contracts;
-using DesignBureau.Core.Models.Comment;
 using DesignBureau.Core.Models.Project;
 using DesignBureau.Core.Services;
 using DesignBureau.Infrastructure.Constants;
@@ -11,16 +10,19 @@ using ProjectHub.Tests.Mocks;
 
 namespace DesignBureau.Tests.UnitTests
 {
+    [TestFixture]
     public class ProjectServiceTests : UnitTestsBase
     {
         private IUserService userService;
         private IProjectService projectService;
-        private readonly UserManager<ApplicationUser> userManager = UserManagerMock.Instance;
-        private readonly IWebHostEnvironment webHostEnv = WebHostEnvironmentMock.Instance;
+        private UserManager<ApplicationUser> userManager;
+        private IWebHostEnvironment webHostEnv;
 
         [OneTimeSetUp]
         public void SetUp()
         {
+            this.userManager = UserManagerMock.Instance;
+            this.webHostEnv = WebHostEnvironmentMock.Instance;
             this.userService = new UserService(this.repository, this.userManager);
             this.projectService = new ProjectService(this.repository, this.webHostEnv);
         }
