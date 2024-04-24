@@ -15,7 +15,7 @@ namespace DesignBureau.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetStatistic()
+        public async Task<OkObjectResult> GetStatistic()
         {
             var result = await statisticService.TotalAsync();
 
