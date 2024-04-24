@@ -27,7 +27,7 @@ namespace DesignBureau.Controllers
 		[HttpGet]
         public async Task<IActionResult> All([FromQuery] AllProjectsViewModel model)
         {
-			var projects = await projectService.AllProjectsAsync(
+			var projects = await projectService.AllAsync(
                 model.Category,
                 model.Phase,
                 model.Town,

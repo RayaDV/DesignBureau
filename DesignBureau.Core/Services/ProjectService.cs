@@ -20,7 +20,7 @@ namespace DesignBureau.Core.Services
             this.webHostEnv = webHostEnv;
         }
 
-        public async Task<ProjectQueryServiceModel> AllProjectsAsync(
+        public async Task<ProjectQueryServiceModel> AllAsync(
             string? category = null,
             string? phase = null,
             string? town = null,
@@ -265,6 +265,8 @@ namespace DesignBureau.Core.Services
         {
             await repository.DeleteAsync<Project>(projectId);
             await repository.SaveChangesAsync();
+
+            //Directory.Delete(this.webHostEnv.WebRootPath + $"/img/Projects/{projectId}");
         }
 
         public async Task<ProjectServiceModel> ProjectToDeleteByIdAsync(int id)

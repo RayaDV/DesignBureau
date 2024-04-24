@@ -15,6 +15,8 @@ namespace System.Linq
                     Id = c.Id,
                     Content = c.Content,
                     Date = c.Date.ToString(DataConstants.DateFormat),
+                    AuthorId = c.AuthorId,
+                    ProjectId = c.ProjectId,
                     Title = c.Project.Title,
                     ProjectImageUrl = c.Project.MainImageUrl,
                     FullName = $"{c.Author.FirstName} {c.Author.LastName}",

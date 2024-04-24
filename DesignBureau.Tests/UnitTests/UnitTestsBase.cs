@@ -79,8 +79,8 @@ namespace DesignBureau.Tests.UnitTests
                 Phase = Phase,
                 Designer = Designer,
                 MainImageUrl = "https://localhost:7134/img/Projects/1/ONYX-01.jpg",
-                //Images = new List<string>() { "https://localhost:7134/img/Projects/1/ONYX-02.jpg",
-                //                              "https://localhost:7134/img/Projects/1/ONYX-03.jpg"}
+                Images = new List<string>() { "https://localhost:7134/img/Projects/1/ONYX-02.jpg",
+                                              "https://localhost:7134/img/Projects/1/ONYX-03.jpg"}
             };
             this.context.Projects.Add(Project);
 

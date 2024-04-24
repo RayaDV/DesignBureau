@@ -11,7 +11,7 @@ namespace ProjectHub.Tests.Mocks
             {
                 var webHostEnv = new Mock<IWebHostEnvironment>();
 
-                webHostEnv.Setup(um => um.WebRootPath).Returns("D:\\RAYA\\SoftUni\\Web\\ASP-NET-DesignBureau\\DesignBureau\\DesignBureau.Tests\\Output");
+                webHostEnv.Setup(whe => whe.WebRootPath).Returns("D:\\RAYA\\SoftUni\\Web\\ASP-NET-DesignBureau\\DesignBureau\\DesignBureau.Tests\\Output");
 
                 return webHostEnv.Object;
             }

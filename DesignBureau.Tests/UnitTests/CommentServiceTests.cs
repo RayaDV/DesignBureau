@@ -67,9 +67,10 @@ namespace DesignBureau.Tests.UnitTests
         }
 
         [Test]
-        public async Task GetCommentFormViewModelByIdAsync_ShouldReturnCorrectCommentModelAsync()
+        public async Task GetCommentFormViewModelByIdAsync_ShouldReturnCorrectCommentModel_WithValidIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await commentService.GetCommentFormViewModelByIdAsync(Comment.Id);
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -80,9 +81,10 @@ namespace DesignBureau.Tests.UnitTests
         }
 
         [Test]
-        public async Task GetCommentFormViewModelByIdAsync_ShouldReturnNullAsync_WithWrongIdAsync()
+        public async Task GetCommentFormViewModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
         {
-            // Arrange, Act
+            // Arrange
+            // Act
             var result = await commentService.GetCommentFormViewModelByIdAsync(2);
             // Assert
             Assert.That(result, Is.Null);
@@ -148,7 +150,7 @@ namespace DesignBureau.Tests.UnitTests
             // Arrange
             int initialCommentsCount = repository.AllReadOnly<Comment>().Count();
             // Act
-            await commentService.DeleteAsync(Designer.Id);
+            await commentService.DeleteAsync(Comment.Id);
             // Assert comments count is changed
             int commentsCount = repository.AllReadOnly<Comment>().Count();
             Assert.That(commentsCount, Is.EqualTo(initialCommentsCount - 1));
@@ -172,24 +174,23 @@ namespace DesignBureau.Tests.UnitTests
         }
 
         [Test]
-        public async Task AllAsync_ShouldReturnCorrectUsers()
+        public async Task AllAsync_ShouldReturnCorrectComments()
         {
             // Arrange
             // Act
             var result = await commentService.AllAsync();
-            // Assert comments count is correct
+            // Assert returned comments count is correct
             int commentsCount = repository.AllReadOnly<Comment>().Count();
             Assert.That(result.TotalCommentsCount, Is.EqualTo(commentsCount));
             Assert.That(result.Comments.Count(), Is.EqualTo(commentsCount));
-            // Assert the comment's data is correct
-            var comment = result.Comments
-                .FirstOrDefault(c => c.Id == Comment.Id);
-            Assert.That(comment, Is.Not.Null);
-            Assert.That(comment.Id, Is.EqualTo(Comment.Id));
-            Assert.That(comment.Content, Is.EqualTo(Comment.Content));
-            Assert.That(comment.Date, Is.EqualTo(Comment.Date.ToString(DataConstants.DateFormat)));
-            Assert.That(comment.ProjectId, Is.EqualTo(Comment.ProjectId));
-            Assert.That(comment.AuthorId, Is.EqualTo(Comment.AuthorId));
+            // Assert returned comments data is correct
+            var firstComment = result.Comments.FirstOrDefault();
+            Assert.That(firstComment, Is.Not.Null);
+            Assert.That(firstComment.Id, Is.EqualTo(Comment.Id));
+            Assert.That(firstComment.Content, Is.EqualTo(Comment.Content));
+            Assert.That(firstComment.Date, Is.EqualTo(Comment.Date.ToString(DataConstants.DateFormat)));
+            Assert.That(firstComment.ProjectId, Is.EqualTo(Comment.ProjectId));
+            Assert.That(firstComment.AuthorId, Is.EqualTo(Comment.AuthorId));
         }
     }
 }

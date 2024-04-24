@@ -246,7 +246,7 @@ namespace DesignBureau.Tests.UnitTests
             Designer.Id);
             //Assert that project images folder exists
             var exists = Directory.Exists($"D:\\RAYA\\SoftUni\\Web\\ASP-NET-DesignBureau\\DesignBureau\\DesignBureau.Tests\\Output\\img\\Projects\\{newProjectId}");
-            Assert.That( exists, Is.True );
+            Assert.That(exists, Is.True);
             // Assert projects count is changed
             int projectsCount = repository.AllReadOnly<Project>().Count();
             Assert.That(projectsCount, Is.EqualTo(initialProjectsCount + 1));
@@ -303,6 +303,280 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(editedProject.YearDesigned, Is.EqualTo(2018));
             Assert.That(editedProject.CategoryId, Is.EqualTo(Category.Id));
             Assert.That(editedProject.PhaseId, Is.EqualTo(Phase.Id));
+        }
+
+        [Test]
+        public async Task GetProjectFormViewModelByIdAsync_ShouldReturnCorrectProjectModel_WithValidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.GetProjectFormViewModelByIdAsync(Project.Id);
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Title, Is.EqualTo(Project.Title));
+            Assert.That(result.Country, Is.EqualTo(Project.Country));
+            Assert.That(result.Town, Is.EqualTo(Project.Town));
+            Assert.That(result.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
+            Assert.That(result.Architect, Is.EqualTo(Project.Architect));
+            Assert.That(result.YearDesigned, Is.EqualTo(Project.YearDesigned));
+            Assert.That(result.Description, Is.EqualTo(Project.Description));
+            Assert.That(result.CategoryId, Is.EqualTo(Project.CategoryId));
+            Assert.That(result.PhaseId, Is.EqualTo(Project.PhaseId));
+        }
+
+        [Test]
+        public async Task GetProjectFormViewModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.GetProjectFormViewModelByIdAsync(2);
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public async Task GetProjectInformationModelByIdAsync_ShouldReturnCorrectProjectModel_WithValidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.GetProjectInformationModelByIdAsync(Project.Id);
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Id, Is.EqualTo(Project.Id));
+            Assert.That(result.Title, Is.EqualTo(Project.Title));
+            Assert.That(result.Country, Is.EqualTo(Project.Country));
+            Assert.That(result.Town, Is.EqualTo(Project.Town));
+        }
+
+        [Test]
+        public async Task GetProjectInformationModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.GetProjectInformationModelByIdAsync(2);
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public async Task GetProjectByIdAsync_ShouldReturnCorrectProject_WithValidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.GetProjectByIdAsync(Project.Id);
+            // Assert project data is correct
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Id, Is.EqualTo(Project.Id));
+            Assert.That(result.Title, Is.EqualTo(Project.Title));
+            Assert.That(result.Country, Is.EqualTo(Project.Country));
+            Assert.That(result.Town, Is.EqualTo(Project.Town));
+            Assert.That(result.Architect, Is.EqualTo(Project.Architect));
+            Assert.That(result.YearDesigned, Is.EqualTo(Project.YearDesigned));
+            Assert.That(result.Description, Is.EqualTo(Project.Description));
+            Assert.That(result.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
+            Assert.That(result.CategoryId, Is.EqualTo(Project.CategoryId));
+            Assert.That(result.PhaseId, Is.EqualTo(Project.PhaseId));
+            Assert.That(result.DesignerId, Is.EqualTo(Project.DesignerId));
+            Assert.That(result.ImagesSerialized, Is.Not.Null);
+            // Assert project comments count is correct
+            int commentsCount = repository.AllReadOnly<Comment>().Where(c => c.ProjectId == Project.Id).Count();
+            var resultComments = result.Comments.ToList();
+            Assert.That(resultComments.Count, Is.EqualTo(commentsCount));
+            // Assert the first comment data is correct
+            var firstComment = resultComments.First();
+            Assert.That(firstComment, Is.Not.Null);
+            Assert.That(firstComment.Id, Is.EqualTo(Comment.Id));
+            Assert.That(firstComment.Content, Is.EqualTo(Comment.Content));
+            Assert.That(firstComment.Date, Is.EqualTo(Comment.Date));
+            Assert.That(firstComment.ProjectId, Is.EqualTo(Comment.ProjectId));
+            Assert.That(firstComment.AuthorId, Is.EqualTo(Comment.AuthorId));
+        }
+
+        [Test]
+        public async Task GetProjectByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.GetProjectByIdAsync(2);
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public async Task ProjectToDeleteByIdAsync_ShouldReturnCorrectProjectModel_WithValidIdAsync()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.ProjectToDeleteByIdAsync(Project.Id);
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Title, Is.EqualTo(Project.Title));
+            Assert.That(result.Country, Is.EqualTo(Project.Country));
+            Assert.That(result.Town, Is.EqualTo(Project.Town));
+            Assert.That(result.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
+            Assert.That(result.YearDesigned, Is.EqualTo(Project.YearDesigned));
+        }
+
+        [Test]
+        public async Task AllProjectsFromLastAsync_ShouldReturnProjectsInCorrectOrder()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.AllProjectsFromLastAsync();
+            // Assert returned projects count is correct
+            var projectsInDb = repository.AllReadOnly<Project>().OrderByDescending(p => p.Id);
+            Assert.That(result.Count(), Is.EqualTo(projectsInDb.Count()));
+            // Assert the projects data is correct
+            var firstProject = result.FirstOrDefault();
+            Assert.That(firstProject, Is.Not.Null);
+            Assert.That(firstProject.Id, Is.EqualTo(Project.Id));
+            Assert.That(firstProject.Title, Is.EqualTo(Project.Title));
+            Assert.That(firstProject.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
+            Assert.That(firstProject.Country, Is.EqualTo(Project.Country));
+            Assert.That(firstProject.Town, Is.EqualTo(Project.Town));
+        }
+
+        [Test]
+        public async Task AllAsync_ShouldReturnCorrectProjects()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.AllAsync();
+            // Assert returned projects count is correct
+            int projectsCount = repository.AllReadOnly<Project>().Count();
+            Assert.That(result.TotalProjectsCount, Is.EqualTo(projectsCount));
+            Assert.That(result.Projects.Count(), Is.EqualTo(projectsCount));
+            // Assert returned projects data is correct
+            var firstProject = result.Projects.FirstOrDefault();
+            Assert.That(firstProject, Is.Not.Null);
+            Assert.That(firstProject.Id, Is.EqualTo(Project.Id));
+            Assert.That(firstProject.Title, Is.EqualTo(Project.Title));
+            Assert.That(firstProject.Country, Is.EqualTo(Project.Country));
+            Assert.That(firstProject.Town, Is.EqualTo(Project.Town));
+            Assert.That(firstProject.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
+            Assert.That(firstProject.YearDesigned, Is.EqualTo(Project.YearDesigned));
+        }
+
+        [Test]
+        public async Task AllProjectsByDesignerIdAsync_ShouldReturnCorrectProjects()
+        {
+            // Arrange
+            int designerId = Designer.Id;
+            // Act
+            var result = await projectService.AllProjectsByDesignerIdAsync(designerId);
+            // Assert returned projects count is correct
+            int projectsCount = repository.AllReadOnly<Project>()
+                .Where(p => p.DesignerId == designerId)
+                .Count();
+            Assert.That(result.TotalProjectsCount, Is.EqualTo(projectsCount));
+            Assert.That(result.Projects.Count(), Is.EqualTo(projectsCount));
+            // Assert returned projects data is correct
+            var firstProject = result.Projects.FirstOrDefault();
+            Assert.That(firstProject, Is.Not.Null);
+            Assert.That(firstProject.Id, Is.EqualTo(Project.Id));
+            Assert.That(firstProject.Title, Is.EqualTo(Project.Title));
+            Assert.That(firstProject.Country, Is.EqualTo(Project.Country));
+            Assert.That(firstProject.Town, Is.EqualTo(Project.Town));
+            Assert.That(firstProject.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
+            Assert.That(firstProject.YearDesigned, Is.EqualTo(Project.YearDesigned));
+        }
+
+        [Test]
+        public async Task DeleteAsync_ShouldWorkCorrectlyAsync()
+        {
+            // Arrange
+            int initialProjectsCount = repository.AllReadOnly<Project>().Count();
+            // Act
+            await projectService.DeleteAsync(Project.Id);
+            // Assert comments count is changed
+            int projectsCount = repository.AllReadOnly<Project>().Count();
+            Assert.That(projectsCount, Is.EqualTo(initialProjectsCount - 1));
+            // Assert the comment is deleted in db
+            var deletedProject = await repository.AllReadOnly<Project>().FirstOrDefaultAsync(p => p.Id == Project.Id);
+            Assert.That(deletedProject, Is.Null);
+            ////Assert that project images folder is deleted if it is empty
+            //var exists = Directory.Exists($"D:\\RAYA\\SoftUni\\Web\\ASP-NET-DesignBureau\\DesignBureau\\DesignBureau.Tests\\Output\\img\\Projects\\{Project.Id}");
+            //Assert.That(exists, Is.True);  // because it is not empty
+        }
+
+        [Test]
+        public async Task AllImagesByProjectIdAsync_ShouldReturnCorrectImages()
+        {
+            // Arrange
+            int projectId = Project.Id;
+            // Act
+            var result = await projectService.AllImagesByProjectIdAsync(projectId);
+            // Assert returned data is correct
+            var project = await repository.AllReadOnly<Project>().FirstOrDefaultAsync(p => p.Id == projectId);
+            Assert.That(project, Is.Not.Null);
+            Assert.That(result.ProjectId, Is.EqualTo(projectId));
+            Assert.That(result.Title, Is.EqualTo(project.Title));
+            Assert.That(result.Gallery, Is.Not.Null);
+            Assert.That(result.Gallery.Count(), Is.EqualTo(project.Images.Count()));
+            string firstImage = result.Gallery.First();
+            Assert.That(firstImage, Is.EqualTo("https://localhost:7134/img/Projects/1/ONYX-02.jpg"));
+        }
+
+        [Test]
+        public async Task AllProjectsGalleryAsync_ShouldReturnCorrectProjects()
+        {
+            // Arrange
+            // Act
+            var result = await projectService.AllProjectsGalleryAsync();
+            // Assert returned projects count is correct
+            int projectsCount = repository.AllReadOnly<Project>().Count();
+            Assert.That(result.TotalProjectsCount, Is.EqualTo(projectsCount));
+            Assert.That(result.Projects.Count(), Is.EqualTo(projectsCount));
+            // Assert returned projects data is correct
+            var firstProject = result.Projects.FirstOrDefault();
+            Assert.That(firstProject, Is.Not.Null);
+            Assert.That(firstProject.ProjectId, Is.EqualTo(Project.Id));
+            Assert.That(firstProject.Title, Is.EqualTo(Project.Title));
+            Assert.That(firstProject.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
+        }
+
+        [Test]
+        public async Task AddImagesToProjectAsync_ShouldWorkCorrectlyAsync()
+        {
+            // Arrange
+            int projectId = Project.Id;
+            var project = await projectService.GetProjectByIdAsync(projectId);
+            Assert.That(project, Is.Not.Null);
+            int initialImagesCount = project.Images.Count();
+            // Act
+            await projectService.AddImagesToProjectAsync(new List<string>() 
+            { "https://localhost:7134/img/Projects/1/ONYX-04.jpg",
+              "https://localhost:7134/img/Projects/1/ONYX-05.jpg"
+            }, projectId);
+            //Assert that project images folder exists
+            //var exists = Directory.Exists($"D:\\RAYA\\SoftUni\\Web\\ASP-NET-DesignBureau\\DesignBureau\\DesignBureau.Tests\\Output\\img\\Projects\\{projectId}");
+            //Assert.That(exists, Is.True);
+            // Assert project images count is changed
+            int imagesCount = project.Images.Count();
+            Assert.That(imagesCount, Is.EqualTo(initialImagesCount + 2));
+            // Assert the new images are added in db
+            Assert.That(project.Images.Contains("https://localhost:7134/img/Projects/1/ONYX-04.jpg"));
+            Assert.That(project.Images.Contains("https://localhost:7134/img/Projects/1/ONYX-05.jpg"));
+        }
+
+        [Test]
+        public async Task RemoveImageFromProjectAsync_ShouldReturnTrue_WithValidInputAsync()
+        {
+            // Arrange
+            int projectId = Project.Id;
+            var project = await projectService.GetProjectByIdAsync(projectId);
+            Assert.That(project, Is.Not.Null);
+            int initialImagesCount = project.Images.Count();
+            // Act
+            bool isRemoved = await projectService.RemoveImageFromProjectAsync(
+                "https://localhost:7134/img/Projects/1/ONYX-03.jpg", projectId);
+            // Assert project images count is changed
+            int imagesCount = project.Images.Count();
+            Assert.That(imagesCount, Is.EqualTo(initialImagesCount - 1));
+            // Assert that the image id deleted from db
+            Assert.That(isRemoved, Is.True);
+            Assert.That(project.Images.Contains("https://localhost:7134/img/Projects/1/ONYX-02.jpg"));
+            Assert.That(!project.Images.Contains("https://localhost:7134/img/Projects/1/ONYX-03.jpg"));
         }
     }
 }

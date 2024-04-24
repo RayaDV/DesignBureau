@@ -19,7 +19,7 @@ namespace DesignBureau.Core.Contracts
 
         Task<int> CreateAsync(ProjectFormViewModel model, int designerId);
 
-        Task<ProjectQueryServiceModel> AllProjectsAsync(
+        Task<ProjectQueryServiceModel> AllAsync(
                 string? category = null,
                 string? phase = null,
                 string? town = null,
@@ -62,6 +62,7 @@ namespace DesignBureau.Core.Contracts
             int projectsPerPage = 1);
 
         Task<ProjectInformationModel?> GetProjectInformationModelByIdAsync(int id);
+
         Task<Project?> GetProjectByIdAsync(int id);
 
         Task AddImagesToProjectAsync(List<string> images, int projectId);
