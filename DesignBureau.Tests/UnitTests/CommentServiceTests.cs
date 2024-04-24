@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DesignBureau.Tests.UnitTests
 {
+    [TestFixture]
     public class CommentServiceTests : UnitTestsBase
     {
         private ICommentService commentService;
@@ -16,7 +17,7 @@ namespace DesignBureau.Tests.UnitTests
         public void SetUp()
             => this.commentService = new CommentService(this.repository);
 
-        [Test]
+        [Test, Order(1)]
         public async Task ExistsByIdAsync_ShouldReturnTrue_WithValidIdAsync()
         {
             // Arrange
@@ -26,7 +27,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task ExistsByIdAsync_ShouldReturnFalse_WithInvalidIdAsync()
         {
             // Arrange
@@ -36,7 +37,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(3)]
         public async Task HasAuthorWithIdAsync_ShouldReturnTrue_WithValidAuthorIdAsync()
         {
             // Arrange
@@ -46,7 +47,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(4)]
         public async Task HasAuthorWithIdAsync_ShouldReturnFalse_WithInvalidAuthorIdAsync()
         {
             // Arrange
@@ -56,7 +57,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(5)]
         public async Task HasAuthorWithIdAsync_ShouldReturnFalse_WithWrongIdAsync()
         {
             // Arrange
@@ -66,7 +67,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(6)]
         public async Task GetCommentFormViewModelByIdAsync_ShouldReturnCorrectCommentModel_WithValidIdAsync()
         {
             // Arrange
@@ -80,7 +81,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result.AuthorId, Is.EqualTo(Comment.AuthorId));
         }
 
-        [Test]
+        [Test, Order(7)]
         public async Task GetCommentFormViewModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
         {
             // Arrange
@@ -90,7 +91,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.Null);
         }
 
-        [Test]
+        [Test, Order(11)]
         public async Task CreateAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -119,7 +120,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(newComment.AuthorId, Is.EqualTo(GuestUser.Id));
         }
 
-        [Test]
+        [Test, Order(10)]
         public async Task EditAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -144,7 +145,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(editedComment.AuthorId, Is.EqualTo(GuestUser.Id));
         }
 
-        [Test]
+        [Test, Order(12)]
         public async Task DeleteAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -159,7 +160,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(deletedComment, Is.Null);
         }
 
-        [Test]
+        [Test, Order(9)]
         public async Task CommentToDeleteByIdAsync_ShouldReturnCommentToDeleteAsync()
         {
             // Arrange
@@ -173,7 +174,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(comment.AuthorId, Is.EqualTo(Comment.AuthorId));
         }
 
-        [Test]
+        [Test, Order(8)]
         public async Task AllAsync_ShouldReturnCorrectComments()
         {
             // Arrange

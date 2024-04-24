@@ -27,7 +27,7 @@ namespace DesignBureau.Tests.UnitTests
             this.projectService = new ProjectService(this.repository, this.webHostEnv);
         }
 
-        [Test]
+        [Test, Order(1)]
         public async Task AllCategoriesAsync_ShouldReturnCorrectCategoriesAsync()
         {
             // Arrange
@@ -42,7 +42,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(category.Name, Is.EqualTo(Category.Name));
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task AllPhasesAsync_ShouldReturnCorrectPhasesAsync()
         {
             // Arrange
@@ -57,7 +57,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(phase.Name, Is.EqualTo(Phase.Name));
         }
 
-        [Test]
+        [Test, Order(3)]
         public async Task AllCategoriesNamesAsync_ShouldReturnCorrectResultAsync()
         {
             // Arrange
@@ -72,7 +72,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(categoryName, Is.EqualTo(Category.Name));
         }
 
-        [Test]
+        [Test, Order(4)]
         public async Task AllPhasesNamesAsync_ShouldReturnCorrectResultAsync()
         {
             // Arrange
@@ -87,7 +87,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(phaseName, Is.EqualTo(Phase.Name));
         }
 
-        [Test]
+        [Test, Order(5)]
         public async Task AllTownsNamesAsync_ShouldReturnCorrectResultAsync()
         {
             // Arrange
@@ -102,7 +102,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(townsNames.Contains(town));
         }
 
-        [Test]
+        [Test, Order(6)]
         public async Task CategoryExistAsync_ShouldReturnTrue_WithValidCategoryIdAsync()
         {
             // Arrange
@@ -112,7 +112,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(7)]
         public async Task CategoryExistAsync_ShouldReturnFalse_WithInvalidCategoryIdAsync()
         {
             // Arrange
@@ -122,7 +122,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(8)]
         public async Task PhaseExistAsync_ShouldReturnTrue_WithValidPhaseIdAsync()
         {
             // Arrange
@@ -132,7 +132,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(9)]
         public async Task PhaseExistAsync_ShouldReturnFalse_WithInvalidPhaseIdAsync()
         {
             // Arrange
@@ -142,7 +142,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(10)]
         public async Task ExistsByIdAsync_ShouldReturnTrue_WithValidIdAsync()
         {
             // Arrange
@@ -152,7 +152,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(11)]
         public async Task ExistsByIdAsync_ShouldReturnFalse_WithInvalidIdAsync()
         {
             // Arrange
@@ -162,7 +162,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(12)]
         public async Task HasDesignerWithIdAsync_ShouldReturnTrue_WithValidDesignerIdAsync()
         {
             // Arrange
@@ -172,7 +172,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(13)]
         public async Task HasDesignerWithIdAsync_ShouldReturnFalse_WithInvalidDesignerIdAsync()
         {
             // Arrange
@@ -182,7 +182,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(14)]
         public async Task HasDesignerWithIdAsync_ShouldReturnFalse_WithInvalidProjectIdAsync()
         {
             // Arrange
@@ -192,7 +192,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(15)]
         public async Task ProjectDetailsByIdAsync_ShouldReturnCorrectProjectDataAsync()
         {
             // Arrange
@@ -227,7 +227,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(firstCommentResult.FullName, Is.EqualTo($"{Comment.Author.FirstName} {Comment.Author.LastName}"));
         }
 
-        [Test]
+        [Test, Order(31)]
         public async Task CreateAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -270,7 +270,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(newProject.PhaseId, Is.EqualTo(Project.PhaseId));
         }
 
-        [Test]
+        [Test, Order(30)]
         public async Task EditAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -307,7 +307,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(editedProject.PhaseId, Is.EqualTo(Phase.Id));
         }
 
-        [Test]
+        [Test, Order(16)]
         public async Task GetProjectFormViewModelByIdAsync_ShouldReturnCorrectProjectModel_WithValidIdAsync()
         {
             // Arrange
@@ -326,7 +326,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result.PhaseId, Is.EqualTo(Project.PhaseId));
         }
 
-        [Test]
+        [Test, Order(17)]
         public async Task GetProjectFormViewModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
         {
             // Arrange
@@ -336,7 +336,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.Null);
         }
 
-        [Test]
+        [Test, Order(18)]
         public async Task GetProjectInformationModelByIdAsync_ShouldReturnCorrectProjectModel_WithValidIdAsync()
         {
             // Arrange
@@ -350,7 +350,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result.Town, Is.EqualTo(Project.Town));
         }
 
-        [Test]
+        [Test, Order(19)]
         public async Task GetProjectInformationModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
         {
             // Arrange
@@ -360,7 +360,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.Null);
         }
 
-        [Test]
+        [Test, Order(20)]
         public async Task GetProjectByIdAsync_ShouldReturnCorrectProject_WithValidIdAsync()
         {
             // Arrange
@@ -394,7 +394,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(firstComment.AuthorId, Is.EqualTo(Comment.AuthorId));
         }
 
-        [Test]
+        [Test, Order(21)]
         public async Task GetProjectByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
         {
             // Arrange
@@ -404,7 +404,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.Null);
         }
 
-        [Test]
+        [Test, Order(22)]
         public async Task ProjectToDeleteByIdAsync_ShouldReturnCorrectProjectModel_WithValidIdAsync()
         {
             // Arrange
@@ -419,7 +419,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result.YearDesigned, Is.EqualTo(Project.YearDesigned));
         }
 
-        [Test]
+        [Test, Order(23)]
         public async Task AllProjectsFromLastAsync_ShouldReturnProjectsInCorrectOrder()
         {
             // Arrange
@@ -438,7 +438,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(firstProject.Town, Is.EqualTo(Project.Town));
         }
 
-        [Test]
+        [Test, Order(24)]
         public async Task AllAsync_ShouldReturnCorrectProjects()
         {
             // Arrange
@@ -459,7 +459,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(firstProject.YearDesigned, Is.EqualTo(Project.YearDesigned));
         }
 
-        [Test]
+        [Test, Order(25)]
         public async Task AllProjectsByDesignerIdAsync_ShouldReturnCorrectProjects()
         {
             // Arrange
@@ -483,7 +483,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(firstProject.YearDesigned, Is.EqualTo(Project.YearDesigned));
         }
 
-        [Test]
+        [Test, Order(32)]
         public async Task DeleteAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -501,7 +501,7 @@ namespace DesignBureau.Tests.UnitTests
             //Assert.That(exists, Is.True);  // because it is not empty
         }
 
-        [Test]
+        [Test, Order(26)]
         public async Task AllImagesByProjectIdAsync_ShouldReturnCorrectImages()
         {
             // Arrange
@@ -519,7 +519,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(firstImage, Is.EqualTo("https://localhost:7134/img/Projects/1/ONYX-02.jpg"));
         }
 
-        [Test]
+        [Test, Order(27)]
         public async Task AllProjectsGalleryAsync_ShouldReturnCorrectProjects()
         {
             // Arrange
@@ -537,7 +537,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(firstProject.MainImageUrl, Is.EqualTo(Project.MainImageUrl));
         }
 
-        [Test]
+        [Test, Order(28)]
         public async Task AddImagesToProjectAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -561,7 +561,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(project.Images.Contains("https://localhost:7134/img/Projects/1/ONYX-05.jpg"));
         }
 
-        [Test]
+        [Test, Order(29)]
         public async Task RemoveImageFromProjectAsync_ShouldReturnTrue_WithValidInputAsync()
         {
             // Arrange

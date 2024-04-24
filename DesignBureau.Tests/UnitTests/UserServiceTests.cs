@@ -22,7 +22,7 @@ namespace DesignBureau.Tests.UnitTests
             this.userService = new UserService(this.repository, this.userManager);
         }
           
-        [Test]
+        [Test, Order(1)]
         public async Task UserFullNameAsync_ShouldReturnCorrectResult()
         {
             // Arrange
@@ -33,7 +33,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task ExistsByIdAsync_ShouldReturnTrue_WithValidIdAsync()
         {
             // Arrange
@@ -43,7 +43,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(3)]
         public async Task ExistsByIdAsync_ShouldReturnFalse_WithInvalidIdAsync()
         {
             // Arrange
@@ -53,7 +53,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(4)]
         public async Task GetUserByIdAsync_ShouldReturnCorrectUser_WithValidIdAsync()
         {
             // Arrange
@@ -69,7 +69,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result.Comments.Count(), Is.EqualTo(1));
         }
 
-        [Test]
+        [Test, Order(5)]
         public async Task GetUserByIdAsync_ShouldReturnNullUser_WithInvalidIdAsync()
         {
             // Arrange
@@ -79,7 +79,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.Null);
         }
 
-        [Test]
+        [Test, Order(7)]
         public async Task CreateAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -105,7 +105,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(newUser.NormalizedUserName, Is.EqualTo("neli@gmail.com".ToUpper()));
         }
 
-        [Test]
+        [Test, Order(8)]
         public async Task DeleteAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -120,7 +120,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(deletedUser, Is.Null);
         }
 
-        [Test]
+        [Test, Order(6)]
         public async Task AllAsync_ShouldReturnCorrectUsers()
         {
             // Arrange

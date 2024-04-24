@@ -15,7 +15,7 @@ namespace DesignBureau.Tests.UnitTests
         public void SetUp()
             => this.designerService = new DesignerService(this.repository);
 
-        [Test]
+        [Test, Order(1)]
         public async Task ExistsByIdAsync_ShouldReturnTrue_WithValidIdAsync()
         {
             // Arrange
@@ -25,7 +25,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task ExistsByIdAsync_ShouldReturnFalse_WithInvalidIdAsync()
         {
             // Arrange
@@ -35,7 +35,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(3)]
         public async Task ExistsByUserIdAsync_ShouldReturnTrue_WithValidUserIdAsync()
         {
             // Arrange
@@ -45,7 +45,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(4)]
         public async Task ExistsByUserIdAsync_ShouldReturnFalse_WithInvalidUserIdAsync()
         {
             // Arrange
@@ -55,7 +55,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(5)]
         public async Task ExistsByPhoneNumberAsync_ShouldReturnTrue_WithValidPhoneNumberAsync()
         {
             // Arrange
@@ -65,7 +65,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(6)]
         public async Task ExistsByPhoneNumberAsync_ShouldReturnFalse_WithInvalidPhoneNumberAsync()
         {
             // Arrange
@@ -75,7 +75,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(7)]
         public async Task ExistsByEmailAsync_ShouldReturnTrue_WithValidEmailAsync()
         {
             // Arrange
@@ -85,7 +85,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(8)]
         public async Task ExistsByEmailAsync_ShouldReturnFalse_WithInvalidEmailAsync()
         {
             // Arrange
@@ -95,7 +95,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(9)]
         public async Task GetDesignerIdAsync_ShouldReturnCorrectUserIdAsync()
         {
             // Arrange
@@ -105,7 +105,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.EqualTo(Designer.Id));
         }
 
-        [Test]
+        [Test, Order(19)]
         public async Task CreateAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -135,7 +135,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(newDesigner.DisciplineId, Is.EqualTo(Designer.DisciplineId));
         }
 
-        [Test]
+        [Test, Order(10)]
         public async Task AllDisciplinesAsync_ShouldReturnAllDisciplinesAsync()
         {
             // Arrange
@@ -150,7 +150,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(discipline.Name, Is.EqualTo(Discipline.Name));
         }
 
-        [Test]
+        [Test, Order(11)]
         public async Task AllDisciplinesNamesAsync_ShouldReturnAllDisciplinesNamesAsync()
         {
             // Arrange
@@ -165,7 +165,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(disciplineName, Is.EqualTo(Discipline.Name));
         }
 
-        [Test]
+        [Test, Order(12)]
         public async Task DisciplineExistsAsync_ShouldReturnTrue_WithValidDisciplineIdAsync()
         {
             // Arrange
@@ -175,7 +175,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.True);
         }
 
-        [Test]
+        [Test, Order(13)]
         public async Task DisciplineExistsAsync_ShouldReturnFalse_WithInvalidDisciplineIdAsync()
         {
             // Arrange
@@ -185,7 +185,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.False);
         }
 
-        [Test]
+        [Test, Order(14)]
         public async Task GetDesignerFormViewModelByIdAsync_ShouldReturnCorrectDesignerModelAsync()
         {
             // Arrange, Act
@@ -201,7 +201,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result.DisciplineId, Is.EqualTo(Designer.DisciplineId));
         }
 
-        [Test]
+        [Test, Order(15)]
         public async Task GetDesignerFormViewModelByIdAsync_ShouldReturnNull_WithInvalidIdAsync()
         {
             // Arrange, Act
@@ -210,7 +210,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(result, Is.Null);
         }
 
-        [Test]
+        [Test, Order(18)]
         public async Task EditAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -240,7 +240,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(editedDesigner.DisciplineId, Is.EqualTo(Discipline.Id));
         }
 
-        [Test]
+        [Test, Order(20)]
         public async Task DeleteAsync_ShouldWorkCorrectlyAsync()
         {
             // Arrange
@@ -255,7 +255,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(deletedDesigner, Is.Null);
         }
 
-        [Test]
+        [Test, Order(16)]
         public async Task DesignerToDeleteByIdAsync_ShouldReturnCorrectDesignerAsync()
         {
             // Arrange
@@ -272,7 +272,7 @@ namespace DesignBureau.Tests.UnitTests
             Assert.That(designer.FullName, Is.EqualTo($"{Designer.User.FirstName} {Designer.User.LastName}"));
         }
 
-        [Test]
+        [Test, Order(17)]
         public async Task AllAsync_ShouldReturnCorrectDesigners()
         {
             // Arrange
