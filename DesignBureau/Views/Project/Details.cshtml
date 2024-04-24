@@ -1,0 +1,82 @@
+﻿@model ProjectDetailsServiceModel
+@inject IProjectService projectService
+
+@{
+    ViewBag.Title = "Project Details";
+    var comments = Model.Comments.ToList();
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h3 class="text-center"><u>@Model.Title</u></h3>
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4 p-3">
+            <img class="card-img-top text-center" src="@Model.MainImageUrl" alt="Project Image">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Designer Info:</h5>
+                    <p></p>
+                    <p class="card-text">Full Name:  @Model.Designer.FullName</p>
+                    <p class="card-text">Email:  @Model.Designer.Email</p>
+                    <p class="card-text">Phone Number: @Model.Designer.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+        <div class="card col-8 border-0">
+            <p><b>Country: </b>@Model.Country</p>
+            <p><b>Town: </b>@Model.Town</p>
+            <p><b>Year of Design: </b>@Model.YearDesigned</p>
+            <p><b>Architect: </b>@Model.Architect</p>
+            <p><b>Description: </b>@Model.Description</p>
+            <p><b>Category: </b>@Model.Category</p>
+            <p><b>Phase: </b>@Model.Phase</p>
+            <div class="form-inline">
+                <a asp-area="" asp-controller="Project" asp-action="Gallery" asp-route-id="@Model.Id"
+                   class="btn btn-primary m-1">Gallery</a>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <div class="btn btn-primary m-1 js-comment-button">Comment</div>
+                    if (await projectService.HasDesignerWithIdAsync(Model.Id, User.Id()) || User.IsAdmin())
+                    {
+                        <a asp-area="" asp-controller="Project" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-dark m-1">Edit</a>
+                        <a asp-area="" asp-controller="Project" asp-action="Delete" asp-route-id="@Model.Id"
+                           class="btn btn-dark m-1">Delete</a>
+                    }
+                }
+            </div>
+            <div class="col" id="js-add-comment-view">
+            </div>
+            @if (comments.Any())
+            {
+                <p class="my-3"><b>Project Comments:</b></p>
+                
+                <div class="col">
+                    @for (int i = comments.Count() - 1; i >= 0; i--)
+                    {
+                        var comment = comments[i];
+                        <partial name="/Views/Comment/_ProjectCommentPartial.cshtml" model="@comment" />
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('.js-comment-button').on('click', function () {
+
+        var projectId = @Model.Id;
+
+        $.get('/Comment/Add/', { projectId: projectId },
+            function (data) {
+                console.log(data);
+                $('#js-add-comment-view').html(data);
+            });
+    });
+</script>

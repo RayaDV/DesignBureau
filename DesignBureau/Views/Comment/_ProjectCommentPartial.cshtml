@@ -1,0 +1,131 @@
+﻿@model ProjectCommentServiceModel
+@inject ICommentService commentService
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<div class="row m-1">
+    <div class="card col-md-8 px-0">
+        <div class="card-header comment-header fs-6">
+            <em style="flex-grow: 1">@Model.Date</em>
+            <div id="js-buttons-@Model.Id" style="display: flex">
+                @if (await this.commentService.HasAuthorWithIdAsync(Model.Id, User.Id()))
+                {
+                    <div class="mx-1" id="js-edit-@Model.Id">
+                        <div class="d-grid gap-2">
+                            <input type="submit" value="Edit" class="btn btn-xs btn-dark" />
+                        </div>
+                    </div>
+                }
+                @if (this.User.IsAdmin() || await this.commentService.HasAuthorWithIdAsync(Model.Id, User.Id()))
+                {
+                    <form class="mx-1" id="js-delete-@Model.Id">
+                        <div class="d-grid gap-2">
+                            <input type="submit" value="Delete" class="btn btn-xs btn-dark"
+                                   onclick="return confirm('Are you sure you want to delete this comment?')"
+                                   asp-area="" asp-controller="Comment" asp-action="Delete" asp-route-id="@Model.Id" />
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+        <div class="card-body py-1">
+            <blockquote class="mb-0">
+                <p id="js-content-@Model.Id">"@Model.Content"</p>
+                <footer class="blockquote-footer mb-1">
+                    <cite title="Author">@Model.FullName</cite>
+                </footer>
+            </blockquote>
+        </div>
+    </div> 
+</div>
+
+
+<script>
+    function getLinesCount(str, cols) {
+        var linecount = 0;
+
+        var lines = str.split("\n");
+        for (let i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            linecount += 1 + Math.floor(line.length / cols);
+        }
+
+        return linecount;
+    };
+
+    function onEditComment(event) {
+        setTextAreaCols(event.target.id);
+        var comment = event.target.value;
+        var cols = event.target.cols;
+        var lines = getLinesCount(comment, cols);
+
+        event.target.rows = lines;
+    }
+
+    function setTextAreaCols(textAreaId) {
+        var element = document.getElementById(textAreaId);
+        console.log(element);
+        console.log(textAreaId);
+        var style = window.getComputedStyle(element, null).getPropertyValue('font-size');
+        var fontSize = parseFloat(style) + "px";
+
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        context.font = fontSize + " system-ui";
+        var symbolWidth = context.measureText("a").width;
+
+        var cols = Math.floor(element.clientWidth / symbolWidth);
+
+        console.log(cols);
+
+        element.cols = cols;
+    }
+
+    $(`#js-edit-@Model.Id`).on('click', function () {
+        var newContent = "";
+
+        // get comment content
+        var content = $(`#js-content-@Model.Id`).text();
+
+        // define textarea html
+        var textarea = `<textarea id="js-edit-comment-@Model.Id" class="edit-comment-input">${content}</textarea>`
+
+        // change content to textarea html with value = comment content
+        $(`#js-content-@Model.Id`).html(textarea)
+
+        // calculate and set textarea columns count
+        setTextAreaCols(`js-edit-comment-@Model.Id`);
+
+        // add event listener on textarea input to calculate text area rows dynamically
+        $(`#js-edit-comment-@Model.Id`).on('input', (ev) => {
+            onEditComment(ev);
+            newContent = ev.target.value;
+            console.log(newContent);
+        });
+
+        // define apply button html
+        var apply = `<div class="mx-1" id="js-apply-@Model.Id">
+                                <div class="d-grid gap-2">
+                                    <input type="submit" value="Apply" class="btn btn-xs btn-dark"/>
+                                </div>
+                             </div>`
+
+        // remove "Edit" and "Delete" buttons and show "Apply" button
+        $(`#js-buttons-@Model.Id`).html(apply);
+
+        // set event handler on "Apply" button
+        $(`#js-apply-@Model.Id`).on('click', () => {
+            console.log("apply: ", newContent);
+            $.get(`/Comment/Edit/@Model.Id`, {
+                Content: newContent,
+                AuthorId: '@Model.AuthorId',
+                ProjectId: @Model.ProjectId
+                    }, () => { window.location.reload() });
+        })
+    });
+</script>
+
+
+
+
+

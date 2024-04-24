@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesignBureau.Infrastructure.Constants
+﻿namespace DesignBureau.Infrastructure.Constants
 {
     public static class DataConstants
     {
@@ -12,13 +6,20 @@ namespace DesignBureau.Infrastructure.Constants
         public const int CategoryNameMaxLength = 50;
         public const int CategoryNameMinLength = 2;
 
+        // Phase
+        public const int PhaseNameMaxLength = 20;
+        public const int PhaseNameMinLength = 3;
+
         // Discipline
         public const int DisciplineNameMaxLength = 30;
         public const int DisciplineNameMinLength = 2;
 
         // Designer
-        public const int DesignerNameMaxLength = 50;
-        public const int DesignerNameMinLength = 2;
+        public const int DesignerPhoneNumberMaxLength = 15;
+        public const int DesignerPhoneNumberMinLength = 7;
+
+        public const int DesignerMaxExperience = 80;
+        public const int DesignerMinExperience = 0;
 
         // Image
         public const int ImageNameMaxLength = 50;
@@ -34,14 +35,27 @@ namespace DesignBureau.Infrastructure.Constants
         public const int ProjectTownMaxLength = 40;
         public const int ProjectTownMinLength = 2;
 
-        public const int ProjectDescriptionMaxLength = 500;
+        public const int ProjectDescriptionMaxLength = 1000;
         public const int ProjectDescriptionMinLength = 50;
 
-        public const int ProjectArchitectMaxLength = 40;
+        public const int ProjectArchitectMaxLength = 60;
         public const int ProjectArchitectMinLength = 2;
 
         public const int ProjectYearMaxValue = 2100;
         public const int ProjectYearMinValue = 1994;
+
+        //ApplicationUser
+        public const int UserFirstNameMaxLength = 15;
+        public const int UserFirstNameMinLength = 1;
+
+        public const int UserLastNameMaxLength = 20;
+        public const int UserLastNameMinLength = 3;
+
+        //Comment
+        public const int CommentContentMaxLength = 1000;
+        public const int CommentContentMinLength = 5;
+
+        public const string DateFormat = "dd/MM/yyyy HH:mm";
 
     }
 }

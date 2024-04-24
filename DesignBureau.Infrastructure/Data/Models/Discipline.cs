@@ -22,6 +22,7 @@ namespace DesignBureau.Infrastructure.Data.Models
         [Comment("Discipline name")]
         public string Name { get; set; } = string.Empty;
 
+        [Comment("Designers from one discipline")]
         public virtual IEnumerable<Designer> Designers { get; set; }
     }
 }

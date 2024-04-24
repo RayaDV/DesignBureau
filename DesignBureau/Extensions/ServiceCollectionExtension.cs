@@ -1,4 +1,8 @@
-﻿using DesignBureau.Data;
+﻿using DesignBureau.Core.Contracts;
+using DesignBureau.Core.Services;
+using DesignBureau.Data;
+using DesignBureau.Infrastructure.Common;
+using DesignBureau.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +12,13 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IDesignerService, DesignerService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IStatisticService, StatisticService>();
+            services.AddScoped<IFileService, FileService>();
+
             return services;
         }
 
@@ -17,6 +28,8 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
             services.AddDbContext<DesignBureauDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            services.AddScoped<IRepository, Repository>(); 
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             return services;
@@ -24,15 +37,16 @@ namespace Microsoft.Extensions.DependencyInjection  // the namespace changed fro
 
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
             })
-                    .AddEntityFrameworkStores<DesignBureauDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DesignBureauDbContext>();
 
             services.AddControllersWithViews();
 

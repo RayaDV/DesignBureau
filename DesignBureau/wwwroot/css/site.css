@@ -14,5 +14,89 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url("/img/background.PNG");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.btn-xs {
+    height: 1.5rem;
+    line-height: 0;
+    margin: 0 !important
+}
+
+.container {
+    background-color: white;
+}
+
+.comment-header {
+    display: flex;
+    height: 2.5rem;
+}
+
+.edit-comment-input {
+    width: 100%;
+    border-color: lightgray;
+}
+
+.close-btn {
+    background-image: url("/svg/close-btn.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 5ex;
+    height: 5ex;
+    right: 20px;
+    top: 20px;
+    position: absolute;
+    z-index: 2;
+    color: lightgrey;
+    cursor: pointer;
+}
+
+.error-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-400-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/400-bad-request.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-401-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/401-unauthorized.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-404-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/404-not-found.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-500-page-image {
+    width: 100%;
+    height: 60vh;
+    background-image: url("/img/ErrorPages/500-internal-server-error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }

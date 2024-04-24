@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="mt-4 p-5 bg-info text-center">
+    <h2 class="display-4">Hello, Admin!</h2>
+    <p class="lead mb-1 mt-3"> This is your administrator area - you can <b>read</b>, <b>delete</b> and <b>edit</b> projects. <br />You can <b>read</b>, <b>create</b>, <b>delete</b> and <b>edit</b> profiles of designers, too! </p>
+    <p class="lead mt-1"> You can also see <b>all users with their comments</b> and <b>operate</b> with them. </p>
+    <hr class="my-4">
+    <a asp-area="" asp-controller="Project" asp-action="All" class="btn btn-dark btn-lg m-1">Projects</a>
+    <a asp-area="" asp-controller="Project" asp-action="AllGallery" class="btn btn-dark btn-lg m-1">Gallery</a>
+    <span> | </span>
+    <a asp-area="" asp-controller="Designer" asp-action="Team" class="btn btn-dark btn-lg m-1">Team</a>
+    <a asp-area="Admin" asp-controller="Designer" asp-action="Add" class="btn btn-dark btn-lg m-1">Add Designer</a>
+    <span> | </span>
+    <a asp-area="Admin" asp-controller="User" asp-action="All" class="btn btn-dark btn-lg m-1">Users</a>
+    <a asp-area="Admin" asp-controller="Comment" asp-action="All" class="btn btn-dark btn-lg m-1">Comments</a>
+</div>
+
+
+<div class="mb-5"></div>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <button class="btn btn-dark btn-lg m-1" id="statistics-button">Show Statistics</button>
+    </div>
+</div>
+
+<div class="mt-4 p-5 bg-light d-none" id="statistics">
+    <div class="row">
+        <h2 class="col-md-3 text-center" id="total-projects"></h2>
+        <h2 class="col-md-3 text-center" id="total-comments"></h2>
+        <h2 class="col-md-3 text-center" id="team-count"></h2>
+        <h2 class="col-md-3 text-center" id="users-count"></h2>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#statistics-button').on('click', ev => {
+            $.get('/api/statistic', data => {
+                $('#total-projects').text(data.totalProjects + ' Projects');
+                $('#total-comments').text(data.totalComments + ' Comments');
+                $('#team-count').text(data.teamCount + ' Designers');
+                $('#users-count').text(data.usersCount + ' Users');
+                $('#statistics').removeClass('d-none');
+                $('#statistics-button').hide();
+            });
+        });
+    </script>
+}

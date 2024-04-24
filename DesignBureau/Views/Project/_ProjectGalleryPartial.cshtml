@@ -1,0 +1,12 @@
+﻿@model ProjectAllGalleryServiceModel
+
+<div class="col-md-4">
+    <div class="card text-bg-light mb-3" style="height: 400px">
+        <div class="rounded-top" style="height: 80%; width:100%; background-image: url(@Model.MainImageUrl); background-position:center; background-repeat:no-repeat; background-size: cover;"></div>
+        <div class="card-body text-center">
+            <a asp-area="" asp-controller="Project" asp-action="Gallery" asp-route-id="@Model.ProjectId" 
+            type="button" class="btn-lg">@Model.Title</a>
+            <br />
+        </div>
+    </div>
+</div>

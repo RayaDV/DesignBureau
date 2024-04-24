@@ -22,6 +22,7 @@ namespace DesignBureau.Infrastructure.Data.Models
         [Comment("Category name")]
         public string Name { get; set; } = string.Empty;
 
+        [Comment("Projects from one category")]
         public virtual IEnumerable<Project> Projects { get; set; }
     }
 }

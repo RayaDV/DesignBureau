@@ -1,0 +1,14 @@
+﻿@model DesignerFormViewModel
+
+@{
+	ViewBag.Title = "Edit Designer";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_DesignerFormPartial" model="@Model" />
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
